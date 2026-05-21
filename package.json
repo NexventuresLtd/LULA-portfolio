@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "packageManager": "pnpm@10.30.3",
   "scripts": {
     "build": "vite build",
     "dev": "vite"
@@ -140,10 +141,8 @@
       "optional": true
     }
   },
-  "pnpm": {
-    "overrides": {
-      "vite": "6.3.5"
-    }
+  "overrides": {
+    "vite": "6.3.5"
   },
   "readme": "ERROR: No README data found!",
   "_id": "@figma/my-make-file@0.0.1"
