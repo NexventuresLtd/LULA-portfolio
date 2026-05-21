@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRC Provinces Map</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0d1117;
+      color: #e8dcc8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 20px 40px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      letter-spacing: 0.02em;
+      color: #f0e4c8;
+      text-shadow: 0 2px 18px rgba(200,160,80,0.18);
+    }
+
+    header p {
+      font-size: 0.92rem;
+      color: #a09070;
+      margin-top: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .map-wrap {
+      width: 100%;
+      max-width: 960px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1.5px solid #2a2418;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.55), 0 0 0 1px #3a301a;
+      position: relative;
+    }
+
+    #map {
+      width: 100%;
+      height: 580px;
+    }
+
+    /* Custom popup styling */
+    .leaflet-popup-content-wrapper {
+      background: #1a1510;
+      border: 1px solid #4a3c20;
+      border-radius: 10px;
+      color: #e8dcc8;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+    }
+
+    .leaflet-popup-tip {
+      background: #1a1510;
+    }
+
+    .leaflet-popup-content {
+      margin: 12px 16px;
+    }
+
+    .popup-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: #d4a84b;
+      margin-bottom: 4px;
+    }
+
+    .popup-sub {
+      font-size: 0.78rem;
+      color: #8a7a5a;
+    }
+
+    .leaflet-control-zoom a {
+      background: #1a1510 !important;
+      color: #d4a84b !important;
+      border-color: #3a301a !important;
+    }
+
+    .leaflet-control-zoom a:hover {
+      background: #2a2010 !important;
+    }
+
+    .leaflet-control-attribution {
+      background: rgba(13,17,23,0.75) !important;
+      color: #5a4a30 !important;
+    }
+
+    .leaflet-control-attribution a { color: #7a6040 !important; }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.78rem;
+      color: #4a3a20;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>DRC Provinces</h1>
+    <p>12 provinces · Democratic Republic of the Congo</p>
+  </header>
+
+  <div class="map-wrap">
+    <div id="map"></div>
+  </div>
+
+  <footer>Click any marker to view province details</footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <script>
+    // Initialize map centered on DRC
+    const map = L.map('map', {
+      center: [-3.5, 24.0],
+      zoom: 5,
+      zoomControl: true,
+      scrollWheelZoom: true
+    });
+
+    // Dark tile layer (CartoDB Dark Matter)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Custom gold pin icon
+    function makeIcon(label) {
+      return L.divIcon({
+        className: '',
+        html: `
+          <div style="
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          ">
+            <div style="
+              width: 14px; height: 14px;
+              background: #d4a84b;
+              border: 2.5px solid #f0d080;
+              border-radius: 50%;
+              box-shadow: 0 0 10px rgba(212,168,75,0.7), 0 0 20px rgba(212,168,75,0.3);
+            "></div>
+            <div style="
+              width: 2px; height: 10px;
+              background: linear-gradient(to bottom, #d4a84b, transparent);
+            "></div>
+          </div>
+        `,
+        iconSize: [14, 24],
+        iconAnchor: [7, 24],
+        popupAnchor: [0, -26]
+      });
+    }
+
+    // Province data
+    const provinces = [
+      { name: "North Kivu",    lat: -0.7917729,   lng: 29.045993,  note: "Eastern DRC · Capital: Goma" },
+      { name: "South Kivu",   lat: -3.011658,    lng: 28.299435,  note: "Eastern DRC · Capital: Bukavu" },
+      { name: "Ituri",        lat:  1.8754518,   lng: 29.045993,  note: "Northeastern DRC · Capital: Bunia" },
+      { name: "Tanganyika",   lat: -6.2740118,   lng: 27.9249002, note: "Eastern DRC · Capital: Kalemie" },
+      { name: "Haut-Katanga", lat: -11.0646485,  lng: 27.5495846, note: "Southeastern DRC · Capital: Lubumbashi" },
+      { name: "Maniema",      lat: -3.0730929,   lng: 26.041389,  note: "Eastern DRC · Capital: Kindu" },
+      { name: "Tshopo",       lat:  0.5455462,   lng: 24.904221,  note: "Northern DRC · Capital: Kisangani" },
+      { name: "Kasaï",        lat: -5.0471979,   lng: 20.7122465, note: "Central DRC · Capital: Luebo" },
+      { name: "Kasaï-Central",lat: -6.2514921,   lng: 22.2384017, note: "Central DRC · Capital: Kananga" },
+      { name: "Lomami",       lat: -5.4903729,   lng: 25.2837585, note: "Central DRC · Capital: Kabinda" },
+      { name: "Sankuru",      lat: -2.8437453,   lng: 23.3823545, note: "Central DRC · Capital: Lodja" },
+      { name: "Kwilu",        lat: -4.4863479,   lng: 18.4276047, note: "Western DRC · Capital: Bandundu" }
+    ];
+
+    // Add markers
+    provinces.forEach(p => {
+      const marker = L.marker([p.lat, p.lng], { icon: makeIcon(p.name) }).addTo(map);
+      marker.bindPopup(`
+        <div class="popup-title">${p.name}</div>
+        <div class="popup-sub">${p.note}</div>
+      `);
+    });
+  </script>
+</body>
+</html>
