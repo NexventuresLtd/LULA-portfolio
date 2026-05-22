@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageProvider';
 
 declare global {
   interface Window {
@@ -14,12 +15,19 @@ declare global {
           },
           elementId: string
         ) => void;
+        element: {
+          getInstance: () => {
+            execute: (command: string, ...args: string[]) => void;
+          } | undefined;
+        };
       };
     };
   }
 }
 
 export default function GoogleTranslate() {
+  const { language } = useLanguage();
+
   useEffect(() => {
     // Add Google Translate script
     const addScript = () => {
@@ -58,7 +66,27 @@ export default function GoogleTranslate() {
     };
   }, []);
 
+  // Sync language context changes with Google Translate
+  useEffect(() => {
+    try {
+      const googleTranslateElement = window.google?.translate?.element?.getInstance?.();
+      if (googleTranslateElement) {
+        // Map language codes to Google Translate language codes
+        const languageMap: Record<string, string> = {
+          en: 'en',
+          fr: 'fr',
+          sw: 'sw'
+        };
+        
+        const translationLanguage = languageMap[language] || 'en';
+        googleTranslateElement.execute('language/translate', translationLanguage);
+      }
+    } catch (error) {
+      console.debug('Google Translate sync error (non-critical):', error);
+    }
+  }, [language]);
+
   return (
-    <div id="google_translate_element" className="google-translate-container"></div>
+    <div id="google_translate_element" className="google-translate-container hidden"></div>
   );
 }

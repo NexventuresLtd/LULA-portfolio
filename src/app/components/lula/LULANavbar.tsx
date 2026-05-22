@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
-import { Menu, X, Heart, Globe, ChevronDown } from 'lucide-react';
+import { Menu, X, Heart, ChevronDown, Check } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useLanguage } from '../../context/LanguageProvider';
 import {
@@ -10,15 +10,6 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-
-// Helper function to trigger Google Translate
-const changeLanguage = (lang: string) => {
-  const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-  if (select) {
-    select.value = lang;
-    select.dispatchEvent(new Event('change'));
-  }
-};
 
 export default function NGONavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -46,24 +37,34 @@ export default function NGONavbar() {
   const isAboutActive = aboutItems.some(item => location.pathname === item.path);
   const isUpdatesActive = updatesItems.some(item => location.pathname === item.path);
 
+  const languages = [
+    { code: 'en', name: t('language.en'), flag: '🇬🇧' },
+    { code: 'fr', name: t('language.fr'), flag: '🇫🇷' },
+    { code: 'sw', name: t('language.sw'), flag: '🇹🇿' },
+  ] as const;
+
   const LanguageSelector = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
-          <Globe className="h-4 w-4" />
-          <span className="uppercase">{language}</span>
+          <span className="text-lg">{languages.find(l => l.code === language)?.flag}</span>
+          <span className="uppercase text-xs font-semibold">{language}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => changeLanguage('en')}>
-          English
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeLanguage('fr')}>
-          Français
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeLanguage('sw')}>
-          Kiswahili
-        </DropdownMenuItem>
+        {languages.map((lang) => (
+          <DropdownMenuItem
+            key={lang.code}
+            onClick={() => setLanguage(lang.code as 'en' | 'fr' | 'sw')}
+            className="flex items-center justify-between gap-2"
+          >
+            <span className="flex items-center gap-2">
+              <span>{lang.flag}</span>
+              <span>{lang.name}</span>
+            </span>
+            {language === lang.code && <Check className="h-4 w-4" />}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

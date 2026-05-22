@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Menu, X, Lightbulb, Sun, Moon } from "lucide-react";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { LanguageSelector } from "./LanguageSelector";
 
 export function Navbar() {
