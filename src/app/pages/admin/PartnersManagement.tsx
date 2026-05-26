@@ -54,7 +54,7 @@ export default function PartnersManagement() {
           <h1 className="text-3xl font-bold text-gray-900">Partners Management</h1>
           <p className="text-gray-600 mt-2">Manage partner organizations and donors</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-green-600 hover:bg-green-700">
           <Plus className="w-4 h-4 mr-2" />
           Add Partner
         </Button>

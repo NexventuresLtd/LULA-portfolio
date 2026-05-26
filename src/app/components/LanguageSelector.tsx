@@ -1,4 +1,4 @@
-import { useLanguage } from "../context/LanguageProvider";
+import { useLanguage } from "../context/LanguageContext";
 import { Button } from "./ui/button";
 import { Check, Globe } from "lucide-react";
 import {
@@ -16,9 +16,8 @@ export function LanguageSelector({ variant = "default" }: LanguageSelectorProps)
   const { language, setLanguage, t } = useLanguage();
 
   const languages = [
-    { code: "en", name: t("language.en"), flag: "�🇧" },
-    { code: "fr", name: t("language.fr"), flag: "🇫🇷" },
-    { code: "sw", name: t("language.sw"), flag: "🇹🇿" },
+    { code: "en", name: t("language.en"), flag: "🇺🇸" },
+    { code: "id", name: t("language.id"), flag: "🇮🇩" },
   ];
 
   if (variant === "minimal") {
@@ -34,7 +33,7 @@ export function LanguageSelector({ variant = "default" }: LanguageSelectorProps)
           {languages.map((lang) => (
             <DropdownMenuItem
               key={lang.code}
-              onClick={() => setLanguage(lang.code as "en" | "fr" | "sw")}
+              onClick={() => setLanguage(lang.code as "en" | "id")}
               className="flex items-center justify-between gap-2"
             >
               <span className="flex items-center gap-2">
@@ -57,7 +56,7 @@ export function LanguageSelector({ variant = "default" }: LanguageSelectorProps)
           <Button
             key={lang.code}
             variant={language === lang.code ? "default" : "outline"}
-            onClick={() => setLanguage(lang.code as "en" | "fr" | "sw")}
+            onClick={() => setLanguage(lang.code as "en" | "id")}
             className="justify-start gap-2"
           >
             <span>{lang.flag}</span>

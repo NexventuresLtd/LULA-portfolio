@@ -6,7 +6,7 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { Plus, Edit, Trash2, Search } from "lucide-react";
+import { Plus, Edit, Trash2, Search, AlertCircle } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { TeamMember } from "../../context/ContentContext";
@@ -14,6 +14,8 @@ import type { TeamMember } from "../../context/ContentContext";
 export function AdminTeamPage() {
   const { teamMembers, addTeamMember, updateTeamMember, deleteTeamMember } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'leadership' | 'staff'>('all');
@@ -57,25 +59,47 @@ export function AdminTeamPage() {
     setIsDialogOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (editingMember) {
-      updateTeamMember(editingMember.id, formData);
-      toast.success('Team member updated successfully!');
-    } else {
-      addTeamMember(formData);
-      toast.success('Team member added successfully!');
+
+    try {
+      if (editingMember) {
+        await updateTeamMember(editingMember.id, formData);
+        toast.success('Team member updated successfully!');
+      } else {
+        await addTeamMember(formData);
+        toast.success('Team member added successfully!');
+      }
+
+      setIsDialogOpen(false);
+      setEditingMember(null);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to save team member details.');
     }
-    
-    setIsDialogOpen(false);
-    setEditingMember(null);
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this team member?')) {
-      deleteTeamMember(id);
+  const handleDeleteClick = (member: TeamMember) => {
+    setMemberToDelete(member);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteDialogOpen(false);
+    setMemberToDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!memberToDelete) {
+      return;
+    }
+
+    try {
+      await deleteTeamMember(memberToDelete.id);
       toast.success('Team member deleted successfully!');
+      setDeleteDialogOpen(false);
+      setMemberToDelete(null);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to delete the team member.');
     }
   };
 
@@ -94,12 +118,12 @@ export function AdminTeamPage() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => handleOpenDialog()}>
+            <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenDialog()}>
               <Plus className="w-5 h-5 mr-2" />
               Add Team Member
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingMember ? 'Edit Team Member' : 'Add New Team Member'}</DialogTitle>
               <DialogDescription>
@@ -191,7 +215,7 @@ export function AdminTeamPage() {
                 <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" className="bg-green-600 hover:bg-green-700">
                   {editingMember ? 'Update Member' : 'Add Member'}
                 </Button>
               </DialogFooter>
@@ -246,7 +270,7 @@ export function AdminTeamPage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="text-lg">{member.name}</CardTitle>
-                        <p className="text-sm text-blue-600 font-medium">{member.role}</p>
+                        <p className="text-sm text-green-600 font-medium">{member.role}</p>
                       </div>
                       <div className="flex gap-2">
                         <Button
@@ -259,7 +283,7 @@ export function AdminTeamPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDelete(member.id)}
+                          onClick={() => handleDeleteClick(member)}
                           className="text-red-600 hover:text-red-700 hover:bg-red-50"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -284,6 +308,40 @@ export function AdminTeamPage() {
           ))
         )}
       </div>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600">
+                <AlertCircle className="h-5 w-5" />
+              </div>
+              <div>
+                <DialogTitle>Delete team member?</DialogTitle>
+                <DialogDescription className="mt-1">
+                  This action will remove this team member from the backend and the admin list.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+
+          {memberToDelete && (
+            <div className="rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-800">
+              <p className="font-medium">{memberToDelete.name}</p>
+              <p className="mt-1">{memberToDelete.role}</p>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={handleCancelDelete}>
+              Cancel
+            </Button>
+            <Button type="button" onClick={handleConfirmDelete} className="bg-red-600 hover:bg-red-700 text-white">
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

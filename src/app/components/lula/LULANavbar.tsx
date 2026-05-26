@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
-import { Menu, X, Heart, ChevronDown, Check } from 'lucide-react';
+import { Menu, X, Heart, Globe, ChevronDown } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useLanguage } from '../../context/LanguageProvider';
 import {
@@ -10,6 +10,15 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
+
+// Helper function to trigger Google Translate
+const changeLanguage = (lang: string) => {
+  const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+  if (select) {
+    select.value = lang;
+    select.dispatchEvent(new Event('change'));
+  }
+};
 
 export default function NGONavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -37,34 +46,24 @@ export default function NGONavbar() {
   const isAboutActive = aboutItems.some(item => location.pathname === item.path);
   const isUpdatesActive = updatesItems.some(item => location.pathname === item.path);
 
-  const languages = [
-    { code: 'en', name: t('language.en'), flag: '🇬🇧' },
-    { code: 'fr', name: t('language.fr'), flag: '🇫🇷' },
-    { code: 'sw', name: t('language.sw'), flag: '🇹🇿' },
-  ] as const;
-
   const LanguageSelector = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
-          <span className="text-lg">{languages.find(l => l.code === language)?.flag}</span>
-          <span className="uppercase text-xs font-semibold">{language}</span>
+          <Globe className="h-4 w-4" />
+          <span className="uppercase">{language}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {languages.map((lang) => (
-          <DropdownMenuItem
-            key={lang.code}
-            onClick={() => setLanguage(lang.code as 'en' | 'fr' | 'sw')}
-            className="flex items-center justify-between gap-2"
-          >
-            <span className="flex items-center gap-2">
-              <span>{lang.flag}</span>
-              <span>{lang.name}</span>
-            </span>
-            {language === lang.code && <Check className="h-4 w-4" />}
-          </DropdownMenuItem>
-        ))}
+        <DropdownMenuItem onClick={() => changeLanguage('en')}>
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage('fr')}>
+          Français
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage('sw')}>
+          Kiswahili
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -75,11 +74,11 @@ export default function NGONavbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-2 rounded-lg">
+            <div className="bg-gradient-to-br from-green-600 to-green-800 p-2 rounded-lg">
               <Heart className="h-6 w-6 text-white fill-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-xl text-blue-900">LULA</span>
+              <span className="font-bold text-xl text-green-900">LULA</span>
               <span className="text-xs text-gray-600">Let Us Live Association</span>
             </div>
           </Link>
@@ -90,8 +89,8 @@ export default function NGONavbar() {
               to="/"
               className={`px-3 py-2 rounded-md text-sm transition-colors ${
                 location.pathname === '/'
-                  ? 'bg-blue-600 text-white font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                  ? 'text-green-600 font-bold'
+                  : 'text-gray-700 hover:text-green-600'
               }`}
             >
               {t('nav.home')}
@@ -103,8 +102,8 @@ export default function NGONavbar() {
                   size="sm"
                   className={`gap-2 ${
                     isAboutActive
-                      ? 'bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:text-white'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                      ? 'text-green-600 font-bold hover:text-green-700'
+                      : 'text-gray-700 hover:text-green-600'
                   }`}
                 >
                   {t('nav.about')}
@@ -118,8 +117,8 @@ export default function NGONavbar() {
                       to={item.path}
                       className={`w-full cursor-pointer ${
                         location.pathname === item.path
-                          ? 'bg-blue-600 text-white font-semibold'
-                          : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                          ? 'text-green-600 font-bold'
+                          : 'text-gray-700 hover:text-green-600'
                       }`}
                     >
                       {item.label}
@@ -135,8 +134,8 @@ export default function NGONavbar() {
                   size="sm"
                   className={`gap-2 ${
                     isUpdatesActive
-                      ? 'bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:text-white'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                      ? 'text-green-600 font-bold hover:text-green-700'
+                      : 'text-gray-700 hover:text-green-600'
                   }`}
                 >
                   Updates
@@ -150,8 +149,8 @@ export default function NGONavbar() {
                       to={item.path}
                       className={`w-full cursor-pointer ${
                         location.pathname === item.path
-                          ? 'bg-blue-600 text-white font-semibold'
-                          : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                          ? 'text-green-600 font-bold'
+                          : 'text-gray-700 hover:text-green-600'
                       }`}
                     >
                       {item.label}
@@ -166,8 +165,8 @@ export default function NGONavbar() {
                 to={item.path}
                 className={`px-3 py-2 rounded-md text-sm transition-colors ${
                   location.pathname === item.path
-                    ? 'bg-blue-600 text-white font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                    ? 'text-green-600 font-bold'
+                    : 'text-gray-700 hover:text-green-600'
                 }`}
               >
                 {item.label}
@@ -179,7 +178,7 @@ export default function NGONavbar() {
           <div className="hidden lg:flex items-center gap-3">
             <LanguageSelector />
             <Link to="/get-involved">
-              <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700">
+              <Button className="bg-gradient-to-r from-gray-900 to-black hover:from-gray-800 hover:to-gray-900">
                 <Heart className="h-4 w-4 mr-2" />
                 {t('nav.donate')}
               </Button>
@@ -202,7 +201,7 @@ export default function NGONavbar() {
                     onClick={() => setMobileOpen(false)}
                     className={`px-4 py-3 rounded-lg text-base transition-colors ${
                       location.pathname === '/'
-                        ? 'bg-blue-600 text-white font-semibold'
+                        ? 'text-green-600 font-bold'
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
@@ -215,8 +214,8 @@ export default function NGONavbar() {
                         size="sm"
                         className={`gap-2 ${
                           isAboutActive
-                            ? 'bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:text-white'
-                            : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                            ? 'text-green-600 font-bold hover:text-green-700'
+                            : 'text-gray-700 hover:text-green-600'
                         }`}
                       >
                         {t('nav.about')}
@@ -231,8 +230,8 @@ export default function NGONavbar() {
                             onClick={() => setMobileOpen(false)}
                             className={`w-full cursor-pointer ${
                               location.pathname === item.path
-                                ? 'bg-blue-600 text-white font-semibold'
-                                : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                                ? 'text-green-600 font-bold'
+                                : 'text-gray-700 hover:text-green-600'
                             }`}
                           >
                             {item.label}
@@ -248,8 +247,8 @@ export default function NGONavbar() {
                         size="sm"
                         className={`gap-2 ${
                           isUpdatesActive
-                            ? 'bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:text-white'
-                            : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                            ? 'text-green-600 font-bold hover:text-green-700'
+                            : 'text-gray-700 hover:text-green-600'
                         }`}
                       >
                         Updates
@@ -264,8 +263,8 @@ export default function NGONavbar() {
                             onClick={() => setMobileOpen(false)}
                             className={`w-full cursor-pointer ${
                               location.pathname === item.path
-                                ? 'bg-blue-600 text-white font-semibold'
-                                : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                                ? 'text-green-600 font-bold'
+                                : 'text-gray-700 hover:text-green-600'
                             }`}
                           >
                             {item.label}
@@ -281,7 +280,7 @@ export default function NGONavbar() {
                       onClick={() => setMobileOpen(false)}
                       className={`px-4 py-3 rounded-lg text-base transition-colors ${
                         location.pathname === item.path
-                          ? 'bg-blue-600 text-white font-semibold'
+                          ? 'text-green-600 font-bold'
                           : 'text-gray-700 hover:bg-gray-50'
                       }`}
                     >
@@ -289,7 +288,7 @@ export default function NGONavbar() {
                     </Link>
                   ))}
                   <Link to="/get-involved" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-600">
+                    <Button className="w-full bg-gradient-to-r from-gray-900 to-black">
                       <Heart className="h-4 w-4 mr-2" />
                       {t('nav.donate')}
                     </Button>

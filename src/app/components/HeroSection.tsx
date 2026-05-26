@@ -76,7 +76,7 @@ export function HeroSection() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-blue-100 text-green-600 dark:bg-green-900/40 dark:text-blue-400 flex items-center justify-center">
                   <Battery className="w-5 h-5" />
                 </div>
                 <div>
@@ -112,7 +112,7 @@ export function HeroSection() {
                   </div>
                   <div className="flex gap-1 mt-1">
                     <span className="inline-block h-1.5 w-8 rounded-full bg-blue-500" title="Hydro"></span>
-                    <span className="inline-block h-1.5 w-6 rounded-full bg-orange-500" title="Geothermal"></span>
+                    <span className="inline-block h-1.5 w-6 rounded-full bg-gray-900" title="Geothermal"></span>
                     <span className="inline-block h-1.5 w-10 rounded-full bg-yellow-500" title="Solar"></span>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ export function HeroSection() {
             
             <div className="absolute -bottom-4 -left-4 glass px-3 py-2 rounded-xl shadow-lg hover-3d">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-green-600 flex items-center justify-center text-white">
                   <HelpCircle className="w-4 h-4" />
                 </div>
                 <div>

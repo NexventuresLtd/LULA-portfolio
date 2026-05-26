@@ -52,7 +52,7 @@ export function PricingSection() {
       ],
       cta: "Contact Industrial Team",
       image: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=2070&auto=format&fit=crop",
-      color: "from-orange-500 to-red-500",
+      color: "from-gray-900 to-red-500",
     }
   ];
 
@@ -171,7 +171,7 @@ export function PricingSection() {
               
               <div className="glass p-6 rounded-2xl border border-white/10 hover:border-primary/20 spatial">
                 <div className="mb-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 text-green-600 dark:bg-green-900/40 dark:text-blue-400 flex items-center justify-center">
                     <span className="text-lg font-medium">2</span>
                   </div>
                 </div>
@@ -191,7 +191,7 @@ export function PricingSection() {
               
               <div className="glass p-6 rounded-2xl border border-white/10 hover:border-primary/20 spatial">
                 <div className="mb-4">
-                  <div className="w-10 h-10 rounded-full bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-gray-100 text-gray-900 dark:bg-gray-900/40 dark:text-gray-700 flex items-center justify-center">
                     <span className="text-lg font-medium">4</span>
                   </div>
                 </div>

@@ -5,23 +5,56 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Heart, Lock, Mail } from "lucide-react";
+import { toast } from "sonner";
+
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || 'http://localhost:8000';
+const AUTH_LOGIN_URL = `${BACKEND_BASE_URL.replace(/\/$/, '')}/api/auth/login`;
 
 export function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/admin");
+
+    setIsLoggingIn(true);
+
+    try {
+      const response = await fetch(AUTH_LOGIN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          username: email,
+          password,
+        }).toString(),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Unable to sign in.');
+      }
+
+      const tokenData = await response.json() as { access_token: string; token_type: string };
+      window.localStorage.setItem('lula-admin-token', tokenData.access_token);
+      toast.success('Signed in successfully.');
+      navigate('/admin');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to sign in.');
+    } finally {
+      setIsLoggingIn(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-600 to-green-900 flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-green-900 rounded-xl flex items-center justify-center">
               <Heart className="w-9 h-9 text-white fill-white" />
             </div>
           </div>
@@ -62,8 +95,8 @@ export function AdminLoginPage() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" size="lg">
-              Sign In
+            <Button type="submit" className="w-full bg-green-600 hover:bg-green-700" size="lg" disabled={isLoggingIn}>
+              {isLoggingIn ? 'Signing in…' : 'Sign In'}
             </Button>
           </form>
         </CardContent>

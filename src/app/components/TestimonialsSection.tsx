@@ -233,7 +233,7 @@ export function TestimonialsSection() {
               <div className="absolute bottom-6 left-6 glass px-5 py-4 rounded-xl shadow-lg">
                 <h4 className="mb-2">Carbon Reduction</h4>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-1">
-                  <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '18%' }}></div>
+                  <div className="bg-green-600 h-2.5 rounded-full" style={{ width: '18%' }}></div>
                 </div>
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>Current: 18%</span>

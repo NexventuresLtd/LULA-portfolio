@@ -1,50 +1,47 @@
+import { useMemo, useState } from "react";
 import { useLULALanguage } from "../context/LULALanguageContext";
 import { Card, CardContent } from "../components/ui/card";
-import { MapPin, Quote } from "lucide-react";
+import { Quote } from "lucide-react";
+import { useContent } from "../context/ContentContext";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../components/ui/pagination";
 
 export function ImpactStoriesPage() {
   const { t } = useLULALanguage();
+  const { impactStories } = useContent();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
 
-  const stories = [
-    {
-      name: "Amani Kabila",
-      role: "Entrepreneur & Program Graduate",
-      location: "Goma, North Kivu",
-      story: "Before joining LULA's women's empowerment program, I struggled to provide for my four children. Through the vocational training in tailoring, I gained skills that changed everything. Today, I run a successful tailoring business employing three other women from my community. LULA didn't just teach me a skill – they gave me hope and a future.",
-      image: "https://images.unsplash.com/photo-1509099863731-ef4bff19e808"
-    },
-    {
-      name: "Jean-Pierre Mutombo",
-      role: "Community Health Worker",
-      location: "Bukavu, South Kivu",
-      story: "As a community health worker trained by LULA, I've seen firsthand how health education transforms lives. In our village, we've reduced infant mortality by 40% and increased HIV testing rates by 300%. The trust our community has in LULA's programs makes my work possible.",
-      image: "https://images.unsplash.com/photo-1515657241610-a6b33f0f6c5a"
-    },
-    {
-      name: "Grace Nyota",
-      role: "Youth Leader",
-      location: "Ituri Province",
-      story: "Growing up in a conflict zone, I never thought I could have a voice in my community. LULA's youth leadership program taught me advocacy, conflict resolution, and project management. Now I lead a youth peace initiative that brings together over 200 young people working for reconciliation.",
-      image: "https://images.unsplash.com/photo-1524414621493-7dec026782c3"
-    },
-    {
-      name: "Emmanuel Nkunda",
-      role: "Parent",
-      location: "Goma, North Kivu",
-      story: "When my daughter was placed in LULA's child protection program, she was traumatized and withdrawn. The counseling, education support, and safe space they provided helped her heal. Today she's thriving in school and dreams of becoming a doctor. LULA gave my child her childhood back.",
-      image: "https://images.unsplash.com/photo-1515658323406-25d61c141a6e"
-    }
-  ];
+  const stories = useMemo(() => {
+    return [...impactStories].sort((a, b) => Number(b.featured ?? false) - Number(a.featured ?? false));
+  }, [impactStories]);
+
+  const totalPages = Math.ceil(stories.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentStories = stories.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="bg-white">
-      <section className="relative h-[400px] bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+      <section id="hero-section" className="relative h-[400px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt="Impact Stories"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {t("impact.title")}
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl">
+            <p className="text-xl text-green-100 max-w-3xl">
               {t("impact.subtitle")}
             </p>
           </div>
@@ -53,37 +50,96 @@ export function ImpactStoriesPage() {
 
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {stories.map((story, index) => (
-              <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="p-0">
-                  <div className="aspect-[16/9] overflow-hidden">
-                    <img
-                      src={story.image}
-                      alt={story.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-8">
-                    <Quote className="w-10 h-10 text-blue-600 mb-4" />
-                    <p className="text-gray-700 text-lg mb-6 italic">"{story.story}"</p>
-                    <div className="border-t border-gray-200 pt-6">
-                      <div className="flex items-start gap-4">
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-900 text-lg">{story.name}</div>
-                          <div className="text-sm text-gray-600">{story.role}</div>
-                          <div className="text-sm text-gray-500 flex items-center gap-1 mt-2">
-                            <MapPin className="w-4 h-4" />
-                            {story.location}
+          {stories.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-6 py-12 text-center text-gray-500">
+              No impact stories are available yet. Add a story in the admin panel to publish it here.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {currentStories.map((story, index) => (
+                <Card key={`${story.id}-${index}`} className="border-none shadow-lg hover:shadow-xl transition-shadow">
+                  <CardContent className="p-0">
+                    <div className="aspect-[16/9] overflow-hidden">
+                      <img
+                        src={story.image}
+                        alt={story.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <div className="mb-4 flex items-center gap-2">
+                        <Quote className="w-10 h-10 text-green-600" />
+                        {story.featured && (
+                          <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                            Featured
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-gray-700 text-lg mb-4 italic">"{story.quote}"</p>
+                      <p className="text-gray-600 leading-relaxed mb-6">{story.story}</p>
+                      <div className="border-t border-gray-200 pt-6">
+                        <div className="flex items-start gap-4">
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900 text-lg">{story.name}</div>
+                            <div className="text-sm text-gray-600">{story.role}</div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {stories.length > itemsPerPage && (
+            <div className="mt-12">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+
+                  {[...Array(totalPages)].map((_, i) => {
+                    const pageNumber = i + 1;
+                    if (
+                      pageNumber === 1 ||
+                      pageNumber === totalPages ||
+                      (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                    ) {
+                      return (
+                        <PaginationItem key={pageNumber}>
+                          <PaginationLink
+                            onClick={() => setCurrentPage(pageNumber)}
+                            isActive={currentPage === pageNumber}
+                            className="cursor-pointer"
+                          >
+                            {pageNumber}
+                          </PaginationLink>
+                        </PaginationItem>
+                      );
+                    }
+
+                    if (pageNumber === currentPage - 2 || pageNumber === currentPage + 2) {
+                      return <PaginationEllipsis key={pageNumber} />;
+                    }
+
+                    return null;
+                  })}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
         </div>
       </section>
     </div>

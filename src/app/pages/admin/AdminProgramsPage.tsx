@@ -6,7 +6,7 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, AlertCircle } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Program } from "../../context/ContentContext";
@@ -14,6 +14,8 @@ import type { Program } from "../../context/ContentContext";
 export function AdminProgramsPage() {
   const { programs, addProgram, updateProgram, deleteProgram } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [programToDelete, setProgramToDelete] = useState<Program | null>(null);
   const [editingProgram, setEditingProgram] = useState<Program | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -21,16 +23,16 @@ export function AdminProgramsPage() {
     details: '',
     beneficiaries: '',
     icon: 'Shield',
-    color: 'bg-blue-50 text-blue-600'
+    color: 'bg-green-50 text-green-600'
   });
 
   const iconOptions = ['Shield', 'Heart', 'Stethoscope', 'GraduationCap', 'Handshake', 'Users', 'Briefcase'];
   const colorOptions = [
-    { value: 'bg-blue-50 text-blue-600', label: 'Blue' },
+    { value: 'bg-green-50 text-green-600', label: 'Blue' },
     { value: 'bg-green-50 text-green-600', label: 'Green' },
     { value: 'bg-pink-50 text-pink-600', label: 'Pink' },
     { value: 'bg-purple-50 text-purple-600', label: 'Purple' },
-    { value: 'bg-orange-50 text-orange-600', label: 'Orange' },
+    { value: 'bg-gray-50 text-gray-900', label: 'Orange' },
     { value: 'bg-indigo-50 text-indigo-600', label: 'Indigo' },
     { value: 'bg-emerald-50 text-emerald-600', label: 'Emerald' },
   ];
@@ -54,7 +56,7 @@ export function AdminProgramsPage() {
         details: '',
         beneficiaries: '',
         icon: 'Shield',
-        color: 'bg-blue-50 text-blue-600'
+        color: 'bg-green-50 text-green-600'
       });
     }
     setIsDialogOpen(true);
@@ -79,15 +81,24 @@ export function AdminProgramsPage() {
       details: '',
       beneficiaries: '',
       icon: 'Shield',
-      color: 'bg-blue-50 text-blue-600'
+      color: 'bg-green-50 text-green-600'
     });
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this program?')) {
-      deleteProgram(id);
-      toast.success('Program deleted successfully!');
+  const handleDeleteClick = (program: Program) => {
+    setProgramToDelete(program);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!programToDelete) {
+      return;
     }
+
+    deleteProgram(programToDelete.id);
+    toast.success('Program deleted successfully!');
+    setDeleteDialogOpen(false);
+    setProgramToDelete(null);
   };
 
   return (
@@ -99,12 +110,12 @@ export function AdminProgramsPage() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => handleOpenDialog()}>
+            <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenDialog()}>
               <Plus className="w-5 h-5 mr-2" />
               Add Program
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingProgram ? 'Edit Program' : 'Add New Program'}</DialogTitle>
               <DialogDescription>
@@ -183,7 +194,7 @@ export function AdminProgramsPage() {
                 <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" className="bg-green-600 hover:bg-green-700">
                   {editingProgram ? 'Update Program' : 'Add Program'}
                 </Button>
               </DialogFooter>
@@ -219,7 +230,7 @@ export function AdminProgramsPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDelete(program.id)}
+                      onClick={() => handleDeleteClick(program)}
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -241,6 +252,44 @@ export function AdminProgramsPage() {
           ))
         )}
       </div>
+
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={(open) => {
+          setDeleteDialogOpen(open);
+          if (!open) {
+            setProgramToDelete(null);
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-red-600" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl">Delete Program?</DialogTitle>
+                <DialogDescription className="mt-1">
+                  This will permanently remove "{programToDelete?.title}" from the admin dashboard.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-end gap-2 mt-4">
+            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={handleConfirmDelete}
+            >
+              Delete Program
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

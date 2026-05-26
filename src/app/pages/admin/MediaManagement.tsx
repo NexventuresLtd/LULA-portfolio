@@ -71,7 +71,7 @@ export default function MediaManagement() {
           <h1 className="text-3xl font-bold text-gray-900">Media Library</h1>
           <p className="text-gray-600 mt-2">Manage images, documents, and files</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-green-600 hover:bg-green-700">
           <Upload className="w-4 h-4 mr-2" />
           Upload Files
         </Button>
@@ -171,8 +171,8 @@ export default function MediaManagement() {
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-                            <FileText className="w-6 h-6 text-blue-600" />
+                          <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                            <FileText className="w-6 h-6 text-green-600" />
                           </div>
                           <div>
                             <h4 className="font-medium">{doc.name}</h4>

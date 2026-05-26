@@ -42,7 +42,7 @@ export function AdminSidebar() {
     <div className="fixed left-0 top-0 h-screen w-64 bg-gray-900 text-white flex flex-col">
       <div className="p-6 border-b border-gray-800">
         <Link to="/admin" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-green-700 rounded-lg flex items-center justify-center">
             <Heart className="w-6 h-6 text-white fill-white" />
           </div>
           <div>
@@ -59,7 +59,7 @@ export function AdminSidebar() {
             to={item.path}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
               isActive(item.path, item.exact)
-                ? "bg-blue-600 text-white"
+                ? "bg-green-600 text-white"
                 : "text-gray-300 hover:bg-gray-800 hover:text-white"
             }`}
           >

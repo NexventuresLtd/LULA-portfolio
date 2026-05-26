@@ -5,14 +5,17 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
-import { Plus, Edit, Trash2, Quote } from "lucide-react";
+import { Plus, Edit, Trash2, Quote, AlertCircle } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
+import { Switch } from "../../components/ui/switch";
 import type { ImpactStory } from "../../context/ContentContext";
 
 export function AdminImpactStoriesPage() {
   const { impactStories, addImpactStory, updateImpactStory, deleteImpactStory } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [storyToDelete, setStoryToDelete] = useState<ImpactStory | null>(null);
   const [editingStory, setEditingStory] = useState<ImpactStory | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -20,7 +23,8 @@ export function AdminImpactStoriesPage() {
     name: '',
     role: '',
     image: '',
-    story: ''
+    story: '',
+    featured: false,
   });
 
   const handleOpenDialog = (story?: ImpactStory) => {
@@ -32,7 +36,8 @@ export function AdminImpactStoriesPage() {
         name: story.name,
         role: story.role,
         image: story.image,
-        story: story.story
+        story: story.story,
+        featured: story.featured ?? false,
       });
     } else {
       setEditingStory(null);
@@ -42,7 +47,8 @@ export function AdminImpactStoriesPage() {
         name: '',
         role: '',
         image: '',
-        story: ''
+        story: '',
+        featured: false,
       });
     }
     setIsDialogOpen(true);
@@ -63,11 +69,20 @@ export function AdminImpactStoriesPage() {
     setEditingStory(null);
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this impact story?')) {
-      deleteImpactStory(id);
-      toast.success('Impact story deleted successfully!');
+  const handleDeleteClick = (story: ImpactStory) => {
+    setStoryToDelete(story);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!storyToDelete) {
+      return;
     }
+
+    deleteImpactStory(storyToDelete.id);
+    toast.success('Impact story deleted successfully!');
+    setDeleteDialogOpen(false);
+    setStoryToDelete(null);
   };
 
   return (
@@ -79,12 +94,12 @@ export function AdminImpactStoriesPage() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => handleOpenDialog()}>
+            <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenDialog()}>
               <Plus className="w-5 h-5 mr-2" />
               Add Impact Story
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingStory ? 'Edit Impact Story' : 'Add New Impact Story'}</DialogTitle>
               <DialogDescription>
@@ -153,12 +168,23 @@ export function AdminImpactStoriesPage() {
                     required
                   />
                 </div>
+                <div className="flex items-center justify-between rounded-lg border border-gray-200 p-4">
+                  <div>
+                    <Label htmlFor="featured" className="text-sm font-semibold text-gray-900">Featured on homepage</Label>
+                    <p className="text-sm text-gray-500 mt-1">Show this story in the featured impact stories carousel.</p>
+                  </div>
+                  <Switch
+                    id="featured"
+                    checked={formData.featured}
+                    onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
+                  />
+                </div>
               </div>
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" className="bg-green-600 hover:bg-green-700">
                   {editingStory ? 'Update Story' : 'Add Story'}
                 </Button>
               </DialogFooter>
@@ -181,6 +207,11 @@ export function AdminImpactStoriesPage() {
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
                     <CardTitle className="text-xl mb-2">{story.title}</CardTitle>
+                    {story.featured && (
+                      <p className="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
+                        Featured
+                      </p>
+                    )}
                   </div>
                   <div className="flex gap-1">
                     <Button
@@ -193,7 +224,7 @@ export function AdminImpactStoriesPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDelete(story.id)}
+                      onClick={() => handleDeleteClick(story)}
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -213,8 +244,8 @@ export function AdminImpactStoriesPage() {
                     <p className="text-sm text-gray-600">{story.role}</p>
                   </div>
                 </div>
-                <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                  <Quote className="h-6 w-6 text-blue-600 mb-2" />
+                <div className="bg-green-50 p-4 rounded-lg mb-4">
+                  <Quote className="h-6 w-6 text-green-600 mb-2" />
                   <p className="text-sm italic text-gray-700">"{story.quote}"</p>
                 </div>
                 <p className="text-sm text-gray-600 line-clamp-3">{story.story}</p>
@@ -223,6 +254,44 @@ export function AdminImpactStoriesPage() {
           ))
         )}
       </div>
+
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={(open) => {
+          setDeleteDialogOpen(open);
+          if (!open) {
+            setStoryToDelete(null);
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-red-600" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl">Delete Impact Story?</DialogTitle>
+                <DialogDescription className="mt-1">
+                  This will permanently remove "{storyToDelete?.title}" from the admin dashboard.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-end gap-2 mt-4">
+            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={handleConfirmDelete}
+            >
+              Delete Story
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -24,21 +24,21 @@ export default function NGOFooter() {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
+    <footer className="bg-gradient-to-br from-green-900 via-green-800 to-green-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <div className="bg-white p-2 rounded-lg">
-                <Heart className="h-6 w-6 text-blue-900 fill-blue-900" />
+                <Heart className="h-6 w-6 text-green-900 fill-blue-900" />
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-xl">LULA</span>
-                <span className="text-sm text-blue-200">Let Us Live Association</span>
+                <span className="text-sm text-green-200">Let Us Live Association</span>
               </div>
             </div>
-            <p className="text-blue-100 mb-6 max-w-md">
+            <p className="text-green-100 mb-6 max-w-md">
               {t('footer.description')}
             </p>
             <div className="flex gap-3">
@@ -46,7 +46,7 @@ export default function NGOFooter() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blue-800 hover:bg-blue-700 p-2 rounded-lg transition-colors"
+                className="bg-green-800 hover:bg-green-700 p-2 rounded-lg transition-colors"
               >
                 <Facebook className="h-5 w-5" />
               </a>
@@ -54,7 +54,7 @@ export default function NGOFooter() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blue-800 hover:bg-blue-700 p-2 rounded-lg transition-colors"
+                className="bg-green-800 hover:bg-green-700 p-2 rounded-lg transition-colors"
               >
                 <Twitter className="h-5 w-5" />
               </a>
@@ -62,7 +62,7 @@ export default function NGOFooter() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blue-800 hover:bg-blue-700 p-2 rounded-lg transition-colors"
+                className="bg-green-800 hover:bg-green-700 p-2 rounded-lg transition-colors"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -70,7 +70,7 @@ export default function NGOFooter() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blue-800 hover:bg-blue-700 p-2 rounded-lg transition-colors"
+                className="bg-green-800 hover:bg-green-700 p-2 rounded-lg transition-colors"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
@@ -85,7 +85,7 @@ export default function NGOFooter() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-blue-100 hover:text-white transition-colors"
+                    className="text-green-100 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -98,17 +98,17 @@ export default function NGOFooter() {
           <div>
             <h3 className="font-semibold text-lg mb-4">{t('footer.getInTouch')}</h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-blue-100">
+              <li className="flex items-start gap-2 text-green-100">
                 <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
                 <span>Goma, North Kivu, Democratic Republic of Congo</span>
               </li>
-              <li className="flex items-center gap-2 text-blue-100">
+              <li className="flex items-center gap-2 text-green-100">
                 <Mail className="h-5 w-5 flex-shrink-0" />
                 <a href="mailto:info@lula-drc.org" className="hover:text-white transition-colors">
                   info@lula-drc.org
                 </a>
               </li>
-              <li className="flex items-center gap-2 text-blue-100">
+              <li className="flex items-center gap-2 text-green-100">
                 <Phone className="h-5 w-5 flex-shrink-0" />
                 <a href="tel:+243999123456" className="hover:text-white transition-colors">
                   +243 999 123 456
@@ -119,11 +119,11 @@ export default function NGOFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-blue-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-blue-200 text-sm">{t('footer.rights')}</p>
+        <div className="border-t border-green-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-green-200 text-sm">{t('footer.rights')}</p>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="gap-2 text-blue-100 hover:text-white hover:bg-blue-800">
+              <Button variant="ghost" size="sm" className="gap-2 text-green-100 hover:text-white hover:bg-green-800">
                 <Globe className="h-4 w-4" />
                 <span className="uppercase">{language}</span>
               </Button>

@@ -12,7 +12,7 @@ export function NotFoundPage() {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <Link to="/">
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+          <Button size="lg" className="bg-green-600 hover:bg-green-700">
             <Home className="w-5 h-5 mr-2" />
             Back to Home
           </Button>

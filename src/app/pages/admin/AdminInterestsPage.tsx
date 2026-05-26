@@ -18,13 +18,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { Mail, Phone, Calendar, Search, Trash2, Heart, HandHeart, Handshake } from "lucide-react";
+import { Mail, Phone, Calendar, Search, Trash2, Heart, HandHeart, Handshake, AlertCircle } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "../../components/ui/dialog";
@@ -35,6 +36,8 @@ export function AdminInterestsPage() {
   const [typeFilter, setTypeFilter] = useState<'all' | 'donate' | 'volunteer' | 'partner'>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'contacted' | 'completed'>('all');
   const [selectedInterest, setSelectedInterest] = useState<any>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [interestToDelete, setInterestToDelete] = useState<any>(null);
 
   const filteredInterests = interests.filter(interest => {
     const matchesSearch = 
@@ -53,16 +56,25 @@ export function AdminInterestsPage() {
     toast.success('Interest status updated successfully');
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this interest?')) {
-      deleteInterest(id);
-      toast.success('Interest deleted successfully');
+  const handleDeleteClick = (interest: any) => {
+    setInterestToDelete(interest);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!interestToDelete) {
+      return;
     }
+
+    deleteInterest(interestToDelete.id);
+    toast.success('Interest deleted successfully');
+    setDeleteDialogOpen(false);
+    setInterestToDelete(null);
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'new': return 'bg-blue-100 text-blue-700';
+      case 'new': return 'bg-green-100 text-green-700';
       case 'contacted': return 'bg-yellow-100 text-yellow-700';
       case 'completed': return 'bg-green-100 text-green-700';
       default: return 'bg-gray-100 text-gray-700';
@@ -71,8 +83,8 @@ export function AdminInterestsPage() {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'donate': return <Heart className="w-4 h-4 text-orange-600" />;
-      case 'volunteer': return <HandHeart className="w-4 h-4 text-blue-600" />;
+      case 'donate': return <Heart className="w-4 h-4 text-gray-900" />;
+      case 'volunteer': return <HandHeart className="w-4 h-4 text-green-600" />;
       case 'partner': return <Handshake className="w-4 h-4 text-purple-600" />;
       default: return null;
     }
@@ -80,8 +92,8 @@ export function AdminInterestsPage() {
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'donate': return 'bg-orange-100 text-orange-700';
-      case 'volunteer': return 'bg-blue-100 text-blue-700';
+      case 'donate': return 'bg-gray-100 text-black';
+      case 'volunteer': return 'bg-green-100 text-green-700';
       case 'partner': return 'bg-purple-100 text-purple-700';
       default: return 'bg-gray-100 text-gray-700';
     }
@@ -118,7 +130,7 @@ export function AdminInterestsPage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Heart className="w-5 h-5 text-orange-600" />
+              <Heart className="w-5 h-5 text-gray-900" />
               <div className="text-2xl font-bold">{stats.donate}</div>
             </div>
           </CardContent>
@@ -129,7 +141,7 @@ export function AdminInterestsPage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <HandHeart className="w-5 h-5 text-blue-600" />
+              <HandHeart className="w-5 h-5 text-green-600" />
               <div className="text-2xl font-bold">{stats.volunteer}</div>
             </div>
           </CardContent>
@@ -209,7 +221,7 @@ export function AdminInterestsPage() {
                     <TableCell className="font-medium">
                       <button
                         onClick={() => setSelectedInterest(interest)}
-                        className="text-blue-600 hover:underline text-left"
+                        className="text-green-600 hover:underline text-left"
                       >
                         {interest.name}
                       </button>
@@ -226,7 +238,7 @@ export function AdminInterestsPage() {
                       <div className="flex flex-col gap-1 text-sm">
                         <div className="flex items-center gap-1">
                           <Mail className="w-3 h-3 text-gray-400" />
-                          <a href={`mailto:${interest.email}`} className="text-blue-600 hover:underline">
+                          <a href={`mailto:${interest.email}`} className="text-green-600 hover:underline">
                             {interest.email}
                           </a>
                         </div>
@@ -265,7 +277,7 @@ export function AdminInterestsPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDelete(interest.id)}
+                        onClick={() => handleDeleteClick(interest)}
                       >
                         <Trash2 className="w-4 h-4 text-red-600" />
                       </Button>
@@ -278,8 +290,46 @@ export function AdminInterestsPage() {
         </CardContent>
       </Card>
 
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={(open) => {
+          setDeleteDialogOpen(open);
+          if (!open) {
+            setInterestToDelete(null);
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-red-600" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl">Delete Interest?</DialogTitle>
+                <DialogDescription className="mt-1">
+                  This will permanently remove "{interestToDelete?.name}" from the admin dashboard.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-end gap-2 mt-4">
+            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={handleConfirmDelete}
+            >
+              Delete Interest
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={selectedInterest !== null} onOpenChange={() => setSelectedInterest(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-4xl">
           <DialogHeader>
             <DialogTitle>{selectedInterest?.name}</DialogTitle>
             <DialogDescription>
@@ -301,7 +351,7 @@ export function AdminInterestsPage() {
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm">
                   <Mail className="w-4 h-4 text-gray-400" />
-                  <a href={`mailto:${selectedInterest?.email}`} className="text-blue-600 hover:underline">
+                  <a href={`mailto:${selectedInterest?.email}`} className="text-green-600 hover:underline">
                     {selectedInterest?.email}
                   </a>
                 </div>

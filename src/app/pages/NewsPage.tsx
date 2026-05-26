@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { useLULALanguage } from "../context/LULALanguageContext";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Calendar, Download, ArrowRight, Search } from "lucide-react";
+import { Calendar, Download, ArrowRight, Search, Filter } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import {
   Pagination,
   PaginationContent,
@@ -20,53 +21,98 @@ export function NewsPage() {
   const { t } = useLULALanguage();
   const { news } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const filteredArticles = news.filter(article =>
-    article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    article.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    article.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Get unique categories from news articles
+  const categories = useMemo(() => {
+    const uniqueCategories = [...new Set(news.map(article => article.category))];
+    return ['all', ...uniqueCategories];
+  }, [news]);
+
+  const filteredArticles = news.filter(article => {
+    const matchesSearch =
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.category.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
 
   const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentArticles = filteredArticles.slice(startIndex, endIndex);
+  const currentArticles = filteredArticles.slice(startIndex, startIndex + itemsPerPage);
+
+  useEffect(() => {
+    if (totalPages === 0) {
+      setCurrentPage(1);
+      return;
+    }
+
+    setCurrentPage(prev => Math.min(prev, totalPages));
+  }, [totalPages]);
 
   return (
     <div className="bg-white">
-      <section className="relative h-[400px] bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+      <section id="hero-section" className="relative h-[500px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt="News & Publications"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
               News & Publications
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl">
+            <p className="text-xl text-green-100 max-w-3xl">
               Stay informed about our latest activities, impact stories, and published reports
             </p>
+          </div>
+
+          {/* Integrated Search & Filter Bar */}
+          <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-3 flex flex-col md:flex-row gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
+              <Input
+                type="text"
+                placeholder="Search news, articles, and publications..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="pl-14 pr-4 py-6 text-lg border-0 bg-transparent focus:ring-0 focus:outline-none placeholder:text-gray-400"
+              />
+            </div>
+            <div className="flex items-center gap-2 px-2">
+              <Filter className="w-5 h-5 text-gray-500" />
+              <Select value={selectedCategory} onValueChange={(value) => {
+                setSelectedCategory(value);
+                setCurrentPage(1);
+              }}>
+                <SelectTrigger className="w-full md:w-[220px] py-6 border-2 border-gray-200 bg-gray-50 hover:bg-gray-100 focus:ring-2 focus:ring-black focus:border-black transition-colors">
+                  <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category === 'all' ? 'All Categories' : category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <Input
-                type="text"
-                placeholder="Search news and publications..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="pl-10"
-              />
-            </div>
-          </div>
-
           {currentArticles.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">No articles found matching your search.</p>
@@ -91,7 +137,7 @@ export function NewsPage() {
                         {article.date}
                       </div>
                       <div className="mb-2">
-                        <span className={`px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700`}>
+                        <span className={`px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700`}>
                           {article.category}
                         </span>
                       </div>
@@ -102,7 +148,7 @@ export function NewsPage() {
                     </CardHeader>
                     <CardContent>
                       <Link to={`/news/${article.id}`}>
-                        <Button variant="link" className="p-0 h-auto text-blue-600">
+                        <Button variant="link" className="p-0 h-auto text-green-600">
                           {t("common.read_more")} <ArrowRight className="w-4 h-4 ml-1" />
                         </Button>
                       </Link>

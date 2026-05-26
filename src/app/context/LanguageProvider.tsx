@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'en' | 'fr' | 'sw';
 
@@ -12,12 +12,6 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
-    // Language
-    'language.en': 'English',
-    'language.fr': 'Français',
-    'language.sw': 'Kiswahili',
-    'language.select': 'Select Language',
-    
     // Navigation
     'nav.home': 'Home',
     'nav.about': 'About Us',
@@ -65,12 +59,6 @@ const translations: Record<Language, Record<string, string>> = {
     'home.latestNews': 'Latest Updates',
   },
   fr: {
-    // Language
-    'language.en': 'English',
-    'language.fr': 'Français',
-    'language.sw': 'Kiswahili',
-    'language.select': 'Sélectionner la langue',
-    
     // Navigation
     'nav.home': 'Accueil',
     'nav.about': 'À Propos',
@@ -118,12 +106,6 @@ const translations: Record<Language, Record<string, string>> = {
     'home.latestNews': 'Dernières Nouvelles',
   },
   sw: {
-    // Language
-    'language.en': 'English',
-    'language.fr': 'Français',
-    'language.sw': 'Kiswahili',
-    'language.select': 'Chagua Lugha',
-    
     // Navigation
     'nav.home': 'Nyumbani',
     'nav.about': 'Kuhusu Sisi',
@@ -174,34 +156,13 @@ const translations: Record<Language, Record<string, string>> = {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('en');
-  const [mounted, setMounted] = useState(false);
-
-  // Load language from localStorage on mount
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language | null;
-    if (savedLanguage && ['en', 'fr', 'sw'].includes(savedLanguage)) {
-      setLanguage(savedLanguage);
-    }
-    setMounted(true);
-  }, []);
-
-  // Save language to localStorage whenever it changes
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-    // Update document language attribute for accessibility and Google Translate
-    document.documentElement.lang = lang;
-  };
 
   const t = (key: string): string => {
     return translations[language][key] || key;
   };
 
-  // Prevent rendering until client is mounted
-  if (!mounted) return <>{children}</>;
-
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

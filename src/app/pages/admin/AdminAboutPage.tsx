@@ -7,6 +7,8 @@ import { Textarea } from "../../components/ui/textarea";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import { Save, Info } from "lucide-react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export function AdminAboutPage() {
   const { aboutContent, updateAboutContent } = useContent();
@@ -17,6 +19,25 @@ export function AdminAboutPage() {
     toast.success('About Us content updated successfully');
   };
 
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'align': [] }],
+      ['link'],
+      ['clean']
+    ],
+  };
+
+  const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike',
+    'list', 'bullet',
+    'align',
+    'link'
+  ];
+
   return (
     <div className="p-8">
       <div className="mb-8 flex items-center justify-between">
@@ -24,7 +45,7 @@ export function AdminAboutPage() {
           <h1 className="text-3xl font-bold text-gray-900">About Us Content</h1>
           <p className="text-gray-600 mt-2">Edit organization mission, vision, and story</p>
         </div>
-        <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
+        <Button onClick={handleSave} className="bg-green-600 hover:bg-green-700">
           <Save className="w-4 h-4 mr-2" />
           Save Changes
         </Button>
@@ -34,7 +55,7 @@ export function AdminAboutPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Info className="w-5 h-5 text-blue-600" />
+              <Info className="w-5 h-5 text-green-600" />
               Mission Statement
             </CardTitle>
             <CardDescription>
@@ -55,7 +76,7 @@ export function AdminAboutPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Info className="w-5 h-5 text-blue-600" />
+              <Info className="w-5 h-5 text-green-600" />
               Vision Statement
             </CardTitle>
             <CardDescription>
@@ -76,33 +97,27 @@ export function AdminAboutPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Info className="w-5 h-5 text-blue-600" />
+              <Info className="w-5 h-5 text-green-600" />
               Our Story
             </CardTitle>
             <CardDescription>
-              Share your organization's history, background, and journey. You can use HTML formatting for rich text.
+              Share your organization's history, background, and journey using the rich text editor below
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="story">Story Content (HTML supported)</Label>
-              <Textarea
-                id="story"
-                value={formData.story}
-                onChange={(e) => setFormData({ ...formData, story: e.target.value })}
-                rows={12}
-                className="w-full font-mono text-sm"
-                placeholder="Enter your organization's story... You can use HTML tags like <p>, <h3>, <strong>, <ul>, <li>, etc."
-              />
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-sm text-gray-900 mb-2">HTML Formatting Tips</h4>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Use <code className="bg-white px-1 rounded">&lt;p&gt;...&lt;/p&gt;</code> for paragraphs</li>
-                <li>• Use <code className="bg-white px-1 rounded">&lt;h3&gt;...&lt;/h3&gt;</code> for section headings</li>
-                <li>• Use <code className="bg-white px-1 rounded">&lt;strong&gt;...&lt;/strong&gt;</code> for bold text</li>
-                <li>• Use <code className="bg-white px-1 rounded">&lt;ul&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ul&gt;</code> for lists</li>
-              </ul>
+              <Label htmlFor="story">Story Content</Label>
+              <div className="mt-2">
+                <ReactQuill
+                  value={formData.story}
+                  onChange={(value) => setFormData({ ...formData, story: value })}
+                  modules={modules}
+                  formats={formats}
+                  placeholder="Write your organization's story here..."
+                  className="bg-white"
+                  theme="snow"
+                />
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -126,7 +141,7 @@ export function AdminAboutPage() {
         </Card>
 
         <div className="flex justify-end">
-          <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
+          <Button onClick={handleSave} className="bg-green-600 hover:bg-green-700">
             <Save className="w-4 h-4 mr-2" />
             Save Changes
           </Button>

@@ -10,6 +10,7 @@ function AboutPage() {
   const { t } = useLanguage();
   const { aboutContent } = useContent();
   const [heroBackground, setHeroBackground] = useState("https://images.unsplash.com/photo-1515658323406-25d61c141a6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwY29tbXVuaXR5JTIwZ2F0aGVyaW5nfGVufDF8fHx8MTc3OTExMjkzN3ww&ixlib=rb-4.1.0&q=80&w=1080");
+  const [storyBackground, setStoryBackground] = useState("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920");
 
   useEffect(() => {
     // Load appearance settings from localStorage
@@ -18,6 +19,9 @@ function AboutPage() {
       const settings = JSON.parse(savedSettings);
       if (settings.aboutHeroBackground) {
         setHeroBackground(settings.aboutHeroBackground);
+      }
+      if (settings.aboutStoryBackground) {
+        setStoryBackground(settings.aboutStoryBackground);
       }
     }
   }, []);
@@ -95,10 +99,10 @@ function AboutPage() {
   ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-blue-800/30 z-10" />
+      <section id="hero-section" className="relative h-[400px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/40 to-green-900/30 z-10" />
         <img
           src={heroBackground}
           alt="Community gathering"
@@ -111,7 +115,7 @@ function AboutPage() {
           <h1 className="text-5xl md:text-6xl mb-4">
             Our Story
           </h1>
-          <p className="text-xl text-blue-100">
+          <p className="text-xl text-green-100">
             Building a brighter future for Eastern DR Congo, one community at a time
           </p>
         </div>
@@ -121,11 +125,8 @@ function AboutPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="border-2 border-blue-100 hover:shadow-xl transition-shadow">
+            <Card className="border-2 border-green-100 hover:shadow-xl transition-shadow">
               <CardContent className="p-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl mb-6">
-                  <Target className="h-8 w-8 text-white" />
-                </div>
                 <h2 className="text-3xl mb-4 text-gray-900">{t('common.ourMission')}</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
                   {aboutContent.mission}
@@ -135,9 +136,6 @@ function AboutPage() {
 
             <Card className="border-2 border-green-100 hover:shadow-xl transition-shadow">
               <CardContent className="p-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl mb-6">
-                  <Eye className="h-8 w-8 text-white" />
-                </div>
                 <h2 className="text-3xl mb-4 text-gray-900">{t('common.ourVision')}</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
                   {aboutContent.vision}
@@ -149,13 +147,22 @@ function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl mb-8 text-center text-gray-900">Our Story</h2>
-          <div 
-            className="prose prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: aboutContent.story }}
-          />
+      <section id="story-section" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src={storyBackground}
+                alt="Our Story"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-green-900/40 to-transparent"></div>
+            </div>
+            <div
+              className="prose prose-lg max-w-none"
+              dangerouslySetInnerHTML={{ __html: aboutContent.story }}
+            />
+          </div>
         </div>
       </section>
 
@@ -170,8 +177,8 @@ function AboutPage() {
             {coreValues.map((value, index) => (
               <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <CardContent className="p-8">
-                  <div className="inline-flex items-center justify-center w-14 h-14 bg-blue-100 rounded-xl mb-4">
-                    <value.icon className="h-7 w-7 text-blue-600" />
+                  <div className="inline-flex items-center justify-center w-14 h-14 bg-green-100 rounded-xl mb-4">
+                    <value.icon className="h-7 w-7 text-green-600" />
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-gray-900">{value.title}</h3>
                   <p className="text-gray-600">{value.description}</p>
@@ -183,7 +190,7 @@ function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-white">
+      <section className="py-20 bg-gradient-to-br from-green-50 to-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl mb-4 text-gray-900">Our Journey</h2>
@@ -191,11 +198,11 @@ function AboutPage() {
           </div>
           <div className="space-y-8">
             {timeline.map((item, index) => (
-              <div key={index} className="relative pl-8 border-l-4 border-blue-600">
-                <div className="absolute -left-3 top-0 w-6 h-6 bg-blue-600 rounded-full border-4 border-white shadow-md" />
+              <div key={index} className="relative pl-8 border-l-4 border-green-600">
+                <div className="absolute -left-3 top-0 w-6 h-6 bg-green-600 rounded-full border-4 border-white shadow-md" />
                 <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow ml-6">
                   <div className="flex items-center gap-3 mb-2">
-                    <Badge className="bg-blue-600 hover:bg-blue-600 text-white text-base px-3 py-1">
+                    <Badge className="bg-green-600 hover:bg-green-600 text-white text-base px-3 py-1">
                       {item.year}
                     </Badge>
                     <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>

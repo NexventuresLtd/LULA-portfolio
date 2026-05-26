@@ -1,57 +1,98 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
-import { Users, FolderKanban, TrendingUp, Heart, ArrowUpRight, ArrowDownRight, Target, Newspaper, Handshake, MessageCircle } from "lucide-react";
+import { Users, FolderKanban, Target, Newspaper, Handshake, MessageCircle, Plus, Mail, Heart } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Button } from "../../components/ui/button";
 
 export function AdminDashboardPage() {
-  const { programs, projects, teamMembers, partners, news, impactStories } = useContent();
+  const { programs, projects, teamMembers, partners, news, impactStories, enquiries, interests } = useContent();
+  const navigate = useNavigate();
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
+
+  // Filter data for today
+  const enquiriesToday = enquiries.filter(e => e.date.startsWith(today));
+  const interestsToday = interests.filter(i => i.date.startsWith(today));
 
   const stats = [
-    { 
-      title: "Programs", 
-      value: programs.length.toString(), 
-      icon: Target, 
-      color: "text-blue-600",
-      link: "/admin/programs"
-    },
-    { 
-      title: "Active Projects", 
-      value: projects.filter(p => p.status === 'active').length.toString(), 
-      icon: FolderKanban, 
+    {
+      title: "Enquiries Today",
+      value: enquiriesToday.length.toString(),
+      icon: Mail,
       color: "text-green-600",
-      link: "/admin/projects"
+      link: "/admin/enquiries",
+      description: "New contact enquiries"
     },
-    { 
-      title: "Team Members", 
-      value: teamMembers.length.toString(), 
-      icon: Users, 
-      color: "text-purple-600",
-      link: "/admin/team"
+    {
+      title: "Interests & Donations",
+      value: interestsToday.length.toString(),
+      icon: Heart,
+      color: "text-green-600",
+      link: "/admin/interests",
+      description: "Volunteer, partner & donation requests"
     },
-    { 
-      title: "Partners", 
-      value: partners.length.toString(), 
-      icon: Handshake, 
-      color: "text-orange-600",
-      link: "/admin/partners"
+    {
+      title: "Total Programs",
+      value: programs.length.toString(),
+      icon: Target,
+      color: "text-green-600",
+      link: "/admin/programs",
+      description: "Active programs"
+    },
+    {
+      title: "Total Partners",
+      value: partners.length.toString(),
+      icon: Handshake,
+      color: "text-green-600",
+      link: "/admin/partners",
+      description: "Organization partners"
     }
   ];
 
-  const contentStats = [
+  // Get recent items for activity feed
+  const recentProjects = projects.slice(0, 2).map(p => ({
+    action: "Project",
+    detail: p.title,
+    type: "project"
+  }));
+  const recentNews = news.slice(0, 1).map(n => ({
+    action: "News Article",
+    detail: n.title,
+    type: "news"
+  }));
+  const recentImpact = impactStories.slice(0, 1).map(s => ({
+    action: "Impact Story",
+    detail: `${s.name} - ${s.role}`,
+    type: "story"
+  }));
+
+  const recentActivity = [...recentProjects, ...recentNews, ...recentImpact].slice(0, 4);
+
+  const quickActions = [
     {
-      title: "News Articles",
-      value: news.length.toString(),
-      icon: Newspaper,
-      color: "text-blue-600",
-      link: "/admin/news"
+      label: "Add New Project",
+      color: "bg-green-600 hover:bg-green-700",
+      icon: FolderKanban,
+      onClick: () => navigate('/admin/projects')
     },
     {
-      title: "Impact Stories",
-      value: impactStories.length.toString(),
+      label: "Add News Article",
+      color: "bg-green-600 hover:bg-green-700",
+      icon: Newspaper,
+      onClick: () => navigate('/admin/news')
+    },
+    {
+      label: "Add Partner",
+      color: "bg-green-600 hover:bg-green-700",
+      icon: Handshake,
+      onClick: () => navigate('/admin/partners')
+    },
+    {
+      label: "Add Impact Story",
+      color: "bg-green-600 hover:bg-green-700",
       icon: MessageCircle,
-      color: "text-green-600",
-      link: "/admin/impact-stories"
+      onClick: () => navigate('/admin/impact-stories')
     }
   ];
 
@@ -62,19 +103,22 @@ export function AdminDashboardPage() {
         <p className="text-gray-600 mt-2">Welcome back to LULA Admin Portal</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat, index) => (
-          <Card key={index}>
+          <Card key={index} className="hover:shadow-lg transition-shadow flex flex-col">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">
                 {stat.title}
               </CardTitle>
               <stat.icon className={`w-5 h-5 ${stat.color}`} />
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
-              <Link to={stat.link} className="text-sm font-medium text-blue-600 hover:underline mt-1">
-                View Details
+            <CardContent className="flex-1 flex flex-col justify-between">
+              <div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                <p className="text-xs text-gray-500 mb-4">{stat.description}</p>
+              </div>
+              <Link to={stat.link} className="text-sm font-medium text-green-600 hover:underline mt-auto">
+                View Details →
               </Link>
             </CardContent>
           </Card>
@@ -84,25 +128,25 @@ export function AdminDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Recent Content</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {[
-                { action: "New project created", detail: "Women's Empowerment - Bukavu", time: "2 hours ago" },
-                { action: "Team member added", detail: "Grace Mwanzo joined", time: "5 hours ago" },
-                { action: "Report published", detail: "Q1 2025 Impact Report", time: "1 day ago" },
-                { action: "Partnership signed", detail: "MOU with Global Fund", time: "2 days ago" }
-              ].map((activity, index) => (
-                <div key={index} className="flex justify-between items-start pb-4 border-b last:border-0">
-                  <div>
-                    <div className="font-medium text-gray-900">{activity.action}</div>
-                    <div className="text-sm text-gray-600">{activity.detail}</div>
+            {recentActivity.length > 0 ? (
+              <div className="space-y-4">
+                {recentActivity.map((activity, index) => (
+                  <div key={index} className="flex justify-between items-start pb-4 border-b last:border-0">
+                    <div className="flex-1">
+                      <div className="font-medium text-gray-900">{activity.action}</div>
+                      <div className="text-sm text-gray-600 line-clamp-1">{activity.detail}</div>
+                    </div>
                   </div>
-                  <div className="text-xs text-gray-500">{activity.time}</div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center text-gray-500 py-8">
+                No recent content. Start by adding projects, news, or impact stories.
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -112,16 +156,13 @@ export function AdminDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              {[
-                { label: "Add Project", color: "bg-blue-500" },
-                { label: "Add News", color: "bg-green-500" },
-                { label: "Add Team Member", color: "bg-purple-500" },
-                { label: "Upload Media", color: "bg-orange-500" }
-              ].map((action, index) => (
+              {quickActions.map((action, index) => (
                 <button
                   key={index}
-                  className={`${action.color} hover:opacity-90 text-white rounded-lg p-4 text-sm font-medium transition-opacity`}
+                  onClick={action.onClick}
+                  className={`${action.color} text-white rounded-lg p-4 text-sm font-medium transition-colors flex items-center justify-center gap-2`}
                 >
+                  <Plus className="w-4 h-4" />
                   {action.label}
                 </button>
               ))}

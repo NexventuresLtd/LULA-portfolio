@@ -18,13 +18,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { Mail, Phone, Calendar, Search, Trash2 } from "lucide-react";
+import { Mail, Phone, Calendar, Search, Trash2, AlertCircle } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "../../components/ui/dialog";
@@ -34,6 +35,8 @@ export function AdminEnquiriesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'in-progress' | 'resolved'>('all');
   const [selectedEnquiry, setSelectedEnquiry] = useState<any>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [enquiryToDelete, setEnquiryToDelete] = useState<any>(null);
 
   const filteredEnquiries = enquiries.filter(enquiry => {
     const matchesSearch = 
@@ -52,16 +55,25 @@ export function AdminEnquiriesPage() {
     toast.success('Enquiry status updated successfully');
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this enquiry?')) {
-      deleteEnquiry(id);
-      toast.success('Enquiry deleted successfully');
+  const handleDeleteClick = (enquiry: any) => {
+    setEnquiryToDelete(enquiry);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!enquiryToDelete) {
+      return;
     }
+
+    deleteEnquiry(enquiryToDelete.id);
+    toast.success('Enquiry deleted successfully');
+    setDeleteDialogOpen(false);
+    setEnquiryToDelete(null);
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'new': return 'bg-blue-100 text-blue-700';
+      case 'new': return 'bg-green-100 text-green-700';
       case 'in-progress': return 'bg-yellow-100 text-yellow-700';
       case 'resolved': return 'bg-green-100 text-green-700';
       default: return 'bg-gray-100 text-gray-700';
@@ -127,7 +139,7 @@ export function AdminEnquiriesPage() {
                     <TableCell>
                       <button
                         onClick={() => setSelectedEnquiry(enquiry)}
-                        className="text-blue-600 hover:underline text-left"
+                        className="text-green-600 hover:underline text-left"
                       >
                         {enquiry.subject}
                       </button>
@@ -136,7 +148,7 @@ export function AdminEnquiriesPage() {
                       <div className="flex flex-col gap-1 text-sm">
                         <div className="flex items-center gap-1">
                           <Mail className="w-3 h-3 text-gray-400" />
-                          <a href={`mailto:${enquiry.email}`} className="text-blue-600 hover:underline">
+                          <a href={`mailto:${enquiry.email}`} className="text-green-600 hover:underline">
                             {enquiry.email}
                           </a>
                         </div>
@@ -175,7 +187,7 @@ export function AdminEnquiriesPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDelete(enquiry.id)}
+                        onClick={() => handleDeleteClick(enquiry)}
                       >
                         <Trash2 className="w-4 h-4 text-red-600" />
                       </Button>
@@ -188,8 +200,46 @@ export function AdminEnquiriesPage() {
         </CardContent>
       </Card>
 
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={(open) => {
+          setDeleteDialogOpen(open);
+          if (!open) {
+            setEnquiryToDelete(null);
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-red-600" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl">Delete Enquiry?</DialogTitle>
+                <DialogDescription className="mt-1">
+                  This will permanently remove "{enquiryToDelete?.subject}" from the admin dashboard.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-end gap-2 mt-4">
+            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={handleConfirmDelete}
+            >
+              Delete Enquiry
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={selectedEnquiry !== null} onOpenChange={() => setSelectedEnquiry(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-4xl">
           <DialogHeader>
             <DialogTitle>{selectedEnquiry?.subject}</DialogTitle>
             <DialogDescription>
@@ -202,7 +252,7 @@ export function AdminEnquiriesPage() {
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm">
                   <Mail className="w-4 h-4 text-gray-400" />
-                  <a href={`mailto:${selectedEnquiry?.email}`} className="text-blue-600 hover:underline">
+                  <a href={`mailto:${selectedEnquiry?.email}`} className="text-green-600 hover:underline">
                     {selectedEnquiry?.email}
                   </a>
                 </div>

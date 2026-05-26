@@ -159,7 +159,7 @@ export default function ContentEditor() {
               </Tabs>
 
               <div className="flex gap-3 mt-6">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button className="bg-green-600 hover:bg-green-700">
                   <Save className="w-4 h-4 mr-2" />
                   Save Changes
                 </Button>

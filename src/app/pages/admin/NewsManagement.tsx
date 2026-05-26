@@ -55,7 +55,7 @@ export default function NewsManagement() {
           <h1 className="text-3xl font-bold text-gray-900">News & Articles</h1>
           <p className="text-gray-600 mt-2">Manage publications and updates</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-green-600 hover:bg-green-700">
           <Plus className="w-4 h-4 mr-2" />
           Create Article
         </Button>

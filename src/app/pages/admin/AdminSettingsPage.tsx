@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { User, Building2, Lock, Palette, Save } from "lucide-react";
+import { User, Building2, Lock, Palette, Save, ExternalLink, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "../../components/ui/textarea";
 
@@ -30,11 +30,18 @@ export function AdminSettingsPage() {
 
   // Site Appearance Settings
   const [appearanceData, setAppearanceData] = useState({
-    teamHeroBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
-    aboutHeroBackground: "https://images.unsplash.com/photo-1578632767115-351597cf2477",
     homeHeroBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
-    primaryColor: "#2563EB",
-    accentColor: "#F97316"
+    aboutHeroBackground: "https://images.unsplash.com/photo-1578632767115-351597cf2477",
+    aboutStoryBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920",
+    teamHeroBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
+    contactHeroBackground: "https://images.unsplash.com/photo-1559027615-cd4628902d4a",
+    programsHeroBackground: "https://images.unsplash.com/photo-1593113598332-cd288d649433",
+    projectsHeroBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
+    newsHeroBackground: "https://images.unsplash.com/photo-1504711434969-e33886168f5c",
+    impactStoriesHeroBackground: "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8",
+    partnersHeroBackground: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    getInvolvedHeroBackground: "https://images.unsplash.com/photo-1559027615-cd4628902d4a",
+    homeCTABackground: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b"
   });
 
   // Load saved settings on mount
@@ -88,6 +95,17 @@ export function AdminSettingsPage() {
     // Save appearance settings
     localStorage.setItem('lula_appearance_settings', JSON.stringify(appearanceData));
     toast.success("Appearance settings updated successfully! Refresh the page to see changes.");
+  };
+
+  const handleBackgroundImageUpload = (fieldName: keyof typeof appearanceData) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAppearanceData({ ...appearanceData, [fieldName]: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -185,7 +203,7 @@ export function AdminSettingsPage() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                  <Button type="submit" className="bg-green-600 hover:bg-green-700">
                     <Save className="w-4 h-4 mr-2" />
                     Save Account Settings
                   </Button>
@@ -263,7 +281,7 @@ export function AdminSettingsPage() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                  <Button type="submit" className="bg-green-600 hover:bg-green-700">
                     <Save className="w-4 h-4 mr-2" />
                     Save Organization Settings
                   </Button>
@@ -277,100 +295,445 @@ export function AdminSettingsPage() {
         <TabsContent value="appearance">
           <Card>
             <CardHeader>
-              <CardTitle>Site Appearance</CardTitle>
-              <CardDescription>Customize the look and feel of your website</CardDescription>
+              <CardTitle>Background Images</CardTitle>
+              <CardDescription>Customize background images across your website. Click "View Location" to see where each image appears.</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSaveAppearance} className="space-y-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Hero Background Images</h3>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="team-hero">Team Page Hero Background</Label>
-                    <Input
-                      id="team-hero"
-                      value={appearanceData.teamHeroBackground}
-                      onChange={(e) => setAppearanceData({ ...appearanceData, teamHeroBackground: e.target.value })}
-                      placeholder="https://..."
-                    />
-                    <p className="text-sm text-gray-500">Recommended: 1920x600px image</p>
-                  </div>
+                  <div className="grid grid-cols-1 gap-6">
+                    {/* Home Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="home-hero" className="text-base font-semibold">Home Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="home-hero"
+                          value={appearanceData.homeHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, homeHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          id="home-hero-upload"
+                          onChange={handleBackgroundImageUpload('homeHeroBackground')}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          onClick={() => document.getElementById('home-hero-upload')?.click()}
+                          title="Upload image"
+                        >
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x1080px (Full-screen hero)</p>
+                      {appearanceData.homeHeroBackground && (
+                        <div className="mt-2 p-2 border rounded-lg bg-white">
+                          <img src={appearanceData.homeHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" />
+                        </div>
+                      )}
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="about-hero">About Page Hero Background</Label>
-                    <Input
-                      id="about-hero"
-                      value={appearanceData.aboutHeroBackground}
-                      onChange={(e) => setAppearanceData({ ...appearanceData, aboutHeroBackground: e.target.value })}
-                      placeholder="https://..."
-                    />
-                    <p className="text-sm text-gray-500">Recommended: 1920x600px image</p>
-                  </div>
+                    {/* About Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="about-hero" className="text-base font-semibold">About Us Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/about#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="about-hero"
+                          value={appearanceData.aboutHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, aboutHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          id="about-hero-upload"
+                          onChange={handleBackgroundImageUpload('aboutHeroBackground')}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          onClick={() => document.getElementById('about-hero-upload')?.click()}
+                          title="Upload image"
+                        >
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.aboutHeroBackground && (
+                        <div className="mt-2 p-2 border rounded-lg bg-white">
+                          <img src={appearanceData.aboutHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" />
+                        </div>
+                      )}
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="home-hero">Home Page Hero Background</Label>
-                    <Input
-                      id="home-hero"
-                      value={appearanceData.homeHeroBackground}
-                      onChange={(e) => setAppearanceData({ ...appearanceData, homeHeroBackground: e.target.value })}
-                      placeholder="https://..."
-                    />
-                    <p className="text-sm text-gray-500">Recommended: 1920x800px image</p>
+                    {/* About Page Our Story Section */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="about-story" className="text-base font-semibold">About Us Page - Our Story Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/about#story-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="about-story"
+                          value={appearanceData.aboutStoryBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, aboutStoryBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          id="about-story-upload"
+                          onChange={handleBackgroundImageUpload('aboutStoryBackground')}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          onClick={() => document.getElementById('about-story-upload')?.click()}
+                          title="Upload image"
+                        >
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x1000px (Wide format)</p>
+                      {appearanceData.aboutStoryBackground && (
+                        <div className="mt-2 p-2 border rounded-lg bg-white">
+                          <img src={appearanceData.aboutStoryBackground} alt="Preview" className="w-full h-24 object-cover rounded" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Team Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="team-hero" className="text-base font-semibold">Team Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/team#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="team-hero"
+                          value={appearanceData.teamHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, teamHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="team-hero-upload" onChange={handleBackgroundImageUpload('teamHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('team-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.teamHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.teamHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* Programs Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="programs-hero" className="text-base font-semibold">Programs Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/programs#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="programs-hero"
+                          value={appearanceData.programsHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, programsHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="programs-hero-upload" onChange={handleBackgroundImageUpload('programsHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('programs-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.programsHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.programsHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* Projects Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="projects-hero" className="text-base font-semibold">Projects Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/projects#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="projects-hero"
+                          value={appearanceData.projectsHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, projectsHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="projects-hero-upload" onChange={handleBackgroundImageUpload('projectsHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('projects-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.projectsHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.projectsHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* News Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="news-hero" className="text-base font-semibold">News Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/news#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="news-hero"
+                          value={appearanceData.newsHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, newsHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="news-hero-upload" onChange={handleBackgroundImageUpload('newsHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('news-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.newsHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.newsHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* Impact Stories Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="impact-hero" className="text-base font-semibold">Impact Stories Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/impact-stories#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="impact-hero"
+                          value={appearanceData.impactStoriesHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, impactStoriesHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="impact-hero-upload" onChange={handleBackgroundImageUpload('impactStoriesHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('impact-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.impactStoriesHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.impactStoriesHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* Partners Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="partners-hero" className="text-base font-semibold">Partners Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/partners#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="partners-hero"
+                          value={appearanceData.partnersHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, partnersHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="partners-hero-upload" onChange={handleBackgroundImageUpload('partnersHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('partners-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.partnersHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.partnersHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* Contact Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="contact-hero" className="text-base font-semibold">Contact Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/contact#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="contact-hero"
+                          value={appearanceData.contactHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, contactHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="contact-hero-upload" onChange={handleBackgroundImageUpload('contactHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('contact-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.contactHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.contactHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* Get Involved Page Hero */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="getinvolved-hero" className="text-base font-semibold">Get Involved Page - Hero Section</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/get-involved#hero-section', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="getinvolved-hero"
+                          value={appearanceData.getInvolvedHeroBackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, getInvolvedHeroBackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="getinvolved-hero-upload" onChange={handleBackgroundImageUpload('getInvolvedHeroBackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('getinvolved-hero-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.getInvolvedHeroBackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.getInvolvedHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
+
+                    {/* Home Page CTA Section */}
+                    <div className="border rounded-lg p-4 bg-gray-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label htmlFor="home-cta" className="text-base font-semibold">Home Page - CTA Section (Near Footer)</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open('/#cta', '_blank')}
+                          className="gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          View Location
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          id="home-cta"
+                          value={appearanceData.homeCTABackground}
+                          onChange={(e) => setAppearanceData({ ...appearanceData, homeCTABackground: e.target.value })}
+                          placeholder="https://... or upload below"
+                        />
+                        <input type="file" accept="image/*" className="hidden" id="home-cta-upload" onChange={handleBackgroundImageUpload('homeCTABackground')} />
+                        <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('home-cta-upload')?.click()} title="Upload image">
+                          <Upload className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Recommended: 1920x600px</p>
+                      {appearanceData.homeCTABackground && <div className="mt-2 p-2 border rounded-lg bg-white"><img src={appearanceData.homeCTABackground} alt="Preview" className="w-full h-24 object-cover rounded" /></div>}
+                    </div>
                   </div>
                 </div>
 
-                <div className="border-t pt-6 space-y-4">
-                  <h3 className="text-lg font-semibold">Color Scheme</h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="primary-color">Primary Color (Blue)</Label>
-                      <div className="flex gap-2">
-                        <Input
-                          id="primary-color"
-                          type="color"
-                          value={appearanceData.primaryColor}
-                          onChange={(e) => setAppearanceData({ ...appearanceData, primaryColor: e.target.value })}
-                          className="w-20 h-10"
-                        />
-                        <Input
-                          value={appearanceData.primaryColor}
-                          onChange={(e) => setAppearanceData({ ...appearanceData, primaryColor: e.target.value })}
-                          placeholder="#2563EB"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="accent-color">Accent Color (Orange)</Label>
-                      <div className="flex gap-2">
-                        <Input
-                          id="accent-color"
-                          type="color"
-                          value={appearanceData.accentColor}
-                          onChange={(e) => setAppearanceData({ ...appearanceData, accentColor: e.target.value })}
-                          className="w-20 h-10"
-                        />
-                        <Input
-                          value={appearanceData.accentColor}
-                          onChange={(e) => setAppearanceData({ ...appearanceData, accentColor: e.target.value })}
-                          placeholder="#F97316"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-                    <p className="text-sm text-blue-800">
-                      <strong>Note:</strong> After saving appearance settings, please refresh the page to see the changes take effect.
-                    </p>
-                  </div>
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <p className="text-sm text-green-800">
+                    <strong>Note:</strong> After saving appearance settings, refresh the page to see the changes take effect.
+                  </p>
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                  <Button type="submit" className="bg-green-600 hover:bg-green-700">
                     <Save className="w-4 h-4 mr-2" />
-                    Save Appearance Settings
+                    Save Background Images
                   </Button>
                 </div>
               </form>

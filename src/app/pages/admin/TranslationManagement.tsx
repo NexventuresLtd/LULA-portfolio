@@ -25,7 +25,7 @@ export default function TranslationManagement() {
           <h1 className="text-3xl font-bold text-gray-900">Translation Management</h1>
           <p className="text-gray-600 mt-2">Manage multilingual content</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-green-600 hover:bg-green-700">
           <Save className="w-4 h-4 mr-2" />
           Save All Changes
         </Button>
@@ -37,9 +37,9 @@ export default function TranslationManagement() {
             <CardTitle className="text-base">Languages</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
               <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-blue-600" />
+                <Globe className="w-4 h-4 text-green-600" />
                 <span className="font-medium">English</span>
               </div>
               <Badge variant="default">Primary</Badge>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useLULALanguage } from "../context/LULALanguageContext";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
@@ -6,12 +7,14 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Label } from "../components/ui/label";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { toast } from "sonner";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
 
 export function ContactPage() {
   const { t } = useLULALanguage();
   const { addEnquiry } = useContent();
+  const navigate = useNavigate();
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,8 +25,8 @@ export function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Save enquiry to context
+
+    // Save enquiry to context (simulating backend submission)
     addEnquiry({
       name: formData.name,
       email: formData.email,
@@ -32,8 +35,8 @@ export function ContactPage() {
       message: formData.message
     });
 
-    // Show success message
-    toast.success("Message sent successfully! We'll get back to you soon.");
+    // Show success dialog
+    setShowSuccessDialog(true);
 
     // Reset form
     setFormData({
@@ -45,15 +48,26 @@ export function ContactPage() {
     });
   };
 
+  const handleDialogClose = () => {
+    setShowSuccessDialog(false);
+    navigate('/');
+  };
+
   return (
     <div className="bg-white">
-      <section className="relative h-[400px] bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+      <section id="hero-section" className="relative h-[400px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt="Contact Us"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {t("contact.title")}
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl">
+            <p className="text-xl text-green-100 max-w-3xl">
               We'd love to hear from you. Reach out to learn more about our work or get involved.
             </p>
           </div>
@@ -118,7 +132,7 @@ export function ContactPage() {
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" size="lg" className="w-full bg-green-600 hover:bg-green-700">
                   {t("contact.send")}
                 </Button>
               </form>
@@ -130,7 +144,7 @@ export function ContactPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                      <MapPin className="w-5 h-5 text-blue-600" />
+                      <MapPin className="w-5 h-5 text-green-600" />
                       Head Office
                     </CardTitle>
                   </CardHeader>
@@ -146,7 +160,7 @@ export function ContactPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                      <Phone className="w-5 h-5 text-blue-600" />
+                      <Phone className="w-5 h-5 text-green-600" />
                       Phone
                     </CardTitle>
                   </CardHeader>
@@ -159,7 +173,7 @@ export function ContactPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                      <Mail className="w-5 h-5 text-blue-600" />
+                      <Mail className="w-5 h-5 text-green-600" />
                       Email
                     </CardTitle>
                   </CardHeader>
@@ -172,7 +186,7 @@ export function ContactPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                      <Clock className="w-5 h-5 text-blue-600" />
+                      <Clock className="w-5 h-5 text-green-600" />
                       Office Hours
                     </CardTitle>
                   </CardHeader>
@@ -200,6 +214,34 @@ export function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* Success Dialog */}
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl">Message Sent Successfully!</DialogTitle>
+                <DialogDescription className="mt-1">
+                  Thank you for contacting us. We'll get back to you within 24 hours.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-end mt-4">
+            <Button
+              type="button"
+              className="bg-green-600 hover:bg-green-700 text-white"
+              onClick={handleDialogClose}
+            >
+              OK, Go to Home
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

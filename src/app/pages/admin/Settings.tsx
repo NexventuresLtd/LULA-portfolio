@@ -15,7 +15,7 @@ export default function Settings() {
           <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
           <p className="text-gray-600 mt-2">Manage website and organization settings</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-green-600 hover:bg-green-700">
           <Save className="w-4 h-4 mr-2" />
           Save All Settings
         </Button>

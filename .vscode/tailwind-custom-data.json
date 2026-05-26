@@ -1,0 +1,17 @@
+[
+  {
+    "version": 1.1,
+    "atDirectives": [
+      {
+        "name": "@theme",
+        "description": "Tailwind CSS v4 theme at-rule used by the shadcn theme files.",
+        "references": [
+          {
+            "name": "Tailwind CSS @theme",
+            "url": "https://tailwindcss.com/docs/theme"
+          }
+        ]
+      }
+    ]
+  }
+]

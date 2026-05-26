@@ -54,7 +54,7 @@ export default function UserManagement() {
       case 'Super Admin':
         return 'bg-purple-100 text-purple-800';
       case 'Admin':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-green-100 text-green-800';
       case 'Editor':
         return 'bg-green-100 text-green-800';
       default:
@@ -69,7 +69,7 @@ export default function UserManagement() {
           <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
           <p className="text-gray-600 mt-2">Manage admin users and permissions</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-green-600 hover:bg-green-700">
           <Plus className="w-4 h-4 mr-2" />
           Add User
         </Button>

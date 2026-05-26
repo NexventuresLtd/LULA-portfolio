@@ -27,17 +27,19 @@ export function TeamPage() {
 
   return (
     <div className="bg-white">
-      <section 
-        className="relative h-[400px] bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBackground})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/40 to-blue-700/30" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
+      <section id="hero-section" className="relative h-[400px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
+        <img
+          src={heroBackground}
+          alt="Our Team"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Our Team
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl">
+            <p className="text-xl text-green-100 max-w-3xl">
               Dedicated professionals committed to transforming lives in Eastern DR Congo
             </p>
           </div>
@@ -66,7 +68,7 @@ export function TeamPage() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                    <div className="text-blue-600 font-medium mb-3">{member.role}</div>
+                    <div className="text-green-600 font-medium mb-3">{member.role}</div>
                     <p className="text-gray-600 text-sm mb-4">{member.bio}</p>
                     <div className="flex gap-2">
                       <a href={`mailto:${member.email}`}>
@@ -114,7 +116,7 @@ export function TeamPage() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
-                    <div className="text-blue-600 text-sm font-medium mb-1">{member.role}</div>
+                    <div className="text-green-600 text-sm font-medium mb-1">{member.role}</div>
                     <div className="text-gray-500 text-sm">{member.location}</div>
                   </div>
                 </CardContent>
@@ -124,14 +126,14 @@ export function TeamPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-blue-600">
+      <section className="py-16 bg-green-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-6">Join Our Team</h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-green-100 mb-8">
             We're always looking for passionate individuals to join our mission
           </p>
           <Link to="/contact">
-            <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+            <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100">
               View Open Positions
             </Button>
           </Link>

@@ -113,7 +113,7 @@ export default function DRCongoMap() {
             <div style="
               width: 28px;
               height: 28px;
-              background: #ea580c;
+              background: #1a1a1a;
               border: 3px solid white;
               border-radius: 50% 50% 50% 0;
               transform: rotate(-45deg);
@@ -199,7 +199,7 @@ export default function DRCongoMap() {
           <div ref={mapRef} className="w-full h-full z-0" />
 
           {/* Title Overlay */}
-          <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-blue-900/95 backdrop-blur-sm rounded-xl px-6 py-3 shadow-xl border border-blue-700 z-[400] pointer-events-none">
+          <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-green-900/95 backdrop-blur-sm rounded-xl px-6 py-3 shadow-xl border border-green-700 z-[400] pointer-events-none">
             <h3 className="text-xl font-bold text-white text-center">{t('map.title')}</h3>
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function DRCongoMap() {
           >
             <div className="flex items-center justify-between">
               <h4 className="text-white font-semibold">{t('map.regions_header')}</h4>
-              <svg className="w-5 h-5 text-blue-400 group-hover:text-blue-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-green-400 group-hover:text-green-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
               </svg>
             </div>
@@ -227,7 +227,7 @@ export default function DRCongoMap() {
                 onClick={() => handleProvinceClick(index, province.lat, province.lng)}
                 className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all ${
                   selectedProvince === index
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-green-600 text-white'
                     : 'bg-gray-700/40 hover:bg-gray-700/70 text-gray-200'
                 }`}
               >

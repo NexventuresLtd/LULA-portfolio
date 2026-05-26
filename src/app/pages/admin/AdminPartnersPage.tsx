@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
+import { Checkbox } from "../../components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { Plus, Edit, Trash2, Upload, Building2 } from "lucide-react";
+import { Plus, Edit, Trash2, Upload, Building2, Star, AlertCircle } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Partner } from "../../context/ContentContext";
@@ -13,11 +14,14 @@ import type { Partner } from "../../context/ContentContext";
 export function AdminPartnersPage() {
   const { partners, addPartner, updatePartner, deletePartner } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [partnerToDelete, setPartnerToDelete] = useState<Partner | null>(null);
   const [editingPartner, setEditingPartner] = useState<Partner | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     type: 'international' as 'international' | 'government' | 'local',
-    logo: ''
+    logo: '',
+    featured: false
   });
 
   const handleOpenDialog = (partner?: Partner) => {
@@ -26,38 +30,81 @@ export function AdminPartnersPage() {
       setFormData({
         name: partner.name,
         type: partner.type,
-        logo: partner.logo || ''
+        logo: partner.logo || '',
+        featured: partner.featured || false
       });
     } else {
       setEditingPartner(null);
       setFormData({
         name: '',
         type: 'international',
-        logo: ''
+        logo: '',
+        featured: false
       });
     }
     setIsDialogOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (editingPartner) {
-      updatePartner(editingPartner.id, formData);
-      toast.success('Partner updated successfully!');
-    } else {
-      addPartner(formData);
-      toast.success('Partner added successfully!');
+
+    try {
+      if (editingPartner) {
+        await updatePartner(editingPartner.id, formData);
+        toast.success('Partner updated successfully!');
+      } else {
+        await addPartner(formData);
+        toast.success('Partner added successfully!');
+      }
+
+      setIsDialogOpen(false);
+      setEditingPartner(null);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to save the partner.');
     }
-    
-    setIsDialogOpen(false);
-    setEditingPartner(null);
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this partner?')) {
-      deletePartner(id);
+  const handleDeleteClick = (partner: Partner) => {
+    setPartnerToDelete(partner);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!partnerToDelete) {
+      return;
+    }
+
+    try {
+      await deletePartner(partnerToDelete.id);
       toast.success('Partner deleted successfully!');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to delete the partner.');
+    } finally {
+      setDeleteDialogOpen(false);
+      setPartnerToDelete(null);
+    }
+  };
+
+  const handleToggleFeatured = async (partner: Partner) => {
+    try {
+      await updatePartner(partner.id, {
+        ...partner,
+        featured: !partner.featured
+      });
+      toast.success(partner.featured ? 'Partner removed from homepage' : 'Partner featured on homepage!');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to update the partner.');
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, logo: reader.result as string });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -66,7 +113,21 @@ export function AdminPartnersPage() {
   const localPartners = partners.filter(p => p.type === 'local');
 
   const PartnerCard = ({ partner }: { partner: Partner }) => (
-    <Card key={partner.id} className="hover:shadow-lg transition-shadow">
+    <Card key={partner.id} className="hover:shadow-lg transition-shadow relative">
+      <div className="absolute top-2 right-2">
+        <button
+          onClick={() => handleToggleFeatured(partner)}
+          className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 transition-all hover:scale-105 ${
+            partner.featured
+              ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
+              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+          }`}
+          title={partner.featured ? 'Click to remove from homepage' : 'Click to feature on homepage'}
+        >
+          <Star className={`w-3 h-3 ${partner.featured ? 'fill-yellow-700' : ''}`} />
+          {partner.featured ? 'Featured' : 'Feature'}
+        </button>
+      </div>
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
           {partner.logo ? (
@@ -91,7 +152,7 @@ export function AdminPartnersPage() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => handleDelete(partner.id)}
+              onClick={() => handleDeleteClick(partner)}
               className="text-red-600 hover:text-red-700 hover:bg-red-50"
             >
               <Trash2 className="w-4 h-4" />
@@ -111,12 +172,12 @@ export function AdminPartnersPage() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => handleOpenDialog()}>
+            <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenDialog()}>
               <Plus className="w-5 h-5 mr-2" />
               Add Partner
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-4xl">
             <DialogHeader>
               <DialogTitle>{editingPartner ? 'Edit Partner' : 'Add New Partner'}</DialogTitle>
               <DialogDescription>
@@ -148,20 +209,33 @@ export function AdminPartnersPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="logo">Logo URL (Optional)</Label>
+                  <Label htmlFor="logo">Logo URL or Upload (Optional)</Label>
                   <div className="flex gap-2">
                     <Input
                       id="logo"
                       value={formData.logo}
                       onChange={(e) => setFormData({ ...formData, logo: e.target.value })}
-                      placeholder="https://example.com/logo.png"
+                      placeholder="https://example.com/logo.png or upload below"
                     />
-                    <Button type="button" variant="outline" size="icon">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="logo-upload"
+                      onChange={handleImageUpload}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={() => document.getElementById('logo-upload')?.click()}
+                      title="Upload image"
+                    >
                       <Upload className="w-4 h-4" />
                     </Button>
                   </div>
                   <p className="text-xs text-gray-500">
-                    Enter the URL of the partner's logo image, or leave blank to use default icon
+                    Enter the URL of the partner's logo image, upload an image, or leave blank to use default icon
                   </p>
                   {formData.logo && (
                     <div className="mt-2 p-4 border rounded-lg bg-gray-50">
@@ -170,12 +244,28 @@ export function AdminPartnersPage() {
                     </div>
                   )}
                 </div>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="featured"
+                      checked={formData.featured}
+                      onCheckedChange={(checked) => setFormData({ ...formData, featured: checked as boolean })}
+                    />
+                    <Label htmlFor="featured" className="flex items-center gap-2 cursor-pointer">
+                      <Star className="w-4 h-4 text-yellow-600" />
+                      Feature on Homepage
+                    </Label>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    Featured partners will appear in the looping carousel on the homepage
+                  </p>
+                </div>
               </div>
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" className="bg-green-600 hover:bg-green-700">
                   {editingPartner ? 'Update Partner' : 'Add Partner'}
                 </Button>
               </DialogFooter>

@@ -21,13 +21,19 @@ export function ProgramsPage() {
 
   return (
     <div className="bg-white">
-      <section className="relative h-[400px] bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+      <section id="hero-section" className="relative h-[400px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt="Our Programs"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {t("programs.title")}
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl">
+            <p className="text-xl text-green-100 max-w-3xl">
               Comprehensive programs addressing the most critical needs in Eastern DR Congo
             </p>
           </div>
@@ -51,10 +57,10 @@ export function ProgramsPage() {
                   <CardContent>
                     <p className="text-gray-600 mb-4">{program.details}</p>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                      <span className="text-sm font-semibold text-blue-600">{program.beneficiaries}</span>
-                      <Link to="/projects">
-                        <Button variant="link" className="p-0 h-auto">
-                          View Projects <ArrowRight className="w-4 h-4 ml-1" />
+                      <span className="text-sm font-semibold text-green-600">{program.beneficiaries}</span>
+                      <Link to="/get-involved">
+                        <Button variant="link" className="p-0 h-auto text-green-600 hover:text-green-700">
+                          Support It <ArrowRight className="w-4 h-4 ml-1" />
                         </Button>
                       </Link>
                     </div>

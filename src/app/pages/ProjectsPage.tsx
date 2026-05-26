@@ -1,89 +1,76 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useLULALanguage } from "../context/LULALanguageContext";
+import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Textarea } from "../components/ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { MapPin, Users, Calendar, ArrowRight } from "lucide-react";
+import { MapPin, Users, Calendar, ArrowRight, HandHeart, CheckCircle } from "lucide-react";
 import { Link } from "react-router";
 
 export function ProjectsPage() {
   const { t } = useLULALanguage();
+  const { projects, addInterest } = useContent();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
-
-  const projects = [
-    {
-      id: 1,
-      title: "Safe Spaces for Children in Goma",
-      status: "active",
-      location: "Goma, North Kivu",
-      beneficiaries: "2,500 children",
-      duration: "2024-2026",
-      image: "https://images.unsplash.com/photo-1509099863731-ef4bff19e808",
-      description: "Creating protective environments where children can learn, play, and receive psychosocial support."
-    },
-    {
-      id: 2,
-      title: "Women's Economic Empowerment",
-      status: "active",
-      location: "Bukavu, South Kivu",
-      beneficiaries: "1,800 women",
-      duration: "2023-2025",
-      image: "https://images.unsplash.com/photo-1515658323406-25d61c141a6e",
-      description: "Vocational training and microfinance support for women-led businesses."
-    },
-    {
-      id: 3,
-      title: "HIV Prevention & Treatment Support",
-      status: "active",
-      location: "Multiple Regions",
-      beneficiaries: "12,000 individuals",
-      duration: "2022-2027",
-      image: "https://images.unsplash.com/photo-1524414621493-7dec026782c3",
-      description: "Comprehensive HIV testing, counseling, treatment adherence support, and community awareness."
-    },
-    {
-      id: 4,
-      title: "Community Health Workers Training",
-      status: "completed",
-      location: "Ituri Province",
-      beneficiaries: "300 health workers",
-      duration: "2023-2024",
-      image: "https://images.unsplash.com/photo-1515657241610-a6b33f0f6c5a",
-      description: "Training and equipping community health workers to provide primary healthcare services."
-    },
-    {
-      id: 5,
-      title: "Refugee Camp Support Program",
-      status: "active",
-      location: "Nyarugusu Camp",
-      beneficiaries: "5,000 refugees",
-      duration: "2024-2026",
-      image: "https://images.unsplash.com/photo-1615027212409-2628cc0cc11a",
-      description: "Providing essential health services, education, and psychosocial support to displaced populations."
-    },
-    {
-      id: 6,
-      title: "Youth Vocational Training Center",
-      status: "upcoming",
-      location: "Goma, North Kivu",
-      beneficiaries: "500 youth",
-      duration: "2026-2028",
-      image: "https://images.unsplash.com/photo-1603703182693-51a19941fa59",
-      description: "New training facility offering skills development in carpentry, tailoring, and digital literacy."
-    }
-  ];
+  const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [volunteerForm, setVolunteerForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: ""
+  });
 
   const filteredProjects = filter === "all" ? projects : projects.filter(p => p.status === filter);
 
+  const handleVolunteerClick = (project: any) => {
+    setSelectedProject(project);
+    setShowVolunteerDialog(true);
+  };
+
+  const handleVolunteerSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Submit to backend (simulated by saving to context)
+    addInterest({
+      name: volunteerForm.name,
+      email: volunteerForm.email,
+      phone: volunteerForm.phone,
+      type: 'volunteer',
+      message: `Interested in volunteering for: ${selectedProject?.title}. ${volunteerForm.message}`
+    });
+
+    setVolunteerForm({ name: "", email: "", phone: "", message: "" });
+    setShowVolunteerDialog(false);
+    setShowSuccessDialog(true);
+  };
+
+  const handleSuccessDialogClose = () => {
+    setShowSuccessDialog(false);
+    navigate('/');
+  };
+
   return (
     <div className="bg-white">
-      <section className="relative h-[400px] bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+      <section id="hero-section" className="relative h-[400px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt="Our Projects"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {t("projects.title")}
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl">
+            <p className="text-xl text-green-100 max-w-3xl">
               Transforming lives through targeted interventions across Eastern DR Congo
             </p>
           </div>
@@ -115,7 +102,7 @@ export function ProjectsPage() {
                   <div className="flex items-center justify-between mb-2">
                     <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                       project.status === 'active' ? 'bg-green-100 text-green-700' :
-                      project.status === 'completed' ? 'bg-blue-100 text-blue-700' :
+                      project.status === 'completed' ? 'bg-green-100 text-green-700' :
                       'bg-yellow-100 text-yellow-700'
                     }`}>
                       {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
@@ -128,28 +115,142 @@ export function ProjectsPage() {
                   <div className="space-y-2 text-sm text-gray-600 mb-4">
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
-                      {project.location}
+                      {project.region}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      {project.beneficiaries}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {project.duration}
-                    </div>
+                    {project.beneficiaries && (
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        {project.beneficiaries}
+                      </div>
+                    )}
+                    {project.duration && (
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {project.duration}
+                      </div>
+                    )}
                   </div>
-                  <Link to={`/projects/${project.id}`}>
-                    <Button variant="link" className="p-0 h-auto text-blue-600">
-                      View Details <ArrowRight className="w-4 h-4 ml-1" />
-                    </Button>
-                  </Link>
+                  <div className="flex items-center justify-between">
+                    <Link to={`/projects/${project.id}`}>
+                      <Button variant="link" className="p-0 h-auto text-green-600">
+                        View Details <ArrowRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </Link>
+                    {project.status === 'active' && (
+                      <Button
+                        size="sm"
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                        onClick={() => handleVolunteerClick(project)}
+                      >
+                        <HandHeart className="w-4 h-4 mr-2" />
+                        Volunteer
+                      </Button>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Volunteer Form Dialog */}
+      <Dialog open={showVolunteerDialog} onOpenChange={setShowVolunteerDialog}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Volunteer for {selectedProject?.title}</DialogTitle>
+            <DialogDescription>
+              Fill out the form below to express your interest in volunteering for this project.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleVolunteerSubmit}>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="v-name">Full Name *</Label>
+                <Input
+                  id="v-name"
+                  value={volunteerForm.name}
+                  onChange={(e) => setVolunteerForm({ ...volunteerForm, name: e.target.value })}
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="v-email">Email *</Label>
+                <Input
+                  id="v-email"
+                  type="email"
+                  value={volunteerForm.email}
+                  onChange={(e) => setVolunteerForm({ ...volunteerForm, email: e.target.value })}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="v-phone">Phone *</Label>
+                <Input
+                  id="v-phone"
+                  type="tel"
+                  value={volunteerForm.phone}
+                  onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
+                  placeholder="Enter your phone number"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="v-message">Why do you want to volunteer?</Label>
+                <Textarea
+                  id="v-message"
+                  value={volunteerForm.message}
+                  onChange={(e) => setVolunteerForm({ ...volunteerForm, message: e.target.value })}
+                  placeholder="Tell us about your interest and relevant experience..."
+                  rows={4}
+                />
+              </div>
+            </div>
+            <DialogFooter className="gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowVolunteerDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" className="bg-green-600 hover:bg-green-700">
+                Submit Application
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Dialog */}
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <DialogTitle className="text-xl">Thank You for Volunteering!</DialogTitle>
+                <DialogDescription className="mt-1">
+                  We've received your application. Our team will contact you soon with next steps.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-end mt-4">
+            <Button
+              type="button"
+              className="bg-green-600 hover:bg-green-700 text-white"
+              onClick={handleSuccessDialogClose}
+            >
+              OK, Go to Home
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

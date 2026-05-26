@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Menu, X, Lightbulb, Sun, Moon } from "lucide-react";
-import { useLanguage } from "../context/LanguageProvider";
+import { useLanguage } from "../context/LanguageContext";
 import { LanguageSelector } from "./LanguageSelector";
 
 export function Navbar() {
@@ -71,6 +71,7 @@ export function Navbar() {
               key={item.label}
               href={item.href}
               className="hover:text-primary transition-colors relative group py-2"
+              onClick={(e) => e.currentTarget.blur()}
             >
               {item.label}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
@@ -131,7 +132,10 @@ export function Navbar() {
                       key={item.label}
                       href={item.href}
                       className="py-3 px-4 hover:bg-secondary/50 rounded-lg transition-colors"
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setIsOpen(false);
+                      }}
                     >
                       {item.label}
                     </a>
