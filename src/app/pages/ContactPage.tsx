@@ -11,11 +11,6 @@ import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function sendEmailNotification(orgEmail: string, subject: string, body: string) {
-  const mailto = `mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(mailto, "_blank");
-}
-
 export function ContactPage() {
   const { t } = useLanguage();
   const { addEnquiry, orgSettings } = useContent();
@@ -53,9 +48,6 @@ export function ContactPage() {
     });
 
     // Send email notification to org
-    const subject = `[Contact Enquiry] ${formData.subject}`;
-    const body = `New contact enquiry from the website:\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
-    sendEmailNotification(orgSettings.email, subject, body);
 
     setShowSuccessDialog(true);
     setFormData({ name: "", email: "", phone: "", subject: "", message: "" });

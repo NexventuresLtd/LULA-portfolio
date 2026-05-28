@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 
 export function GetInvolvedPage() {
   const { t } = useLanguage();
-  const { addInterest, orgSettings } = useContent();
+  const { addInterest } = useContent();
   const navigate = useNavigate();
   const [donationAmount, setDonationAmount] = useState("");
   const [isVolunteerDialogOpen, setIsVolunteerDialogOpen] = useState(false);
@@ -52,9 +52,6 @@ export function GetInvolvedPage() {
       type: 'volunteer',
       message: volunteerForm.message
     });
-    const subject = `[Volunteer Application] ${volunteerForm.name}`;
-    const body = `New volunteer application:\n\nName: ${volunteerForm.name}\nEmail: ${volunteerForm.email}\nPhone: ${volunteerForm.phone}\nMessage: ${volunteerForm.message}`;
-    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setVolunteerForm({ name: "", email: "", phone: "", message: "" });
     setIsVolunteerDialogOpen(false);
     setShowVolunteerSuccess(true);
@@ -69,9 +66,6 @@ export function GetInvolvedPage() {
       type: 'partner',
       message: partnerForm.message
     });
-    const subject = `[Partnership Inquiry] ${partnerForm.name}`;
-    const body = `New partnership inquiry:\n\nName: ${partnerForm.name}\nEmail: ${partnerForm.email}\nPhone: ${partnerForm.phone}\nMessage: ${partnerForm.message}`;
-    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setPartnerForm({ name: "", email: "", phone: "", message: "" });
     setIsPartnerDialogOpen(false);
     setShowPartnerSuccess(true);
@@ -86,9 +80,6 @@ export function GetInvolvedPage() {
       type: 'donate',
       message: `Interested in donating ${donationAmount}. ${donateForm.message}`
     });
-    const subject = `[Donation Interest] ${donateForm.name} - ${donationAmount}`;
-    const body = `New donation interest:\n\nName: ${donateForm.name}\nEmail: ${donateForm.email}\nPhone: ${donateForm.phone}\nAmount: ${donationAmount}\nMessage: ${donateForm.message}`;
-    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setDonateForm({ name: "", email: "", phone: "", message: "" });
     setDonationAmount("");
     setIsDonateDialogOpen(false);

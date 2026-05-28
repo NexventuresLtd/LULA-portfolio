@@ -14,7 +14,7 @@ import { Link } from "react-router";
 
 export function ProjectsPage() {
   const { t } = useLanguage();
-  const { projects, addInterest, orgSettings } = useContent();
+  const { projects, addInterest } = useContent();
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
@@ -43,9 +43,6 @@ export function ProjectsPage() {
       type: 'volunteer',
       message: `Interested in volunteering for: ${selectedProject?.title}. ${volunteerForm.message}`
     });
-    const subject = `[Project Volunteer] ${selectedProject?.title} - ${volunteerForm.name}`;
-    const body = `New project volunteer application:\n\nProject: ${selectedProject?.title}\nName: ${volunteerForm.name}\nEmail: ${volunteerForm.email}\nPhone: ${volunteerForm.phone}\nMessage: ${volunteerForm.message}`;
-    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setVolunteerForm({ name: "", email: "", phone: "", message: "" });
     setShowVolunteerDialog(false);
     setShowSuccessDialog(true);
