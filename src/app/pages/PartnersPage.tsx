@@ -2,7 +2,7 @@ import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router";
-import { Handshake, Building2, Star } from "lucide-react";
+import { Handshake, Building2 } from "lucide-react";
 import { useContent } from "../context/ContentContext";
 
 export function PartnersPage() {
@@ -71,13 +71,8 @@ export function PartnersPage() {
             {internationalPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="relative flex flex-col items-center justify-center p-8 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow border-2 border-transparent hover:border-green-200"
+                className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow border-2 border-transparent hover:border-green-200"
               >
-                {partner.featured && (
-                  <div className="absolute top-2 right-2">
-                    <Star className="w-4 h-4 text-yellow-600 fill-yellow-600" />
-                  </div>
-                )}
                 {partner.logo ? (
                   <img
                     src={partner.logo}
@@ -109,13 +104,8 @@ export function PartnersPage() {
             {governmentPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="relative flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
               >
-                {partner.featured && (
-                  <div className="absolute top-2 right-2">
-                    <Star className="w-4 h-4 text-yellow-600 fill-yellow-600" />
-                  </div>
-                )}
                 {partner.logo ? (
                   <img
                     src={partner.logo}
@@ -147,13 +137,8 @@ export function PartnersPage() {
             {localPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="relative flex flex-col items-center justify-center p-6 bg-green-50 rounded-lg hover:shadow-lg transition-shadow"
+                className="flex flex-col items-center justify-center p-6 bg-green-50 rounded-lg hover:shadow-lg transition-shadow"
               >
-                {partner.featured && (
-                  <div className="absolute top-2 right-2">
-                    <Star className="w-4 h-4 text-yellow-600 fill-yellow-600" />
-                  </div>
-                )}
                 {partner.logo ? (
                   <img
                     src={partner.logo}

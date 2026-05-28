@@ -320,11 +320,11 @@ function HomePage() {
           {featuredPartners.length > 0 ? (
             <>
               {/* Desktop Grid */}
-              <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="hidden sm:flex flex-wrap justify-center gap-4">
                 {featuredPartners.map((partner) => (
                   <div
                     key={partner.id}
-                    className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 text-center transition-colors hover:bg-gray-100"
+                    className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 text-center transition-colors hover:bg-gray-100 w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
                   >
                     <p className="text-2xl font-semibold tracking-tight text-gray-500 sm:text-3xl">
                       {partner.name}

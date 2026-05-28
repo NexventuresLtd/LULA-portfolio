@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, ArrowLeft } from "lucide-react";
+import { Link } from "react-router";
 import { toast } from "sonner";
 import headerLogo from "../../../assets/LULA-HeaderLogo.png";
 
@@ -58,6 +59,12 @@ export function AdminLoginPage() {
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-green-900/70" />
+      <Link to="/" className="absolute top-4 left-4 z-20">
+        <Button variant="ghost" className="text-white hover:bg-white/20 gap-2">
+          <ArrowLeft className="h-4 w-4" />
+          Go to Homepage
+        </Button>
+      </Link>
       <Card className="relative z-10 w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
