@@ -60,7 +60,7 @@ export function AdminLoginPage() {
       />
       <div className="absolute inset-0 bg-green-900/70" />
       <Link to="/" className="absolute top-4 left-4 z-20">
-        <Button variant="ghost" className="text-white hover:bg-white/20 gap-2">
+        <Button variant="ghost" className="text-white border border-white/50 hover:bg-green-600 hover:border-green-600 hover:text-white gap-2">
           <ArrowLeft className="h-4 w-4" />
           Go to Homepage
         </Button>

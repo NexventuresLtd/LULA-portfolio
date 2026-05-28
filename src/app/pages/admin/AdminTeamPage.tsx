@@ -6,7 +6,7 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { Plus, Edit, Trash2, Search, AlertCircle } from "lucide-react";
+import { Plus, Edit, Trash2, Search, AlertCircle, User } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { TeamMember } from "../../context/ContentContext";
@@ -261,11 +261,17 @@ export function AdminTeamPage() {
             <Card key={member.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="flex gap-4">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                      <User className="w-8 h-8 text-gray-400" />
+                    </div>
+                  )}
                   <div className="flex-1">
                     <div className="flex justify-between items-start">
                       <div>
