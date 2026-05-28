@@ -7,7 +7,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
-import { Heart, HandHeart, Handshake, DollarSign, CheckCircle } from "lucide-react";
+import { Heart, HandHeart, Handshake, CheckCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
 
 export function GetInvolvedPage() {
@@ -132,62 +132,19 @@ export function GetInvolvedPage() {
               <CardContent>
                 <div className="space-y-6">
                   <div>
-                    <Label>Select Amount</Label>
-                    <div className="grid grid-cols-3 gap-3 mt-2">
-                      {["$25", "$50", "$100"].map((amount) => (
-                        <Button
-                          key={amount}
-                          variant={donationAmount === amount ? "default" : "outline"}
-                          onClick={() => setDonationAmount(amount)}
-                          className="h-12"
-                        >
-                          {amount}
-                        </Button>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-3 gap-3 mt-3">
-                      {["$250", "$500", "$1000"].map((amount) => (
-                        <Button
-                          key={amount}
-                          variant={donationAmount === amount ? "default" : "outline"}
-                          onClick={() => setDonationAmount(amount)}
-                          className="h-12"
-                        >
-                          {amount}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="custom">Or Enter Custom Amount</Label>
-                    <div className="relative mt-2">
-                      <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <Input
-                        id="custom"
-                        type="number"
-                        placeholder="Enter amount"
-                        className="pl-10"
-                        value={donationAmount}
-                        onChange={(e) => setDonationAmount(e.target.value)}
-                      />
-                    </div>
+                    <Label htmlFor="custom">Amount</Label>
+                    <Input
+                      id="custom"
+                      placeholder="Enter amount with currency (e.g. 50 USD, 100 EUR)"
+                      className="mt-2"
+                      value={donationAmount}
+                      onChange={(e) => setDonationAmount(e.target.value)}
+                    />
                   </div>
 
                   <Button size="lg" className="w-full bg-gray-900 hover:bg-black text-white" onClick={() => setIsDonateDialogOpen(true)}>
-                    <Heart className="w-5 h-5 mr-2" />
-                    Donate {donationAmount}
+                    {t('common.donate')} {donationAmount}
                   </Button>
-
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">Your Impact</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• $25 provides school supplies for 5 children</li>
-                      <li>• $50 supports HIV testing for 10 individuals</li>
-                      <li>• $100 funds vocational training for 2 women</li>
-                      <li>• $500 establishes a safe space for children</li>
-                    </ul>
-                  </div>
                 </div>
               </CardContent>
             </Card>

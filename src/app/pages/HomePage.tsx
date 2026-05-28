@@ -12,20 +12,10 @@ import { useEffect, useState } from 'react';
 
 function HomePage() {
   const { t } = useLanguage();
-  const { impactStories, projects, news, partners } = useContent();
-  const [heroBackground, setHeroBackground] = useState("https://images.unsplash.com/photo-1509099836639-18ba1795216d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwY2hpbGRyZW4lMjBlZHVjYXRpb24lMjBjb21tdW5pdHl8ZW58MXx8fHwxNzc5MTg3NzQ3fDA&ixlib=rb-4.1.0&q=80&w=1080");
+  const { impactStories, projects, news, partners, appearanceSettings } = useContent();
   const [viewportWidth, setViewportWidth] = useState(1024);
 
-  useEffect(() => {
-    // Load appearance settings from localStorage
-    const savedSettings = localStorage.getItem('lula_appearance_settings');
-    if (savedSettings) {
-      const settings = JSON.parse(savedSettings);
-      if (settings.homeHeroBackground) {
-        setHeroBackground(settings.homeHeroBackground);
-      }
-    }
-  }, []);
+  const heroBackground = appearanceSettings.homeHeroBackground || "https://images.unsplash.com/photo-1509099836639-18ba1795216d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);

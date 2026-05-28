@@ -10,7 +10,7 @@ import { Textarea } from "../../components/ui/textarea";
 import { useContent } from "../../context/ContentContext";
 
 export function AdminSettingsPage() {
-  const { orgSettings, updateOrgSettings } = useContent();
+  const { orgSettings, updateOrgSettings, appearanceSettings, updateAppearanceSettings } = useContent();
 
   // Account Settings
   const [accountData, setAccountData] = useState({
@@ -31,29 +31,28 @@ export function AdminSettingsPage() {
     website: orgSettings.website || "www.lula-asbl.org"
   });
 
-  // Site Appearance Settings
+  // Site Appearance Settings (from context)
   const [appearanceData, setAppearanceData] = useState({
-    homeHeroBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
-    aboutHeroBackground: "https://images.unsplash.com/photo-1578632767115-351597cf2477",
-    aboutStoryBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920",
-    teamHeroBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
-    contactHeroBackground: "https://images.unsplash.com/photo-1559027615-cd4628902d4a",
-    programsHeroBackground: "https://images.unsplash.com/photo-1593113598332-cd288d649433",
-    projectsHeroBackground: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c",
-    newsHeroBackground: "https://images.unsplash.com/photo-1504711434969-e33886168f5c",
-    impactStoriesHeroBackground: "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8",
-    partnersHeroBackground: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
-    getInvolvedHeroBackground: "https://images.unsplash.com/photo-1559027615-cd4628902d4a",
-    homeCTABackground: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b"
+    homeHeroBackground: appearanceSettings.homeHeroBackground || "",
+    aboutHeroBackground: appearanceSettings.aboutHeroBackground || "",
+    aboutStoryBackground: appearanceSettings.aboutStoryBackground || "",
+    teamHeroBackground: appearanceSettings.teamHeroBackground || "",
+    contactHeroBackground: appearanceSettings.contactHeroBackground || "",
+    programsHeroBackground: appearanceSettings.programsHeroBackground || "",
+    projectsHeroBackground: appearanceSettings.projectsHeroBackground || "",
+    newsHeroBackground: appearanceSettings.newsHeroBackground || "",
+    impactStoriesHeroBackground: appearanceSettings.impactStoriesHeroBackground || "",
+    partnersHeroBackground: appearanceSettings.partnersHeroBackground || "",
+    getInvolvedHeroBackground: appearanceSettings.getInvolvedHeroBackground || "",
+    homeCTABackground: appearanceSettings.homeCTABackground || ""
   });
 
-  // Load saved appearance settings on mount
+  // Load appearance from context when it changes
   useEffect(() => {
-    const savedAppearanceSettings = localStorage.getItem('lula_appearance_settings');
-    if (savedAppearanceSettings) {
-      setAppearanceData(JSON.parse(savedAppearanceSettings));
+    if (Object.keys(appearanceSettings).length > 0) {
+      setAppearanceData(prev => ({ ...prev, ...appearanceSettings }));
     }
-  }, []);
+  }, [appearanceSettings]);
 
   const handleSaveAccount = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,11 +92,10 @@ export function AdminSettingsPage() {
     toast.success("Organization settings updated successfully!");
   };
 
-  const handleSaveAppearance = (e: React.FormEvent) => {
+  const handleSaveAppearance = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Save appearance settings
-    localStorage.setItem('lula_appearance_settings', JSON.stringify(appearanceData));
-    toast.success("Appearance settings updated successfully! Refresh the page to see changes.");
+    await updateAppearanceSettings(appearanceData);
+    toast.success("Appearance settings saved successfully!");
   };
 
   const handleBackgroundImageUpload = (fieldName: keyof typeof appearanceData) => (e: React.ChangeEvent<HTMLInputElement>) => {

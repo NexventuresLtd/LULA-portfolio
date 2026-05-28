@@ -4,23 +4,11 @@ import { Mail, Linkedin, User } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router";
 import { useContent } from "../context/ContentContext";
-import { useEffect, useState } from "react";
 
 export function TeamPage() {
   const { t } = useLanguage();
-  const { teamMembers } = useContent();
-  const [heroBackground, setHeroBackground] = useState("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c");
-
-  useEffect(() => {
-    // Load appearance settings from localStorage
-    const savedSettings = localStorage.getItem('lula_appearance_settings');
-    if (savedSettings) {
-      const settings = JSON.parse(savedSettings);
-      if (settings.teamHeroBackground) {
-        setHeroBackground(settings.teamHeroBackground);
-      }
-    }
-  }, []);
+  const { teamMembers, appearanceSettings } = useContent();
+  const heroBackground = appearanceSettings.teamHeroBackground || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c";
 
   const leadership = teamMembers.filter(member => member.type === 'leadership');
   const staff = teamMembers.filter(member => member.type === 'staff');

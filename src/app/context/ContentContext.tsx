@@ -198,6 +198,7 @@ const toImpactStory = (item: any): ImpactStory => ({
 });
 
 const ORG_SETTINGS_MARKER = '<!--ORG_SETTINGS:';
+const APPEARANCE_MARKER = '<!--APPEARANCE:';
 
 const parseOrgSettings = (vision: string): OrgSettings | null => {
   const idx = vision.indexOf(ORG_SETTINGS_MARKER);
@@ -214,10 +215,25 @@ const embedOrgSettings = (vision: string, settings: OrgSettings): string => {
   return `${cleanVision}${ORG_SETTINGS_MARKER}${JSON.stringify(settings)}-->`;
 };
 
+const parseAppearance = (story: string): Record<string, string> | null => {
+  const idx = story.indexOf(APPEARANCE_MARKER);
+  if (idx === -1) return null;
+  try {
+    const json = story.slice(idx + APPEARANCE_MARKER.length, story.indexOf('-->', idx));
+    return JSON.parse(json);
+  } catch { return null; }
+};
+
+const embedAppearance = (story: string, settings: Record<string, string>): string => {
+  const idx = story.indexOf(APPEARANCE_MARKER);
+  const cleanStory = idx === -1 ? story : story.slice(0, idx);
+  return `${cleanStory}${APPEARANCE_MARKER}${JSON.stringify(settings)}-->`;
+};
+
 const toAboutContent = (item: any): AboutContent => ({
   mission: item.mission || '',
   vision: (item.vision || '').split(ORG_SETTINGS_MARKER)[0],
-  story: item.story || '',
+  story: (item.story || '').split(APPEARANCE_MARKER)[0],
 });
 
 const toEnquiry = (item: any): Enquiry => ({
@@ -428,6 +444,9 @@ interface ContentContextType {
   orgSettings: OrgSettings;
   updateOrgSettings: (settings: Partial<OrgSettings>) => void;
 
+  appearanceSettings: Record<string, string>;
+  updateAppearanceSettings: (settings: Record<string, string>) => Promise<void>;
+
   enquiries: Enquiry[];
   addEnquiry: (enquiry: Omit<Enquiry, 'id' | 'date' | 'status'>) => Promise<void>;
   updateEnquiryStatus: (id: string, status: Enquiry['status']) => Promise<void>;
@@ -486,6 +505,29 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       console.warn('Failed to persist org settings to backend', error);
+    }
+  };
+
+  const [appearanceSettings, setAppearanceSettings] = useState<Record<string, string>>({});
+
+  const updateAppearanceSettings = async (settings: Record<string, string>) => {
+    setAppearanceSettings(settings);
+    // Persist to backend by embedding in story field
+    const rawStory = aboutContent.story || '';
+    const storyWithAppearance = embedAppearance(rawStory, settings);
+    try {
+      const currentVision = aboutContent.vision || '';
+      const visionWithOrg = embedOrgSettings(currentVision, orgSettings);
+      await requestJson<any>('/site-content/', {
+        method: 'PUT',
+        body: JSON.stringify({
+          mission: aboutContent.mission,
+          vision: visionWithOrg,
+          story: storyWithAppearance,
+        }),
+      });
+    } catch (error) {
+      console.warn('Failed to persist appearance settings to backend', error);
     }
   };
 
@@ -550,6 +592,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
           setAboutContent(toAboutContent(siteContentResult.value));
           const parsed = parseOrgSettings(siteContentResult.value.vision || '');
           if (parsed) setOrgSettings(prev => ({ ...prev, ...parsed }));
+          const appearance = parseAppearance(siteContentResult.value.story || '');
+          if (appearance) setAppearanceSettings(appearance);
         }
 
         if (enquiriesResult.status === 'fulfilled' && Array.isArray(enquiriesResult.value)) {
@@ -883,6 +927,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         updateAboutContent,
         orgSettings,
         updateOrgSettings,
+        appearanceSettings,
+        updateAppearanceSettings,
         enquiries,
         addEnquiry,
         updateEnquiryStatus,

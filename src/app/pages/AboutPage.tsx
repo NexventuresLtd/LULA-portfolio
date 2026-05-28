@@ -4,27 +4,12 @@ import { Badge } from '../components/ui/badge';
 import { useLanguage } from '../context/LanguageProvider';
 import { useContent } from '../context/ContentContext';
 import DRCongoMap from '../components/lula/DRCongoMap';
-import { useEffect, useState } from 'react';
 
 function AboutPage() {
   const { t } = useLanguage();
-  const { aboutContent } = useContent();
-  const [heroBackground, setHeroBackground] = useState("https://images.unsplash.com/photo-1515658323406-25d61c141a6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwY29tbXVuaXR5JTIwZ2F0aGVyaW5nfGVufDF8fHx8MTc3OTExMjkzN3ww&ixlib=rb-4.1.0&q=80&w=1080");
-  const [storyBackground, setStoryBackground] = useState("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920");
-
-  useEffect(() => {
-    // Load appearance settings from localStorage
-    const savedSettings = localStorage.getItem('lula_appearance_settings');
-    if (savedSettings) {
-      const settings = JSON.parse(savedSettings);
-      if (settings.aboutHeroBackground) {
-        setHeroBackground(settings.aboutHeroBackground);
-      }
-      if (settings.aboutStoryBackground) {
-        setStoryBackground(settings.aboutStoryBackground);
-      }
-    }
-  }, []);
+  const { aboutContent, appearanceSettings } = useContent();
+  const heroBackground = appearanceSettings.aboutHeroBackground || "https://images.unsplash.com/photo-1515658323406-25d61c141a6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
+  const storyBackground = appearanceSettings.aboutStoryBackground || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920";
 
   const coreValues = [
     {
