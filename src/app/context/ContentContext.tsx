@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.lula-asbl.org/api';
 const ADMIN_TOKEN_KEY = 'lula-admin-token';
 
 const formatBackendDate = (value?: string | null) => {
@@ -736,9 +736,9 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   ]);
 
   const [aboutContent, setAboutContent] = useState<AboutContent>({
-    mission: 'Our mission is to empower vulnerable communities in Eastern DRC through education, health, and economic development programs.',
-    vision: 'We envision a future where every child is safe, every woman is empowered, and every community is resilient and self-sufficient.',
-    story: 'LULA Congo was founded in 2010 to address the urgent needs of communities affected by conflict and displacement in Eastern DRC. We have grown to become a leading humanitarian organization, implementing a wide range of programs that improve the lives of over 100,000 people annually.'
+    mission: 'Let Us Live Association (LULA) is a community-driven humanitarian organization working in conflict-affected and displacement settings in Eastern Democratic Republic of Congo (DRC), with a core mission to protect the health, rights, and future of children, adolescents, women, and caregivers facing heightened vulnerability to HIV, exploitation, and poor access to essential services. Our work is rooted in refugee camps and host communities in North and South Kivu Provinces, where poverty, insecurity, and weak health access continue to fuel paediatric and adolescent HIV transmission.',
+    vision: 'LULA ASBL envisions a region free from social discrimination and stigma related to sexual violence, HIV/AIDS, and other vulnerabilities faced by women, girls, and children in the DR Congo.',
+    story: '<h2>Our Story</h2><p><strong>Let Us Live Association (LULA)</strong> (REG No: JUST.112/921/NK/2025) is a community-based humanitarian organization dedicated to addressing the unique vulnerabilities of marginalized groups, especially children, women and girls living in conflict-affected areas in North and South Kivu Provinces of DR Congo.</p><p>Currently, LULA has more than <strong>100 staff, members and volunteers</strong>. Its programs have directly reached nearly <strong>850,000 beneficiaries</strong> including girls and young women, orphans and vulnerable children heading families, and the most vulnerable young women and girls.</p><p>Through targeted interventions, LULA has made significant strides in improving life conditions and reducing violations against women, SGBV, HIV and early forced marriages in North and South Kivu Provinces.</p>'
   });
 
   const [enquiries, setEnquiries] = useState<Enquiry[]>([

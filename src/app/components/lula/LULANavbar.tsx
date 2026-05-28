@@ -128,7 +128,7 @@ export default function NGONavbar() {
                       : 'text-gray-700 hover:text-green-600'
                   }`}
                 >
-                  Updates
+                  {t('nav.updates')}
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>

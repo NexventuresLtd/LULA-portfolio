@@ -8,7 +8,7 @@ import { Lock, Mail } from "lucide-react";
 import { toast } from "sonner";
 import headerLogo from "../../../assets/LULA-HeaderLogo.png";
 
-const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || 'http://localhost:8000';
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org';
 const AUTH_LOGIN_URL = `${BACKEND_BASE_URL.replace(/\/$/, '')}/api/auth/login`;
 
 export function AdminLoginPage() {
