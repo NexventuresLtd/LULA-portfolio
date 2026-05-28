@@ -432,11 +432,13 @@ interface ContentContextType {
   addEnquiry: (enquiry: Omit<Enquiry, 'id' | 'date' | 'status'>) => Promise<void>;
   updateEnquiryStatus: (id: string, status: Enquiry['status']) => Promise<void>;
   deleteEnquiry: (id: string) => Promise<void>;
+  refreshEnquiries: () => Promise<void>;
 
   interests: Interest[];
   addInterest: (interest: Omit<Interest, 'id' | 'date' | 'status'>) => Promise<void>;
   updateInterestStatus: (id: string, status: Interest['status']) => Promise<void>;
   deleteInterest: (id: string) => Promise<void>;
+  refreshInterests: () => Promise<void>;
 
   activities: Activity[];
 }
@@ -836,6 +838,20 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     setInterests(prev => prev.filter(i => i.id !== id));
   };
 
+  const refreshEnquiries = async () => {
+    try {
+      const data = await fetchJson<any[]>(`${API_BASE_URL}/enquiries/`, { requireAuth: true });
+      if (Array.isArray(data)) setEnquiries(data.filter(Boolean).map(toEnquiry));
+    } catch {}
+  };
+
+  const refreshInterests = async () => {
+    try {
+      const data = await fetchJson<any[]>(`${API_BASE_URL}/interests/`);
+      if (Array.isArray(data)) setInterests(data.filter(Boolean).map(toInterest));
+    } catch {}
+  };
+
   return (
     <ContentContext.Provider
       value={{
@@ -871,10 +887,12 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         addEnquiry,
         updateEnquiryStatus,
         deleteEnquiry,
+        refreshEnquiries,
         interests,
         addInterest,
         updateInterestStatus,
         deleteInterest,
+        refreshInterests,
         activities,
       }}
     >

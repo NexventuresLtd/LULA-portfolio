@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { Mail, Phone, Calendar, Search, Trash2, Heart, HandHeart, Handshake, AlertCircle, Eye } from "lucide-react";
+import { Mail, Phone, Calendar, Search, Trash2, Heart, HandHeart, Handshake, AlertCircle, Eye, RefreshCw } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import {
@@ -31,7 +31,7 @@ import {
 } from "../../components/ui/dialog";
 
 export function AdminInterestsPage() {
-  const { interests, updateInterestStatus, deleteInterest } = useContent();
+  const { interests, updateInterestStatus, deleteInterest, refreshInterests } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<'all' | 'donate' | 'volunteer' | 'partner'>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'contacted' | 'completed'>('all');
@@ -109,9 +109,15 @@ export function AdminInterestsPage() {
 
   return (
     <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Interests & Donations Management</h1>
-        <p className="text-gray-600 mt-2">Track people interested in donating, volunteering, and partnering</p>
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Interests & Donations Management</h1>
+          <p className="text-gray-600 mt-2">Track people interested in donating, volunteering, and partnering</p>
+        </div>
+        <Button variant="outline" onClick={() => refreshInterests()} className="gap-2">
+          <RefreshCw className="w-4 h-4" />
+          Refresh
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -225,6 +231,11 @@ export function AdminInterestsPage() {
                       >
                         {interest.name}
                       </button>
+                      {interest.message.includes('volunteering for:') && (
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          Project: {interest.message.split('volunteering for:')[1]?.split('.')[0]?.trim()}
+                        </p>
+                      )}
                     </TableCell>
                     <TableCell>
                       <Badge className={getTypeColor(interest.type)}>

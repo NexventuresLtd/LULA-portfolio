@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { Mail, Phone, Calendar, Search, Trash2, AlertCircle, Eye } from "lucide-react";
+import { Mail, Phone, Calendar, Search, Trash2, AlertCircle, Eye, RefreshCw } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import {
@@ -31,7 +31,7 @@ import {
 } from "../../components/ui/dialog";
 
 export function AdminEnquiriesPage() {
-  const { enquiries, updateEnquiryStatus, deleteEnquiry } = useContent();
+  const { enquiries, updateEnquiryStatus, deleteEnquiry, refreshEnquiries } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'in-progress' | 'resolved'>('all');
   const [selectedEnquiry, setSelectedEnquiry] = useState<any>(null);
@@ -82,9 +82,15 @@ export function AdminEnquiriesPage() {
 
   return (
     <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Enquiries Management</h1>
-        <p className="text-gray-600 mt-2">Manage contact form submissions from the website</p>
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Enquiries Management</h1>
+          <p className="text-gray-600 mt-2">Manage contact form submissions from the website</p>
+        </div>
+        <Button variant="outline" onClick={() => refreshEnquiries()} className="gap-2">
+          <RefreshCw className="w-4 h-4" />
+          Refresh
+        </Button>
       </div>
 
       <Card>
