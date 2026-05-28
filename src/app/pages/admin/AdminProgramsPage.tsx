@@ -10,8 +10,6 @@ import { Plus, Edit, Trash2, AlertCircle, Upload, Star, Search } from "lucide-re
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Program } from "../../context/ContentContext";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 export function AdminProgramsPage() {
   const { programs, addProgram, updateProgram, deleteProgram } = useContent();
@@ -41,26 +39,6 @@ export function AdminProgramsPage() {
       program.beneficiaries.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [programs, searchTerm]);
-
-  // React Quill modules configuration
-  const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'align': [] }],
-      ['link', 'image'],
-      ['clean']
-    ],
-  };
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike',
-    'list', 'bullet',
-    'align',
-    'link', 'image'
-  ];
 
   const iconOptions = ['Shield', 'Heart', 'Stethoscope', 'GraduationCap', 'Handshake', 'Users', 'Briefcase'];
   const colorOptions = [
@@ -281,34 +259,14 @@ export function AdminProgramsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Short Description *</CardTitle>
+                <CardTitle>Description *</CardTitle>
               </CardHeader>
               <CardContent>
-                <ReactQuill
+                <Input
                   value={formData.description}
-                  onChange={(value) => setFormData({ ...formData, description: value })}
-                  modules={modules}
-                  formats={formats}
-                  placeholder="Write a short description of the program..."
-                  className="bg-white"
-                  style={{ height: '200px', marginBottom: '60px' }}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Detailed Description *</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ReactQuill
-                  value={formData.details}
-                  onChange={(value) => setFormData({ ...formData, details: value })}
-                  modules={modules}
-                  formats={formats}
-                  placeholder="Write the full program details and information..."
-                  className="bg-white"
-                  style={{ height: '500px', marginBottom: '60px' }}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Short description of the program (1-2 sentences)"
+                  required
                 />
               </CardContent>
             </Card>

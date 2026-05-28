@@ -1,6 +1,6 @@
 import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent } from "../components/ui/card";
-import { Mail, Linkedin } from "lucide-react";
+import { Mail, Linkedin, User } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router";
 import { useContent } from "../context/ContentContext";
@@ -59,12 +59,18 @@ export function TeamPage() {
             {leadership.map((member, index) => (
               <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-shadow">
                 <CardContent className="p-0">
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="aspect-square overflow-hidden bg-gray-100">
+                    {member.image ? (
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <User className="w-24 h-24 text-gray-300" />
+                      </div>
+                    )}
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
@@ -107,12 +113,18 @@ export function TeamPage() {
             {staff.map((member, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow">
                 <CardContent className="p-0">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                    {member.image ? (
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <User className="w-20 h-20 text-gray-300" />
+                      </div>
+                    )}
                   </div>
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h3>

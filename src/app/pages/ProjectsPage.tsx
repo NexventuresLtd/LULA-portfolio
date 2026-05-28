@@ -109,7 +109,9 @@ export function ProjectsPage() {
                     </span>
                   </div>
                   <CardTitle className="text-xl">{project.title}</CardTitle>
-                  <CardDescription className="text-base">{project.description}</CardDescription>
+                  <CardDescription className="text-base line-clamp-2">
+                    {project.description.replace(/<[^>]*>/g, '').slice(0, 150)}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-sm text-gray-600 mb-4">
