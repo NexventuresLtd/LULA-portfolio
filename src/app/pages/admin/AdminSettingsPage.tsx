@@ -7,8 +7,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/ta
 import { User, Building2, Lock, Palette, Save, ExternalLink, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "../../components/ui/textarea";
+import { useContent } from "../../context/ContentContext";
 
 export function AdminSettingsPage() {
+  const { orgSettings, updateOrgSettings } = useContent();
+
   // Account Settings
   const [accountData, setAccountData] = useState({
     name: "Admin User",
@@ -18,14 +21,14 @@ export function AdminSettingsPage() {
     confirmPassword: ""
   });
 
-  // Organization Settings
+  // Organization Settings (from context)
   const [orgData, setOrgData] = useState({
-    name: "Let Us Live Association",
+    name: orgSettings.name || "Let Us Live Association",
     acronym: "LULA",
-    email: "info@lulacongo.org",
-    phone: "+243 999 123 456",
-    address: "Goma, North Kivu, Democratic Republic of Congo",
-    website: "www.lulacongo.org"
+    email: orgSettings.email,
+    phone: orgSettings.phone,
+    address: orgSettings.address,
+    website: orgSettings.website || "www.lula-asbl.org"
   });
 
   // Site Appearance Settings
@@ -44,13 +47,8 @@ export function AdminSettingsPage() {
     homeCTABackground: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b"
   });
 
-  // Load saved settings on mount
+  // Load saved appearance settings on mount
   useEffect(() => {
-    const savedOrgSettings = localStorage.getItem('lula_org_settings');
-    if (savedOrgSettings) {
-      setOrgData(JSON.parse(savedOrgSettings));
-    }
-
     const savedAppearanceSettings = localStorage.getItem('lula_appearance_settings');
     if (savedAppearanceSettings) {
       setAppearanceData(JSON.parse(savedAppearanceSettings));
@@ -85,8 +83,13 @@ export function AdminSettingsPage() {
 
   const handleSaveOrganization = (e: React.FormEvent) => {
     e.preventDefault();
-    // Save organization settings
-    localStorage.setItem('lula_org_settings', JSON.stringify(orgData));
+    updateOrgSettings({
+      name: orgData.name,
+      email: orgData.email,
+      phone: orgData.phone,
+      address: orgData.address,
+      website: orgData.website
+    });
     toast.success("Organization settings updated successfully!");
   };
 

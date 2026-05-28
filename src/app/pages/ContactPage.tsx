@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
@@ -9,12 +9,6 @@ import { Label } from "../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
 
-const DEFAULT_ORG = {
-  email: "letusliveassociation@gmail.com",
-  phone: "+243 890 423 191",
-  address: "Avenue Kabasha, No. 01, Goma, North Kivu, DR Congo",
-};
-
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function sendEmailNotification(orgEmail: string, subject: string, body: string) {
@@ -24,10 +18,9 @@ function sendEmailNotification(orgEmail: string, subject: string, body: string) 
 
 export function ContactPage() {
   const { t } = useLanguage();
-  const { addEnquiry } = useContent();
+  const { addEnquiry, orgSettings } = useContent();
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [emailError, setEmailError] = useState("");
-  const [orgSettings, setOrgSettings] = useState(DEFAULT_ORG);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,18 +28,6 @@ export function ContactPage() {
     subject: "",
     message: ""
   });
-
-  useEffect(() => {
-    const saved = localStorage.getItem('lula_org_settings');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setOrgSettings({
-        email: parsed.email || DEFAULT_ORG.email,
-        phone: parsed.phone || DEFAULT_ORG.phone,
-        address: parsed.address || DEFAULT_ORG.address,
-      });
-    }
-  }, []);
 
   const validateEmail = (email: string) => {
     if (!EMAIL_REGEX.test(email)) {

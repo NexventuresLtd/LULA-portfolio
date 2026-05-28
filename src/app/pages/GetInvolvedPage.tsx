@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
@@ -12,16 +12,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 
 export function GetInvolvedPage() {
   const { t } = useLanguage();
-  const { addInterest } = useContent();
-  const [orgEmail, setOrgEmail] = useState('letusliveassociation@gmail.com');
-
-  useEffect(() => {
-    const saved = localStorage.getItem('lula_org_settings');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed.email) setOrgEmail(parsed.email);
-    }
-  }, []);
+  const { addInterest, orgSettings } = useContent();
   const navigate = useNavigate();
   const [donationAmount, setDonationAmount] = useState("");
   const [isVolunteerDialogOpen, setIsVolunteerDialogOpen] = useState(false);
@@ -63,7 +54,7 @@ export function GetInvolvedPage() {
     });
     const subject = `[Volunteer Application] ${volunteerForm.name}`;
     const body = `New volunteer application:\n\nName: ${volunteerForm.name}\nEmail: ${volunteerForm.email}\nPhone: ${volunteerForm.phone}\nMessage: ${volunteerForm.message}`;
-    window.open(`mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setVolunteerForm({ name: "", email: "", phone: "", message: "" });
     setIsVolunteerDialogOpen(false);
     setShowVolunteerSuccess(true);
@@ -80,7 +71,7 @@ export function GetInvolvedPage() {
     });
     const subject = `[Partnership Inquiry] ${partnerForm.name}`;
     const body = `New partnership inquiry:\n\nName: ${partnerForm.name}\nEmail: ${partnerForm.email}\nPhone: ${partnerForm.phone}\nMessage: ${partnerForm.message}`;
-    window.open(`mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setPartnerForm({ name: "", email: "", phone: "", message: "" });
     setIsPartnerDialogOpen(false);
     setShowPartnerSuccess(true);
@@ -97,7 +88,7 @@ export function GetInvolvedPage() {
     });
     const subject = `[Donation Interest] ${donateForm.name} - ${donationAmount}`;
     const body = `New donation interest:\n\nName: ${donateForm.name}\nEmail: ${donateForm.email}\nPhone: ${donateForm.phone}\nAmount: ${donationAmount}\nMessage: ${donateForm.message}`;
-    window.open(`mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setDonateForm({ name: "", email: "", phone: "", message: "" });
     setDonationAmount("");
     setIsDonateDialogOpen(false);

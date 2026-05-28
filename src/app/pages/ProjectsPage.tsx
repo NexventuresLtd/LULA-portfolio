@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
@@ -14,27 +14,18 @@ import { Link } from "react-router";
 
 export function ProjectsPage() {
   const { t } = useLanguage();
-  const { projects, addInterest } = useContent();
+  const { projects, addInterest, orgSettings } = useContent();
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [orgEmail, setOrgEmail] = useState('letusliveassociation@gmail.com');
   const [volunteerForm, setVolunteerForm] = useState({
     name: "",
     email: "",
     phone: "",
     message: ""
   });
-
-  useEffect(() => {
-    const saved = localStorage.getItem('lula_org_settings');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed.email) setOrgEmail(parsed.email);
-    }
-  }, []);
 
   const filteredProjects = filter === "all" ? projects : projects.filter(p => p.status === filter);
 
@@ -54,7 +45,7 @@ export function ProjectsPage() {
     });
     const subject = `[Project Volunteer] ${selectedProject?.title} - ${volunteerForm.name}`;
     const body = `New project volunteer application:\n\nProject: ${selectedProject?.title}\nName: ${volunteerForm.name}\nEmail: ${volunteerForm.email}\nPhone: ${volunteerForm.phone}\nMessage: ${volunteerForm.message}`;
-    window.open(`mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    window.open(`mailto:${orgSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setVolunteerForm({ name: "", email: "", phone: "", message: "" });
     setShowVolunteerDialog(false);
     setShowSuccessDialog(true);

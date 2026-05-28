@@ -366,6 +366,14 @@ export interface Activity {
   description: string;
 }
 
+export interface OrgSettings {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  website: string;
+}
+
 interface ContentContextType {
   programs: Program[];
   addProgram: (program: Omit<Program, 'id'>) => Promise<void>;
@@ -400,6 +408,9 @@ interface ContentContextType {
   aboutContent: AboutContent;
   updateAboutContent: (content: Partial<AboutContent>) => Promise<void>;
 
+  orgSettings: OrgSettings;
+  updateOrgSettings: (settings: Partial<OrgSettings>) => void;
+
   enquiries: Enquiry[];
   addEnquiry: (enquiry: Omit<Enquiry, 'id' | 'date' | 'status'>) => Promise<void>;
   updateEnquiryStatus: (id: string, status: Enquiry['status']) => Promise<void>;
@@ -431,6 +442,17 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [interests, setInterests] = useState<Interest[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [orgSettings, setOrgSettings] = useState<OrgSettings>({
+    name: 'Let Us Live Association',
+    email: 'letusliveassociation@gmail.com',
+    phone: '+243 890 423 191',
+    address: 'Avenue Kabasha, No. 01, Goma, North Kivu, DR Congo',
+    website: 'www.lula-asbl.org'
+  });
+
+  const updateOrgSettings = (settings: Partial<OrgSettings>) => {
+    setOrgSettings(prev => ({ ...prev, ...settings }));
+  };
 
   // --- REMOVED HARDCODED FALLBACK DATA - frontend now relies on backend only ---
   const _REMOVED_PLACEHOLDER = null; // eslint-disable-line
@@ -808,6 +830,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         deleteImpactStory,
         aboutContent,
         updateAboutContent,
+        orgSettings,
+        updateOrgSettings,
         enquiries,
         addEnquiry,
         updateEnquiryStatus,
