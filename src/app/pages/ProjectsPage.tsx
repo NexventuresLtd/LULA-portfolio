@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
@@ -20,12 +20,21 @@ export function ProjectsPage() {
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [orgEmail, setOrgEmail] = useState('letusliveassociation@gmail.com');
   const [volunteerForm, setVolunteerForm] = useState({
     name: "",
     email: "",
     phone: "",
     message: ""
   });
+
+  useEffect(() => {
+    const saved = localStorage.getItem('lula_org_settings');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.email) setOrgEmail(parsed.email);
+    }
+  }, []);
 
   const filteredProjects = filter === "all" ? projects : projects.filter(p => p.status === filter);
 
@@ -36,8 +45,6 @@ export function ProjectsPage() {
 
   const handleVolunteerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Submit to backend (simulated by saving to context)
     addInterest({
       name: volunteerForm.name,
       email: volunteerForm.email,
@@ -45,7 +52,9 @@ export function ProjectsPage() {
       type: 'volunteer',
       message: `Interested in volunteering for: ${selectedProject?.title}. ${volunteerForm.message}`
     });
-
+    const subject = `[Project Volunteer] ${selectedProject?.title} - ${volunteerForm.name}`;
+    const body = `New project volunteer application:\n\nProject: ${selectedProject?.title}\nName: ${volunteerForm.name}\nEmail: ${volunteerForm.email}\nPhone: ${volunteerForm.phone}\nMessage: ${volunteerForm.message}`;
+    window.open(`mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
     setVolunteerForm({ name: "", email: "", phone: "", message: "" });
     setShowVolunteerDialog(false);
     setShowSuccessDialog(true);

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
@@ -10,11 +9,25 @@ import { Label } from "../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
 
+const DEFAULT_ORG = {
+  email: "letusliveassociation@gmail.com",
+  phone: "+243 890 423 191",
+  address: "Avenue Kabasha, No. 01, Goma, North Kivu, DR Congo",
+};
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function sendEmailNotification(orgEmail: string, subject: string, body: string) {
+  const mailto = `mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailto, "_blank");
+}
+
 export function ContactPage() {
   const { t } = useLanguage();
   const { addEnquiry } = useContent();
-  const navigate = useNavigate();
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [orgSettings, setOrgSettings] = useState(DEFAULT_ORG);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,10 +36,33 @@ export function ContactPage() {
     message: ""
   });
 
+  useEffect(() => {
+    const saved = localStorage.getItem('lula_org_settings');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setOrgSettings({
+        email: parsed.email || DEFAULT_ORG.email,
+        phone: parsed.phone || DEFAULT_ORG.phone,
+        address: parsed.address || DEFAULT_ORG.address,
+      });
+    }
+  }, []);
+
+  const validateEmail = (email: string) => {
+    if (!EMAIL_REGEX.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Save enquiry to context (simulating backend submission)
+    if (!validateEmail(formData.email)) return;
+
+    // Save to backend
     addEnquiry({
       name: formData.name,
       email: formData.email,
@@ -35,21 +71,13 @@ export function ContactPage() {
       message: formData.message
     });
 
-    // Show success dialog
+    // Send email notification to org
+    const subject = `[Contact Enquiry] ${formData.subject}`;
+    const body = `New contact enquiry from the website:\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
+    sendEmailNotification(orgSettings.email, subject, body);
+
     setShowSuccessDialog(true);
-
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: ""
-    });
-  };
-
-  const handleDialogClose = () => {
-    setShowSuccessDialog(false);
+    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
   };
 
   return (
@@ -95,9 +123,15 @@ export function ContactPage() {
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (emailError) validateEmail(e.target.value);
+                    }}
+                    onBlur={(e) => validateEmail(e.target.value)}
+                    className={emailError ? "border-red-500" : ""}
                     required
                   />
+                  {emailError && <p className="text-sm text-red-500 mt-1">{emailError}</p>}
                 </div>
 
                 <div>
@@ -148,11 +182,7 @@ export function ContactPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">
-                      Avenue de la Paix, Quartier Himbi<br />
-                      Goma, North Kivu<br />
-                      Democratic Republic of Congo
-                    </p>
+                    <p className="text-gray-600">{orgSettings.address}</p>
                   </CardContent>
                 </Card>
 
@@ -164,7 +194,7 @@ export function ContactPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">+243 XXX XXX XXX</p>
+                    <p className="text-gray-600">{orgSettings.phone}</p>
                     <p className="text-sm text-gray-500 mt-1">Monday - Friday, 8am - 5pm EAT</p>
                   </CardContent>
                 </Card>
@@ -177,7 +207,9 @@ export function ContactPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">info@lulacongo.org</p>
+                    <a href={`mailto:${orgSettings.email}`} className="text-green-600 hover:underline">
+                      {orgSettings.email}
+                    </a>
                     <p className="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
                   </CardContent>
                 </Card>
@@ -203,17 +235,6 @@ export function ContactPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="aspect-[21/9] bg-gray-300 rounded-lg overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center text-gray-500">
-              <MapPin className="w-12 h-12 mr-3" />
-              <span className="text-lg">Map Location: Goma, North Kivu, DR Congo</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Success Dialog */}
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent className="sm:max-w-md">
@@ -234,9 +255,9 @@ export function ContactPage() {
             <Button
               type="button"
               className="bg-green-600 hover:bg-green-700 text-white"
-              onClick={handleDialogClose}
+              onClick={() => setShowSuccessDialog(false)}
             >
-              OK, Go to Home
+              OK
             </Button>
           </DialogFooter>
         </DialogContent>
