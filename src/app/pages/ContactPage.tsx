@@ -50,7 +50,6 @@ export function ContactPage() {
 
   const handleDialogClose = () => {
     setShowSuccessDialog(false);
-    navigate('/');
   };
 
   return (
