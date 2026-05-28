@@ -1,4 +1,4 @@
-import { useLULALanguage } from "../context/LULALanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent } from "../components/ui/card";
 import { Mail, Linkedin } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -7,7 +7,7 @@ import { useContent } from "../context/ContentContext";
 import { useEffect, useState } from "react";
 
 export function TeamPage() {
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
   const { teamMembers } = useContent();
   const [heroBackground, setHeroBackground] = useState("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c");
 

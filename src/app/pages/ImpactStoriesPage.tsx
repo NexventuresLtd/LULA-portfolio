@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useLULALanguage } from "../context/LULALanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent } from "../components/ui/card";
 import { Quote } from "lucide-react";
 import { useContent } from "../context/ContentContext";
@@ -14,7 +14,7 @@ import {
 } from "../components/ui/pagination";
 
 export function ImpactStoriesPage() {
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
   const { impactStories } = useContent();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;

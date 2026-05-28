@@ -77,7 +77,7 @@ export default function DRCongoMap() {
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markersRef = useRef<L.Marker[]>([]);
   const [selectedProvince, setSelectedProvince] = useState<number | null>(null);
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;

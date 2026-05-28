@@ -72,25 +72,25 @@ export function AdminDashboardPage() {
   const quickActions = [
     {
       label: "Add New Project",
-      color: "bg-green-600 hover:bg-green-700",
+      color: "bg-gray-600 hover:bg-gray-700",
       icon: FolderKanban,
       onClick: () => navigate('/admin/projects')
     },
     {
       label: "Add News Article",
-      color: "bg-green-600 hover:bg-green-700",
+      color: "bg-gray-600 hover:bg-gray-700",
       icon: Newspaper,
       onClick: () => navigate('/admin/news')
     },
     {
       label: "Add Partner",
-      color: "bg-green-600 hover:bg-green-700",
+      color: "bg-gray-600 hover:bg-gray-700",
       icon: Handshake,
       onClick: () => navigate('/admin/partners')
     },
     {
       label: "Add Impact Story",
-      color: "bg-green-600 hover:bg-green-700",
+      color: "bg-gray-600 hover:bg-gray-700",
       icon: MessageCircle,
       onClick: () => navigate('/admin/impact-stories')
     }

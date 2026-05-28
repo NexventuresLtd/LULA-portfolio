@@ -170,6 +170,8 @@ const toProgram = (item: any): Program => ({
   beneficiaries: item.beneficiaries || 'Community members',
   icon: item.icon || 'Shield',
   color: item.color || 'bg-green-50 text-green-600',
+  image: item.image_url || item.image || '',
+  featured: item.featured ?? false,
 });
 
 const toTeamMember = (item: any): TeamMember => ({
@@ -270,6 +272,8 @@ export interface Program {
   beneficiaries: string;
   icon: string;
   color: string;
+  image?: string;
+  featured?: boolean;
 }
 
 export interface TeamMember {

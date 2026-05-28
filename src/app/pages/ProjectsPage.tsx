@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useLULALanguage } from "../context/LULALanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -13,7 +13,7 @@ import { MapPin, Users, Calendar, ArrowRight, HandHeart, CheckCircle } from "luc
 import { Link } from "react-router";
 
 export function ProjectsPage() {
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
   const { projects, addInterest } = useContent();
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");

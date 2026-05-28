@@ -1,4 +1,4 @@
-import { useLULALanguage } from "../context/LULALanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router";
@@ -6,7 +6,7 @@ import { Handshake, Building2, Star } from "lucide-react";
 import { useContent } from "../context/ContentContext";
 
 export function PartnersPage() {
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
   const { partners } = useContent();
 
   // Filter partners by type

@@ -1,4 +1,4 @@
-import { useLULALanguage } from "../context/LULALanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -6,7 +6,7 @@ import { Shield, Heart, Stethoscope, GraduationCap, Handshake, Users, Briefcase,
 import { Link } from "react-router";
 
 export function ProgramsPage() {
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
   const { programs } = useContent();
 
   const iconMap: { [key: string]: any } = {

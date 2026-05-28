@@ -339,6 +339,83 @@
 .prose h2 { font-size: 1.875em; }
 .prose h3 { font-size: 1.5em; }
 
+/* Homepage carousel responsiveness */
+.homepage-carousel {
+  margin-inline: -0.5rem;
+}
+
+.homepage-carousel .slick-list {
+  overflow: hidden;
+}
+
+.homepage-carousel .slick-track {
+  display: flex;
+  align-items: stretch;
+}
+
+.homepage-carousel .slick-slide {
+  height: auto;
+}
+
+.homepage-carousel .slick-slide > div {
+  height: 100%;
+}
+
+.homepage-carousel .slick-dots {
+  position: static;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 0.125rem;
+  margin-top: 1.5rem;
+  line-height: 1;
+}
+
+.homepage-carousel .slick-dots li {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-inline: 0.125rem;
+}
+
+.homepage-carousel .slick-dots li button {
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0;
+}
+
+.homepage-carousel .slick-dots li button::before {
+  font-size: 0.5rem;
+  color: #16a34a;
+  opacity: 0.35;
+}
+
+.homepage-carousel .slick-dots li.slick-active button::before {
+  color: #15803d;
+  opacity: 1;
+}
+
+.impact-stories-carousel .slick-dots li button::before {
+  color: #ffffff;
+}
+
+.impact-stories-carousel .slick-dots li.slick-active button::before {
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .homepage-carousel {
+    margin-inline: -0.25rem;
+  }
+
+  .homepage-carousel .slick-list {
+    overflow: hidden;
+  }
+
+  .homepage-carousel .slick-dots {
+    margin-top: 1.25rem;
+  }
+}
+
 .prose p {
   margin-bottom: 1.25em;
   line-height: 1.75;

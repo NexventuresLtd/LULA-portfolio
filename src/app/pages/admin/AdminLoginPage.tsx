@@ -4,8 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Heart, Lock, Mail } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import { toast } from "sonner";
+import headerLogo from "../../../assets/LULA-HeaderLogo.png";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || 'http://localhost:8000';
 const AUTH_LOGIN_URL = `${BACKEND_BASE_URL.replace(/\/$/, '')}/api/auth/login`;
@@ -50,13 +51,21 @@ export function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-600 to-green-900 flex items-center justify-center px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen relative flex items-center justify-center px-4">
+      <img
+        src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-green-900/70" />
+      <Card className="relative z-10 w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-green-900 rounded-xl flex items-center justify-center">
-              <Heart className="w-9 h-9 text-white fill-white" />
-            </div>
+            <img
+              src={headerLogo}
+              alt="LULA Let Us Live Association"
+              className="h-20 w-auto max-w-[240px] object-contain"
+            />
           </div>
           <CardTitle className="text-2xl">LULA Admin Portal</CardTitle>
           <CardDescription>Sign in to manage your organization</CardDescription>

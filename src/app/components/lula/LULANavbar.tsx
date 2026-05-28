@@ -1,24 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router';
-import { Menu, X, Heart, Globe, ChevronDown } from 'lucide-react';
+import { Menu, Globe, ChevronDown } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useLanguage } from '../../context/LanguageProvider';
+import { useLanguage, Language } from '../../context/LanguageProvider';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-
-// Helper function to trigger Google Translate
-const changeLanguage = (lang: string) => {
-  const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-  if (select) {
-    select.value = lang;
-    select.dispatchEvent(new Event('change'));
-  }
-};
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '../ui/sheet';
+import headerLogo from '../../../assets/LULA-HeaderLogo.png';
 
 export default function NGONavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -55,13 +47,13 @@ export default function NGONavbar() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => changeLanguage('en')}>
+        <DropdownMenuItem onClick={() => setLanguage('en' as Language)}>
           English
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeLanguage('fr')}>
+        <DropdownMenuItem onClick={() => setLanguage('fr' as Language)}>
           Français
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeLanguage('sw')}>
+        <DropdownMenuItem onClick={() => setLanguage('sw' as Language)}>
           Kiswahili
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -71,16 +63,14 @@ export default function NGONavbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-green-600 to-green-800 p-2 rounded-lg">
-              <Heart className="h-6 w-6 text-white fill-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-xl text-green-900">LULA</span>
-              <span className="text-xs text-gray-600">Let Us Live Association</span>
-            </div>
+          <Link to="/" className="flex min-w-0 items-center">
+            <img
+              src={headerLogo}
+              alt="LULA Let Us Live Association"
+              className="h-14 w-auto max-w-[190px] object-contain sm:h-16 sm:max-w-[220px] lg:h-[72px] lg:max-w-[250px]"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -179,117 +169,59 @@ export default function NGONavbar() {
             <LanguageSelector />
             <Link to="/get-involved">
               <Button className="bg-gradient-to-r from-gray-900 to-black hover:from-gray-800 hover:to-gray-900">
-                <Heart className="h-4 w-4 mr-2" />
                 {t('nav.donate')}
               </Button>
             </Link>
           </div>
 
-          {/* Mobile Menu */}
-          <div className="lg:hidden flex items-center gap-2">
+          {/* Mobile Navigation */}
+          <div className="lg:hidden flex items-center gap-1 sm:gap-2">
             <LanguageSelector />
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                <Button variant="ghost" size="icon" aria-label="Open navigation menu" className="shrink-0">
+                  <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px]">
-                <div className="flex flex-col gap-4 mt-8">
+              <SheetContent side="right" className="w-[86vw] max-w-sm bg-white p-0">
+                <div className="border-b border-gray-100 p-5">
+                  <SheetTitle className="sr-only">LULA navigation</SheetTitle>
+                  <img
+                    src={headerLogo}
+                    alt="LULA Let Us Live Association"
+                    className="h-12 w-auto max-w-[180px] object-contain"
+                  />
+                </div>
+                <nav className="flex flex-col gap-1 px-3 py-4">
                   <Link
                     to="/"
                     onClick={() => setMobileOpen(false)}
-                    className={`px-4 py-3 rounded-lg text-base transition-colors ${
+                    className={`rounded-md px-3 py-3 text-sm transition-colors ${
                       location.pathname === '/'
-                        ? 'text-green-600 font-bold'
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-green-50 text-green-700 font-bold'
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-green-600'
                     }`}
                   >
                     {t('nav.home')}
                   </Link>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className={`gap-2 ${
-                          isAboutActive
-                            ? 'text-green-600 font-bold hover:text-green-700'
-                            : 'text-gray-700 hover:text-green-600'
-                        }`}
-                      >
-                        {t('nav.about')}
-                        <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      {aboutItems.map((item) => (
-                        <DropdownMenuItem key={item.path} asChild>
-                          <Link
-                            to={item.path}
-                            onClick={() => setMobileOpen(false)}
-                            className={`w-full cursor-pointer ${
-                              location.pathname === item.path
-                                ? 'text-green-600 font-bold'
-                                : 'text-gray-700 hover:text-green-600'
-                            }`}
-                          >
-                            {item.label}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className={`gap-2 ${
-                          isUpdatesActive
-                            ? 'text-green-600 font-bold hover:text-green-700'
-                            : 'text-gray-700 hover:text-green-600'
-                        }`}
-                      >
-                        Updates
-                        <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      {updatesItems.map((item) => (
-                        <DropdownMenuItem key={item.path} asChild>
-                          <Link
-                            to={item.path}
-                            onClick={() => setMobileOpen(false)}
-                            className={`w-full cursor-pointer ${
-                              location.pathname === item.path
-                                ? 'text-green-600 font-bold'
-                                : 'text-gray-700 hover:text-green-600'
-                            }`}
-                          >
-                            {item.label}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  {singleNavItems.map((item) => (
+                  {[...aboutItems, ...updatesItems, ...singleNavItems].map((item) => (
                     <Link
                       key={item.path}
                       to={item.path}
                       onClick={() => setMobileOpen(false)}
-                      className={`px-4 py-3 rounded-lg text-base transition-colors ${
+                      className={`rounded-md px-3 py-3 text-sm transition-colors ${
                         location.pathname === item.path
-                          ? 'text-green-600 font-bold'
-                          : 'text-gray-700 hover:bg-gray-50'
+                          ? 'bg-green-50 text-green-700 font-bold'
+                          : 'text-gray-700 hover:bg-gray-50 hover:text-green-600'
                       }`}
                     >
                       {item.label}
                     </Link>
                   ))}
+                </nav>
+                <div className="mt-auto border-t border-gray-100 p-4">
                   <Link to="/get-involved" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-gray-900 to-black">
-                      <Heart className="h-4 w-4 mr-2" />
+                    <Button className="w-full bg-gradient-to-r from-gray-900 to-black hover:from-gray-800 hover:to-gray-900">
                       {t('nav.donate')}
                     </Button>
                   </Link>

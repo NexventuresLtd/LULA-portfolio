@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -6,7 +6,7 @@ import { Label } from "../../components/ui/label";
 import { Checkbox } from "../../components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { Plus, Edit, Trash2, MapPin, AlertCircle, Upload, Star } from "lucide-react";
+import { Plus, Edit, Trash2, MapPin, AlertCircle, Upload, Star, Search } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Project } from "../../context/ContentContext";
@@ -20,6 +20,7 @@ export function AdminProjectsPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -31,6 +32,16 @@ export function AdminProjectsPage() {
     beneficiaries: '',
     duration: ''
   });
+
+  // Filter projects based on search term
+  const filteredProjects = useMemo(() => {
+    return projects.filter(project =>
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.region.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [projects, searchTerm]);
 
   // React Quill modules configuration
   const modules = {
@@ -408,15 +419,30 @@ export function AdminProjectsPage() {
         </Button>
       </div>
 
+      {/* Search Bar */}
+      <div className="mb-8">
+        <div className="relative">
+          <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+          <Input
+            placeholder="Search projects by title, category, region, or description..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.length === 0 ? (
+        {filteredProjects.length === 0 ? (
           <Card className="col-span-full">
             <CardContent className="py-12 text-center text-gray-500">
-              No projects found. Click "Add Project" to create your first project.
+              {projects.length === 0 
+                ? "No projects found. Click \"Add Project\" to create your first project."
+                : "No projects match your search."}
             </CardContent>
           </Card>
         ) : (
-          projects.map((project) => (
+          filteredProjects.map((project) => (
             <Card key={project.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative h-48 overflow-hidden">
                 <img

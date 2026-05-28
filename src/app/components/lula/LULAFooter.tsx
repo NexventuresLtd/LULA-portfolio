@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Globe } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageProvider';
 import { Button } from '../ui/button';
 import {
@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import headerLogo from '../../../assets/LULA-HeaderLogo.png';
 
 export default function NGOFooter() {
   const { language, setLanguage, t } = useLanguage();
@@ -29,14 +30,12 @@ export default function NGOFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="bg-white p-2 rounded-lg">
-                <Heart className="h-6 w-6 text-green-900 fill-blue-900" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-xl">LULA</span>
-                <span className="text-sm text-green-200">Let Us Live Association</span>
-              </div>
+            <div className="mb-4 inline-flex">
+              <img
+                src={headerLogo}
+                alt="LULA Let Us Live Association"
+                className="h-16 w-auto max-w-[230px] object-contain brightness-0 invert sm:h-20 sm:max-w-[280px]"
+              />
             </div>
             <p className="text-green-100 mb-6 max-w-md">
               {t('footer.description')}

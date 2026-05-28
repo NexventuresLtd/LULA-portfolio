@@ -8,13 +8,13 @@ import {
   Handshake, 
   Info, 
   Settings,
-  Heart,
   LogOut,
   MessageCircle,
   Mail,
   HeartHandshake
 } from "lucide-react";
 import { Button } from "../ui/button";
+import headerLogo from "../../../assets/LULA-HeaderLogo.png";
 
 export function AdminSidebar() {
   const location = useLocation();
@@ -41,10 +41,12 @@ export function AdminSidebar() {
   return (
     <div className="fixed left-0 top-0 h-screen w-64 bg-gray-900 text-white flex flex-col">
       <div className="p-6 border-b border-gray-800">
-        <Link to="/admin" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-green-700 rounded-lg flex items-center justify-center">
-            <Heart className="w-6 h-6 text-white fill-white" />
-          </div>
+        <Link to="/admin" className="flex flex-col gap-2">
+          <img
+            src={headerLogo}
+            alt="LULA Let Us Live Association"
+            className="h-14 w-auto max-w-[190px] object-contain brightness-0 invert"
+          />
           <div>
             <div className="font-bold text-lg">LULA Admin</div>
             <div className="text-xs text-gray-400">Management Portal</div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useLULALanguage } from "../context/LULALanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -11,7 +11,7 @@ import { Heart, HandHeart, Handshake, DollarSign, CheckCircle } from "lucide-rea
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
 
 export function GetInvolvedPage() {
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
   const { addInterest } = useContent();
   const navigate = useNavigate();
   const [donationAmount, setDonationAmount] = useState("");

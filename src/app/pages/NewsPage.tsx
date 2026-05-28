@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
-import { useLULALanguage } from "../context/LULALanguageContext";
+import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -18,7 +18,7 @@ import {
 } from "../components/ui/pagination";
 
 export function NewsPage() {
-  const { t } = useLULALanguage();
+  const { t } = useLanguage();
   const { news } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
