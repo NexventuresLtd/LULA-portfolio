@@ -513,7 +513,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
           fetchJson<any[]>(`${API_BASE_URL}/impact-stories/`),
           fetchJson<any>(`${API_BASE_URL}/site-content/`),
           fetchJson<any[]>(`${API_BASE_URL}/enquiries/`, { requireAuth: true }),
-          fetchJson<any[]>(`${API_BASE_URL}/interests/`, { requireAuth: true }),
+          fetchJson<any[]>(`${API_BASE_URL}/interests/`),
         ]);
 
         if (cancelled) {
