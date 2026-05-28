@@ -76,7 +76,7 @@ export function ContactPage() {
               {t("contact.title")}
             </h1>
             <p className="text-xl text-green-100 max-w-3xl">
-              We'd love to hear from you. Reach out to learn more about our work or get involved.
+              {t('contact.subtitle')}
             </p>
           </div>
         </div>
@@ -86,7 +86,7 @@ export function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Send Us a Message</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('contact.sendMessage')}</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Label htmlFor="name">{t("contact.name")}</Label>
@@ -159,7 +159,7 @@ export function ContactPage() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
                       <MapPin className="w-5 h-5 text-green-600" />
-                      Head Office
+                      {t('contact.headOffice')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -191,7 +191,7 @@ export function ContactPage() {
                     <a href={`mailto:${orgSettings.email}`} className="text-green-600 hover:underline">
                       {orgSettings.email}
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
+                    <p className="text-sm text-gray-500 mt-1">{t('contact.responseTime')}</p>
                   </CardContent>
                 </Card>
 
@@ -199,7 +199,7 @@ export function ContactPage() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
                       <Clock className="w-5 h-5 text-green-600" />
-                      Office Hours
+                      {t('contact.officeHours')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -225,9 +225,9 @@ export function ContactPage() {
                 <CheckCircle className="w-6 h-6 text-green-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Message Sent Successfully!</DialogTitle>
+                <DialogTitle className="text-xl">{t('contact.successTitle')}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  Thank you for contacting us. We'll get back to you within 24 hours.
+                  {t('contact.successText')}
                 </DialogDescription>
               </div>
             </div>

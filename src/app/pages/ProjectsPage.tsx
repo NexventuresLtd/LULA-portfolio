@@ -71,7 +71,7 @@ export function ProjectsPage() {
               {t("projects.title")}
             </h1>
             <p className="text-xl text-green-100 max-w-3xl">
-              Transforming lives through targeted interventions across Eastern DR Congo
+              {t('projects.subtitle')}
             </p>
           </div>
         </div>

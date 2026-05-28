@@ -201,11 +201,10 @@ function HomePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <Badge className="mb-4 bg-green-100 text-green-700 hover:bg-green-100 text-xs sm:text-sm">{t('common.ourMission')}</Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 text-gray-900">
-            Empowering Communities, Transforming Lives
+            {t('home.mission.heading')}
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
-            LULA works to create lasting change in Eastern Democratic Republic of Congo by addressing the root causes 
-            of vulnerability through child protection, women's empowerment, health education, and sustainable community development.
+            {t('home.mission.text')}
           </p>
         </div>
       </section>
@@ -215,7 +214,7 @@ function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl mb-2 sm:mb-4 text-gray-900">{t('home.featuredProjects')}</h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600">Making a real impact in communities across Eastern DRC</p>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600">{t('home.projects.subtitle')}</p>
           </div>
           {homepageProjects.length > 0 ? (
             <Slider {...featuredProjectsCarouselSettings}>
@@ -258,7 +257,7 @@ function HomePage() {
           <div className="text-center mt-8 sm:mt-12">
             <Link to="/projects">
               <Button size="lg" variant="outline" className="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:border-green-600 hover:text-white text-sm sm:text-base transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-                View All Projects
+                {t('home.viewAllProjects')}
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </Link>
@@ -271,7 +270,7 @@ function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl mb-2 sm:mb-4">{t('home.testimonials')}</h2>
-            <p className="text-base sm:text-lg md:text-xl text-green-100">Real stories from the communities we serve</p>
+            <p className="text-base sm:text-lg md:text-xl text-green-100">{t('home.impact.subtitle')}</p>
           </div>
           {displayedImpactStories.length > 0 ? (
             <Slider {...carouselSettings}>
@@ -305,7 +304,7 @@ function HomePage() {
           <div className="text-center mt-8 sm:mt-12">
             <Link to="/impact-stories">
               <Button size="lg" className="bg-transparent border-2 border-white text-white hover:bg-green-600 hover:border-green-600 hover:text-white text-sm sm:text-base transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-                View the changes we're making
+                {t('home.viewImpact')}
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </Link>
@@ -358,7 +357,7 @@ function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl mb-2 sm:mb-4 text-gray-900">{t('home.latestNews')}</h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600">Stay informed about our impact and initiatives</p>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600">{t('home.news.subtitle')}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {latestNews.map((item, index) => (
@@ -387,7 +386,7 @@ function HomePage() {
           <div className="text-center mt-8 sm:mt-12">
             <Link to="/news">
               <Button size="lg" variant="outline" className="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:border-green-600 hover:text-white text-sm sm:text-base transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-                View All News & Publications
+                {t('home.viewAllNews')}
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </Link>
@@ -405,20 +404,20 @@ function HomePage() {
         />
         <div className="relative z-20 max-w-4xl mx-auto px-4 text-center text-white">
           <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 font-bold">
-            Join Us in Making a Difference
+            {t('home.cta.title')}
           </h2>
           <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-gray-100">
-            Your support can transform lives and build stronger, more resilient communities in Eastern DRC.
+            {t('home.cta.text')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link to="/get-involved">
               <Button size="lg" className="bg-white text-gray-900 hover:bg-green-600 hover:border-green-600 hover:text-white text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-white w-full sm:w-auto transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-                Donate Now
+                {t('home.cta.donate')}
               </Button>
             </Link>
             <Link to="/get-involved">
               <Button size="lg" variant="outline" className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-white text-white bg-transparent hover:bg-green-600 hover:border-green-600 hover:text-white w-full sm:w-auto transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-                Become a Volunteer
+                {t('home.cta.volunteer')}
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </Link>

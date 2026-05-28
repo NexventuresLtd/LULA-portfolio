@@ -116,7 +116,7 @@ function AboutPage() {
             Our Story
           </h1>
           <p className="text-xl text-green-100">
-            Building a brighter future for Eastern DR Congo, one community at a time
+            {t('about.heroSubtitle')}
           </p>
         </div>
       </section>
@@ -171,7 +171,7 @@ function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl mb-4 text-gray-900">{t('common.ourValues')}</h2>
-            <p className="text-xl text-gray-600">The principles that guide our work every day</p>
+            <p className="text-xl text-gray-600">{t('about.valuesSubtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {coreValues.map((value, index) => (
@@ -193,8 +193,8 @@ function AboutPage() {
       <section className="py-20 bg-gradient-to-br from-green-50 to-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl mb-4 text-gray-900">Our Journey</h2>
-            <p className="text-xl text-gray-600">Milestones of impact and growth</p>
+            <h2 className="text-4xl mb-4 text-gray-900">{t('about.journey')}</h2>
+            <p className="text-xl text-gray-600">{t('about.journeySubtitle')}</p>
           </div>
           <div className="space-y-8">
             {timeline.map((item, index) => (
@@ -219,8 +219,8 @@ function AboutPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl mb-4 text-gray-900">Where We Work</h2>
-            <p className="text-xl text-gray-600">Operating across 12 regions in Eastern DRC</p>
+            <h2 className="text-4xl mb-4 text-gray-900">{t('about.whereWeWork')}</h2>
+            <p className="text-xl text-gray-600">{t('about.whereWeWorkSubtitle')}</p>
           </div>
           <DRCongoMap />
         </div>

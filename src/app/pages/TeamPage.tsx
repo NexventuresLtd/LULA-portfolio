@@ -37,10 +37,10 @@ export function TeamPage() {
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Our Team
+              {t('team.title')}
             </h1>
             <p className="text-xl text-green-100 max-w-3xl">
-              Dedicated professionals committed to transforming lives in Eastern DR Congo
+              {t('team.subtitle')}
             </p>
           </div>
         </div>
@@ -49,9 +49,9 @@ export function TeamPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Executive Leadership</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('team.leadership')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Experienced leaders guiding our mission and strategic direction
+              {t('team.leadershipSubtitle')}
             </p>
           </div>
 
@@ -103,9 +103,9 @@ export function TeamPage() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Team</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('team.staff')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Passionate professionals working on the ground to deliver impact
+              {t('team.staffSubtitle')}
             </p>
           </div>
 
@@ -140,13 +140,13 @@ export function TeamPage() {
 
       <section className="py-16 bg-green-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Join Our Team</h2>
+          <h2 className="text-3xl font-bold text-white mb-6">{t('team.joinTitle')}</h2>
           <p className="text-xl text-green-100 mb-8">
-            We're always looking for passionate individuals to join our mission
+            {t('team.joinText')}
           </p>
           <Link to="/contact">
             <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100">
-              View Open Positions
+              {t('team.viewPositions')}
             </Button>
           </Link>
         </div>

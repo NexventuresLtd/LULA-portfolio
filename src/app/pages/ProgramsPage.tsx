@@ -34,7 +34,7 @@ export function ProgramsPage() {
               {t("programs.title")}
             </h1>
             <p className="text-xl text-green-100 max-w-3xl">
-              Comprehensive programs addressing the most critical needs in Eastern DR Congo
+              {t('programs.subtitle')}
             </p>
           </div>
         </div>
