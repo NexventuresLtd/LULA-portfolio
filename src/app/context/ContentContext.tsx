@@ -197,9 +197,26 @@ const toImpactStory = (item: any): ImpactStory => ({
   featured: item.featured ?? false,
 });
 
+const ORG_SETTINGS_MARKER = '<!--ORG_SETTINGS:';
+
+const parseOrgSettings = (vision: string): OrgSettings | null => {
+  const idx = vision.indexOf(ORG_SETTINGS_MARKER);
+  if (idx === -1) return null;
+  try {
+    const json = vision.slice(idx + ORG_SETTINGS_MARKER.length, vision.indexOf('-->', idx));
+    return JSON.parse(json);
+  } catch { return null; }
+};
+
+const embedOrgSettings = (vision: string, settings: OrgSettings): string => {
+  const idx = vision.indexOf(ORG_SETTINGS_MARKER);
+  const cleanVision = idx === -1 ? vision : vision.slice(0, idx);
+  return `${cleanVision}${ORG_SETTINGS_MARKER}${JSON.stringify(settings)}-->`;
+};
+
 const toAboutContent = (item: any): AboutContent => ({
   mission: item.mission || '',
-  vision: item.vision || '',
+  vision: (item.vision || '').split(ORG_SETTINGS_MARKER)[0],
   story: item.story || '',
 });
 
@@ -450,8 +467,24 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     website: 'www.lula-asbl.org'
   });
 
-  const updateOrgSettings = (settings: Partial<OrgSettings>) => {
-    setOrgSettings(prev => ({ ...prev, ...settings }));
+  const updateOrgSettings = async (settings: Partial<OrgSettings>) => {
+    const updated = { ...orgSettings, ...settings };
+    setOrgSettings(updated);
+    // Persist to backend by embedding in vision field
+    const currentVision = aboutContent.vision || '';
+    const visionWithOrg = embedOrgSettings(currentVision, updated);
+    try {
+      await requestJson<any>('/site-content/', {
+        method: 'PUT',
+        body: JSON.stringify({
+          mission: aboutContent.mission,
+          vision: visionWithOrg,
+          story: aboutContent.story,
+        }),
+      });
+    } catch (error) {
+      console.warn('Failed to persist org settings to backend', error);
+    }
   };
 
   // --- REMOVED HARDCODED FALLBACK DATA - frontend now relies on backend only ---
@@ -513,6 +546,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
         if (siteContentResult.status === 'fulfilled' && siteContentResult.value) {
           setAboutContent(toAboutContent(siteContentResult.value));
+          const parsed = parseOrgSettings(siteContentResult.value.vision || '');
+          if (parsed) setOrgSettings(prev => ({ ...prev, ...parsed }));
         }
 
         if (enquiriesResult.status === 'fulfilled' && Array.isArray(enquiriesResult.value)) {
