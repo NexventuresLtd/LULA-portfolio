@@ -55,7 +55,6 @@ export function ProgramsPage() {
                     <CardDescription className="text-base">{program.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 mb-4">{program.details}</p>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                       <span className="text-sm font-semibold text-green-600">{program.beneficiaries}</span>
                       <Link to="/get-involved">
