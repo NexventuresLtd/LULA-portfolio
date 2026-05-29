@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { User, Building2, Lock, Palette, Save, ExternalLink, Upload } from "lucide-react";
+import { User, Building2, Lock, Palette, Save, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "../../components/ui/textarea";
 import { useContent } from "../../context/ContentContext";
@@ -102,16 +102,6 @@ export function AdminSettingsPage() {
     }
   };
 
-  const handleBackgroundImageUpload = (fieldName: keyof typeof appearanceData) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAppearanceData({ ...appearanceData, [fieldName]: reader.result as string });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <div className="p-8">
@@ -327,7 +317,7 @@ export function AdminSettingsPage() {
                           id="home-hero"
                           value={appearanceData.homeHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, homeHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input
                           type="file"
@@ -374,7 +364,7 @@ export function AdminSettingsPage() {
                           id="about-hero"
                           value={appearanceData.aboutHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, aboutHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input
                           type="file"
@@ -421,7 +411,7 @@ export function AdminSettingsPage() {
                           id="about-story"
                           value={appearanceData.aboutStoryBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, aboutStoryBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input
                           type="file"
@@ -468,7 +458,7 @@ export function AdminSettingsPage() {
                           id="team-hero"
                           value={appearanceData.teamHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, teamHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="team-hero-upload" onChange={handleBackgroundImageUpload('teamHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('team-hero-upload')?.click()} title="Upload image">
@@ -499,7 +489,7 @@ export function AdminSettingsPage() {
                           id="programs-hero"
                           value={appearanceData.programsHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, programsHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="programs-hero-upload" onChange={handleBackgroundImageUpload('programsHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('programs-hero-upload')?.click()} title="Upload image">
@@ -530,7 +520,7 @@ export function AdminSettingsPage() {
                           id="projects-hero"
                           value={appearanceData.projectsHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, projectsHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="projects-hero-upload" onChange={handleBackgroundImageUpload('projectsHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('projects-hero-upload')?.click()} title="Upload image">
@@ -561,7 +551,7 @@ export function AdminSettingsPage() {
                           id="news-hero"
                           value={appearanceData.newsHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, newsHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="news-hero-upload" onChange={handleBackgroundImageUpload('newsHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('news-hero-upload')?.click()} title="Upload image">
@@ -592,7 +582,7 @@ export function AdminSettingsPage() {
                           id="impact-hero"
                           value={appearanceData.impactStoriesHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, impactStoriesHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="impact-hero-upload" onChange={handleBackgroundImageUpload('impactStoriesHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('impact-hero-upload')?.click()} title="Upload image">
@@ -623,7 +613,7 @@ export function AdminSettingsPage() {
                           id="partners-hero"
                           value={appearanceData.partnersHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, partnersHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="partners-hero-upload" onChange={handleBackgroundImageUpload('partnersHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('partners-hero-upload')?.click()} title="Upload image">
@@ -654,7 +644,7 @@ export function AdminSettingsPage() {
                           id="contact-hero"
                           value={appearanceData.contactHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, contactHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="contact-hero-upload" onChange={handleBackgroundImageUpload('contactHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('contact-hero-upload')?.click()} title="Upload image">
@@ -685,7 +675,7 @@ export function AdminSettingsPage() {
                           id="getinvolved-hero"
                           value={appearanceData.getInvolvedHeroBackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, getInvolvedHeroBackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="getinvolved-hero-upload" onChange={handleBackgroundImageUpload('getInvolvedHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('getinvolved-hero-upload')?.click()} title="Upload image">
@@ -716,7 +706,7 @@ export function AdminSettingsPage() {
                           id="home-cta"
                           value={appearanceData.homeCTABackground}
                           onChange={(e) => setAppearanceData({ ...appearanceData, homeCTABackground: e.target.value })}
-                          placeholder="https://... or upload below"
+                          placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="home-cta-upload" onChange={handleBackgroundImageUpload('homeCTABackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('home-cta-upload')?.click()} title="Upload image">
