@@ -92,8 +92,7 @@ export function AdminSettingsPage() {
     toast.success("Organization settings updated successfully!");
   };
 
-  const handleSaveAppearance = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSaveAppearance = async () => {
     try {
       await updateAppearanceSettings(appearanceData);
       toast.success("Appearance settings saved successfully!");
@@ -756,12 +755,12 @@ export function AdminSettingsPage() {
 
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                   <p className="text-sm text-green-800">
-                    <strong>Note:</strong> After saving appearance settings, refresh the page to see the changes take effect.
+                    <strong>Note:</strong> Changes are saved to the backend and reflect across the site immediately.
                   </p>
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" className="bg-green-600 hover:bg-green-700">
+                  <Button type="button" onClick={handleSaveAppearance} className="bg-green-600 hover:bg-green-700">
                     <Save className="w-4 h-4 mr-2" />
                     Save Background Images
                   </Button>
