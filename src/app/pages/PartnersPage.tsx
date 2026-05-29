@@ -73,17 +73,16 @@ export function PartnersPage() {
             {internationalPartners.map((partner) => (
               <div
                 key={partner.id}
-                className={`flex flex-col items-center justify-center p-8 rounded-lg transition-shadow ${partner.logo ? '' : 'bg-gray-50 hover:shadow-lg border-2 border-transparent hover:border-green-200'}`}
+                className="flex flex-col items-center justify-center p-6 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
               >
-                {partner.logo ? (
+                {partner.logo && (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-20 w-auto object-contain"
+                    className="h-16 w-auto object-contain mb-3"
                   />
-                ) : (
-                  <span className="text-lg font-bold text-gray-600 text-center">{partner.name}</span>
                 )}
+                <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
               </div>
             ))}
           </div>
@@ -103,17 +102,16 @@ export function PartnersPage() {
             {governmentPartners.map((partner) => (
               <div
                 key={partner.id}
-                className={`flex flex-col items-center justify-center p-6 rounded-lg transition-shadow ${partner.logo ? '' : 'bg-white shadow-md hover:shadow-lg'}`}
+                className="flex flex-col items-center justify-center p-6 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
               >
-                {partner.logo ? (
+                {partner.logo && (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-18 w-auto object-contain"
+                    className="h-14 w-auto object-contain mb-3"
                   />
-                ) : (
-                  <span className="text-base font-semibold text-gray-700 text-center">{partner.name}</span>
                 )}
+                <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
               </div>
             ))}
           </div>
@@ -133,17 +131,16 @@ export function PartnersPage() {
             {localPartners.map((partner) => (
               <div
                 key={partner.id}
-                className={`flex flex-col items-center justify-center p-6 rounded-lg transition-shadow ${partner.logo ? '' : 'bg-green-50 hover:shadow-lg'}`}
+                className="flex flex-col items-center justify-center p-6 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
               >
-                {partner.logo ? (
+                {partner.logo && (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-18 w-auto object-contain"
+                    className="h-14 w-auto object-contain mb-3"
                   />
-                ) : (
-                  <span className="text-base font-semibold text-green-700 text-center">{partner.name}</span>
                 )}
+                <span className="text-sm font-semibold text-green-700 text-center">{partner.name}</span>
               </div>
             ))}
           </div>

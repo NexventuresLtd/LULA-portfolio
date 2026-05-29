@@ -106,20 +106,6 @@ function HomePage() {
     ]
   };
 
-  // Slider settings for partners carousel
-  const partnersCarouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    pauseOnHover: true,
-    arrows: false,
-    className: 'homepage-carousel partners-carousel',
-  };
-
   // Get featured partners from ContentContext
   const featuredPartners = partners.filter(p => p.featured);
 
@@ -309,43 +295,24 @@ function HomePage() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl text-center mb-8 sm:mb-12 text-gray-900">{t('home.partners')}</h2>
           {featuredPartners.length > 0 ? (
-            <>
-              {/* Desktop Grid */}
-              <div className="hidden sm:flex flex-wrap justify-center gap-6">
-                {featuredPartners.map((partner) => (
+            <div className="overflow-hidden">
+              <div className="flex animate-marquee gap-8 whitespace-nowrap">
+                {[...featuredPartners, ...featuredPartners].map((partner, i) => (
                   <div
-                    key={partner.id}
-                    className={`rounded-2xl px-6 py-8 flex items-center justify-center transition-colors w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1rem)] ${partner.logo ? '' : 'border border-gray-100 bg-gray-50 hover:bg-gray-100'}`}
+                    key={`${partner.id}-${i}`}
+                    className="flex-shrink-0 w-48 h-28 rounded-xl border border-gray-200 flex items-center justify-center px-4"
                   >
                     {partner.logo ? (
-                      <img src={partner.logo} alt={partner.name} className="h-20 w-auto max-w-full object-contain" />
+                      <img src={partner.logo} alt={partner.name} className="h-16 w-auto max-w-full object-contain" />
                     ) : (
-                      <p className="text-2xl font-semibold tracking-tight text-gray-500 sm:text-3xl text-center">
+                      <p className="text-base font-semibold text-gray-500 text-center whitespace-normal">
                         {partner.name}
                       </p>
                     )}
                   </div>
                 ))}
               </div>
-              {/* Mobile Carousel */}
-              <div className="sm:hidden">
-                <Slider {...partnersCarouselSettings}>
-                  {featuredPartners.map((partner) => (
-                    <div key={partner.id} className="px-3">
-                      <div className={`rounded-2xl px-6 py-8 flex items-center justify-center transition-colors ${partner.logo ? '' : 'border border-gray-100 bg-gray-50 hover:bg-gray-100'}`}>
-                        {partner.logo ? (
-                          <img src={partner.logo} alt={partner.name} className="h-16 w-auto max-w-full object-contain" />
-                        ) : (
-                          <p className="text-xl font-semibold tracking-tight text-gray-500 text-center">
-                            {partner.name}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </Slider>
-              </div>
-            </>
+            </div>
           ) : (
             <div className="text-center text-gray-400">No featured partners to display</div>
           )}
