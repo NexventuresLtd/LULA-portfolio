@@ -8,7 +8,7 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Label } from "../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
-import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, CheckCircle, MessageCircle } from "lucide-react";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -171,6 +171,15 @@ export function ContactPage() {
                   <CardContent>
                     <p className="text-gray-600">{orgSettings.phone}</p>
                     <p className="text-sm text-gray-500 mt-1">Monday - Friday, 8am - 5pm EAT</p>
+                    <a
+                      href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-colors"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      Chat on WhatsApp
+                    </a>
                   </CardContent>
                 </Card>
 
