@@ -6,10 +6,17 @@ import NGOFooter from '../components/lula/LULAFooter';
 export default function Root() {
   const location = useLocation();
 
-  // Scroll to top on route change
+  // Scroll to hash or top on route change
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    if (location.hash) {
+      setTimeout(() => {
+        const el = document.querySelector(location.hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname, location.hash]);
 
   return (
     <div className="min-h-screen flex flex-col">
