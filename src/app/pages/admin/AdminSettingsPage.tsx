@@ -93,8 +93,11 @@ export function AdminSettingsPage() {
   };
 
   const handleSaveAppearance = async () => {
+    const merged = { ...appearanceSettings, ...Object.fromEntries(
+      Object.entries(appearanceData).filter(([_, v]) => v !== '')
+    )};
     try {
-      await updateAppearanceSettings(appearanceData);
+      await updateAppearanceSettings(merged);
       toast.success("Appearance settings saved successfully!");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to save appearance settings.");
@@ -118,7 +121,9 @@ export function AdminSettingsPage() {
       const imageUrl = `${import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org'}${data.url}`;
       const updated = { ...appearanceData, [fieldName]: imageUrl };
       setAppearanceData(updated);
-      await updateAppearanceSettings(updated);
+      await updateAppearanceSettings({ ...appearanceSettings, ...Object.fromEntries(
+        Object.entries(updated).filter(([_, v]) => v !== '')
+      )});
       toast.success('Image uploaded and saved!');
     } catch {
       toast.error('Failed to upload image. Please try again.');
@@ -130,10 +135,15 @@ export function AdminSettingsPage() {
     setAppearanceData(updated);
   };
 
-  const handleImageUrlBlur = async (fieldName: keyof typeof appearanceData) => {
-    try {
-      await updateAppearanceSettings(appearanceData);
-    } catch {}
+  const handleImageUrlBlur = async () => {
+    const nonEmpty = Object.fromEntries(
+      Object.entries(appearanceData).filter(([_, v]) => v !== '')
+    );
+    if (Object.keys(nonEmpty).length > 0) {
+      try {
+        await updateAppearanceSettings({ ...appearanceSettings, ...nonEmpty });
+      } catch {}
+    }
   };
 
 
@@ -350,7 +360,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="home-hero"
                           value={appearanceData.homeHeroBackground}
-                          onChange={(e) => handleImageUrlChange("homeHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("homeHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("homeHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input
@@ -397,7 +407,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="about-hero"
                           value={appearanceData.aboutHeroBackground}
-                          onChange={(e) => handleImageUrlChange("aboutHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("aboutHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("aboutHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input
@@ -444,7 +454,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="about-story"
                           value={appearanceData.aboutStoryBackground}
-                          onChange={(e) => handleImageUrlChange("aboutStoryBackground", e.target.value)} onBlur={() => handleImageUrlBlur("aboutStoryBackground")}
+                          onChange={(e) => handleImageUrlChange("aboutStoryBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input
@@ -491,7 +501,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="team-hero"
                           value={appearanceData.teamHeroBackground}
-                          onChange={(e) => handleImageUrlChange("teamHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("teamHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("teamHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="team-hero-upload" onChange={handleImageUpload('teamHeroBackground')} />
@@ -522,7 +532,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="programs-hero"
                           value={appearanceData.programsHeroBackground}
-                          onChange={(e) => handleImageUrlChange("programsHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("programsHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("programsHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="programs-hero-upload" onChange={handleImageUpload('programsHeroBackground')} />
@@ -553,7 +563,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="projects-hero"
                           value={appearanceData.projectsHeroBackground}
-                          onChange={(e) => handleImageUrlChange("projectsHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("projectsHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("projectsHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="projects-hero-upload" onChange={handleImageUpload('projectsHeroBackground')} />
@@ -584,7 +594,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="news-hero"
                           value={appearanceData.newsHeroBackground}
-                          onChange={(e) => handleImageUrlChange("newsHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("newsHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("newsHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="news-hero-upload" onChange={handleImageUpload('newsHeroBackground')} />
@@ -615,7 +625,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="impact-hero"
                           value={appearanceData.impactStoriesHeroBackground}
-                          onChange={(e) => handleImageUrlChange("impactStoriesHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("impactStoriesHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("impactStoriesHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="impact-hero-upload" onChange={handleImageUpload('impactStoriesHeroBackground')} />
@@ -646,7 +656,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="partners-hero"
                           value={appearanceData.partnersHeroBackground}
-                          onChange={(e) => handleImageUrlChange("partnersHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("partnersHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("partnersHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="partners-hero-upload" onChange={handleImageUpload('partnersHeroBackground')} />
@@ -677,7 +687,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="contact-hero"
                           value={appearanceData.contactHeroBackground}
-                          onChange={(e) => handleImageUrlChange("contactHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("contactHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("contactHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="contact-hero-upload" onChange={handleImageUpload('contactHeroBackground')} />
@@ -708,7 +718,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="getinvolved-hero"
                           value={appearanceData.getInvolvedHeroBackground}
-                          onChange={(e) => handleImageUrlChange("getInvolvedHeroBackground", e.target.value)} onBlur={() => handleImageUrlBlur("getInvolvedHeroBackground")}
+                          onChange={(e) => handleImageUrlChange("getInvolvedHeroBackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="getinvolved-hero-upload" onChange={handleImageUpload('getInvolvedHeroBackground')} />
@@ -739,7 +749,7 @@ export function AdminSettingsPage() {
                         <Input
                           id="home-cta"
                           value={appearanceData.homeCTABackground}
-                          onChange={(e) => handleImageUrlChange("homeCTABackground", e.target.value)} onBlur={() => handleImageUrlBlur("homeCTABackground")}
+                          onChange={(e) => handleImageUrlChange("homeCTABackground", e.target.value)} onBlur={handleImageUrlBlur}
                           placeholder="Paste image URL here"
                         />
                         <input type="file" accept="image/*" className="hidden" id="home-cta-upload" onChange={handleImageUpload('homeCTABackground')} />
