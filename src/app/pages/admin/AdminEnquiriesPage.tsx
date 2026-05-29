@@ -274,7 +274,9 @@ export function AdminEnquiriesPage() {
                 {selectedEnquiry?.phone && (
                   <div className="flex items-center gap-2 text-sm">
                     <Phone className="w-4 h-4 text-gray-400" />
-                    <span>{selectedEnquiry?.phone}</span>
+                    <a href={`https://wa.me/${selectedEnquiry.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">
+                      {selectedEnquiry.phone}
+                    </a>
                   </div>
                 )}
               </div>

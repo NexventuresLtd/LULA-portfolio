@@ -378,7 +378,9 @@ export function AdminInterestsPage() {
                 {selectedInterest?.phone && (
                   <div className="flex items-center gap-2 text-sm">
                     <Phone className="w-4 h-4 text-gray-400" />
-                    <span>{selectedInterest?.phone}</span>
+                    <a href={`https://wa.me/${selectedInterest.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">
+                      {selectedInterest.phone}
+                    </a>
                   </div>
                 )}
               </div>
