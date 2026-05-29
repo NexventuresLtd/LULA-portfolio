@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { User, Building2, Lock, Palette, Save, ExternalLink } from "lucide-react";
+import { User, Building2, Lock, Palette, Save, ExternalLink, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "../../components/ui/textarea";
 import { useContent } from "../../context/ContentContext";
@@ -99,6 +99,28 @@ export function AdminSettingsPage() {
       toast.success("Appearance settings saved successfully!");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to save appearance settings.");
+    }
+  };
+
+  const handleImageUpload = (fieldName: keyof typeof appearanceData) => async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const token = localStorage.getItem('lula-admin-token');
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org'}/api/media/upload`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData,
+      });
+      if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      const imageUrl = `${import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org'}${data.url}`;
+      setAppearanceData({ ...appearanceData, [fieldName]: imageUrl });
+      toast.success('Image uploaded successfully!');
+    } catch {
+      toast.error('Failed to upload image. Please try again.');
     }
   };
 
@@ -324,7 +346,7 @@ export function AdminSettingsPage() {
                           accept="image/*"
                           className="hidden"
                           id="home-hero-upload"
-                          onChange={handleBackgroundImageUpload('homeHeroBackground')}
+                          onChange={handleImageUpload('homeHeroBackground')}
                         />
                         <Button
                           type="button"
@@ -371,7 +393,7 @@ export function AdminSettingsPage() {
                           accept="image/*"
                           className="hidden"
                           id="about-hero-upload"
-                          onChange={handleBackgroundImageUpload('aboutHeroBackground')}
+                          onChange={handleImageUpload('aboutHeroBackground')}
                         />
                         <Button
                           type="button"
@@ -418,7 +440,7 @@ export function AdminSettingsPage() {
                           accept="image/*"
                           className="hidden"
                           id="about-story-upload"
-                          onChange={handleBackgroundImageUpload('aboutStoryBackground')}
+                          onChange={handleImageUpload('aboutStoryBackground')}
                         />
                         <Button
                           type="button"
@@ -460,7 +482,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, teamHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="team-hero-upload" onChange={handleBackgroundImageUpload('teamHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="team-hero-upload" onChange={handleImageUpload('teamHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('team-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -491,7 +513,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, programsHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="programs-hero-upload" onChange={handleBackgroundImageUpload('programsHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="programs-hero-upload" onChange={handleImageUpload('programsHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('programs-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -522,7 +544,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, projectsHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="projects-hero-upload" onChange={handleBackgroundImageUpload('projectsHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="projects-hero-upload" onChange={handleImageUpload('projectsHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('projects-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -553,7 +575,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, newsHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="news-hero-upload" onChange={handleBackgroundImageUpload('newsHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="news-hero-upload" onChange={handleImageUpload('newsHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('news-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -584,7 +606,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, impactStoriesHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="impact-hero-upload" onChange={handleBackgroundImageUpload('impactStoriesHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="impact-hero-upload" onChange={handleImageUpload('impactStoriesHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('impact-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -615,7 +637,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, partnersHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="partners-hero-upload" onChange={handleBackgroundImageUpload('partnersHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="partners-hero-upload" onChange={handleImageUpload('partnersHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('partners-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -646,7 +668,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, contactHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="contact-hero-upload" onChange={handleBackgroundImageUpload('contactHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="contact-hero-upload" onChange={handleImageUpload('contactHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('contact-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -677,7 +699,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, getInvolvedHeroBackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="getinvolved-hero-upload" onChange={handleBackgroundImageUpload('getInvolvedHeroBackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="getinvolved-hero-upload" onChange={handleImageUpload('getInvolvedHeroBackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('getinvolved-hero-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
@@ -708,7 +730,7 @@ export function AdminSettingsPage() {
                           onChange={(e) => setAppearanceData({ ...appearanceData, homeCTABackground: e.target.value })}
                           placeholder="Paste image URL here"
                         />
-                        <input type="file" accept="image/*" className="hidden" id="home-cta-upload" onChange={handleBackgroundImageUpload('homeCTABackground')} />
+                        <input type="file" accept="image/*" className="hidden" id="home-cta-upload" onChange={handleImageUpload('homeCTABackground')} />
                         <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('home-cta-upload')?.click()} title="Upload image">
                           <Upload className="w-4 h-4" />
                         </Button>
