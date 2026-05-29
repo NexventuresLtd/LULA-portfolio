@@ -517,18 +517,14 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     const storyWithAppearance = embedAppearance(rawStory, settings);
     const currentVision = aboutContent.vision || '';
     const visionWithOrg = embedOrgSettings(currentVision, orgSettings);
-    try {
-      await requestJson<any>('/site-content/', {
-        method: 'PUT',
-        body: JSON.stringify({
-          mission: aboutContent.mission,
-          vision: visionWithOrg,
-          story: storyWithAppearance,
-        }),
-      });
-    } catch (error) {
-      console.warn('Failed to persist appearance settings to backend', error);
-    }
+    await requestJson<any>('/site-content/', {
+      method: 'PUT',
+      body: JSON.stringify({
+        mission: aboutContent.mission,
+        vision: visionWithOrg,
+        story: storyWithAppearance,
+      }),
+    });
   };
 
   // --- REMOVED HARDCODED FALLBACK DATA - frontend now relies on backend only ---
@@ -818,12 +814,17 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   };
 
   const updateAboutContent = async (content: Partial<AboutContent>) => {
+    const visionWithOrg = embedOrgSettings(content.vision || aboutContent.vision || '', orgSettings);
+    const storyWithAppearance = Object.keys(appearanceSettings).length > 0
+      ? embedAppearance(content.story || aboutContent.story || '', appearanceSettings)
+      : (content.story || aboutContent.story || '');
+
     const updatedContent = await requestJson<any>('/site-content/', {
       method: 'PUT',
       body: JSON.stringify({
-        mission: content.mission,
-        vision: content.vision,
-        story: content.story,
+        mission: content.mission || aboutContent.mission,
+        vision: visionWithOrg,
+        story: storyWithAppearance,
       }),
     });
 

@@ -94,8 +94,12 @@ export function AdminSettingsPage() {
 
   const handleSaveAppearance = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateAppearanceSettings(appearanceData);
-    toast.success("Appearance settings saved successfully!");
+    try {
+      await updateAppearanceSettings(appearanceData);
+      toast.success("Appearance settings saved successfully!");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to save appearance settings.");
+    }
   };
 
   const handleBackgroundImageUpload = (fieldName: keyof typeof appearanceData) => (e: React.ChangeEvent<HTMLInputElement>) => {
