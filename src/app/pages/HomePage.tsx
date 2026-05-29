@@ -195,7 +195,7 @@ function HomePage() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 text-gray-900">
             {t('home.mission.heading')}
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed text-justify">
             {t('home.mission.text')}
           </p>
         </div>
@@ -311,14 +311,14 @@ function HomePage() {
           {featuredPartners.length > 0 ? (
             <>
               {/* Desktop Grid */}
-              <div className="hidden sm:flex flex-wrap justify-center gap-4">
+              <div className="hidden sm:flex flex-wrap justify-center gap-6">
                 {featuredPartners.map((partner) => (
                   <div
                     key={partner.id}
-                    className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 flex items-center justify-center transition-colors hover:bg-gray-100 w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
+                    className={`rounded-2xl px-6 py-8 flex items-center justify-center transition-colors w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1rem)] ${partner.logo ? '' : 'border border-gray-100 bg-gray-50 hover:bg-gray-100'}`}
                   >
                     {partner.logo ? (
-                      <img src={partner.logo} alt={partner.name} className="h-16 w-auto max-w-full object-contain" />
+                      <img src={partner.logo} alt={partner.name} className="h-20 w-auto max-w-full object-contain" />
                     ) : (
                       <p className="text-2xl font-semibold tracking-tight text-gray-500 sm:text-3xl text-center">
                         {partner.name}
@@ -332,9 +332,9 @@ function HomePage() {
                 <Slider {...partnersCarouselSettings}>
                   {featuredPartners.map((partner) => (
                     <div key={partner.id} className="px-3">
-                      <div className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 flex items-center justify-center transition-colors hover:bg-gray-100">
+                      <div className={`rounded-2xl px-6 py-8 flex items-center justify-center transition-colors ${partner.logo ? '' : 'border border-gray-100 bg-gray-50 hover:bg-gray-100'}`}>
                         {partner.logo ? (
-                          <img src={partner.logo} alt={partner.name} className="h-14 w-auto max-w-full object-contain" />
+                          <img src={partner.logo} alt={partner.name} className="h-16 w-auto max-w-full object-contain" />
                         ) : (
                           <p className="text-xl font-semibold tracking-tight text-gray-500 text-center">
                             {partner.name}

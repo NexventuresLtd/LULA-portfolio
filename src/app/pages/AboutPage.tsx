@@ -115,7 +115,7 @@ function AboutPage() {
             <Card className="border-2 border-green-100 hover:shadow-xl transition-shadow">
               <CardContent className="p-8">
                 <h2 className="text-3xl mb-4 text-gray-900">{t('common.ourMission')}</h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
+                <p className="text-lg text-gray-600 leading-relaxed text-justify">
                   {aboutContent.mission}
                 </p>
               </CardContent>
@@ -124,7 +124,7 @@ function AboutPage() {
             <Card className="border-2 border-green-100 hover:shadow-xl transition-shadow">
               <CardContent className="p-8">
                 <h2 className="text-3xl mb-4 text-gray-900">{t('common.ourVision')}</h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
+                <p className="text-lg text-gray-600 leading-relaxed text-justify">
                   {aboutContent.vision}
                 </p>
               </CardContent>
@@ -146,7 +146,7 @@ function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-green-900/40 to-transparent"></div>
             </div>
             <div
-              className="prose prose-lg max-w-none"
+              className="prose prose-lg max-w-none text-justify"
               dangerouslySetInnerHTML={{ __html: aboutContent.story }}
             />
           </div>

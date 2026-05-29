@@ -3,7 +3,7 @@ import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router";
-import { Handshake, Building2 } from "lucide-react";
+import { Handshake } from "lucide-react";
 import { useContent } from "../context/ContentContext";
 
 export function PartnersPage() {
@@ -73,20 +73,17 @@ export function PartnersPage() {
             {internationalPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow border-2 border-transparent hover:border-green-200"
+                className={`flex flex-col items-center justify-center p-8 rounded-lg transition-shadow ${partner.logo ? '' : 'bg-gray-50 hover:shadow-lg border-2 border-transparent hover:border-green-200'}`}
               >
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-16 w-auto object-contain mb-3"
+                    className="h-20 w-auto object-contain"
                   />
                 ) : (
-                  <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center mb-3">
-                    <Building2 className="w-8 h-8 text-gray-400" />
-                  </div>
+                  <span className="text-lg font-bold text-gray-600 text-center">{partner.name}</span>
                 )}
-                <span className="text-lg font-bold text-gray-600 text-center">{partner.name}</span>
               </div>
             ))}
           </div>
@@ -106,20 +103,17 @@ export function PartnersPage() {
             {governmentPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                className={`flex flex-col items-center justify-center p-6 rounded-lg transition-shadow ${partner.logo ? '' : 'bg-white shadow-md hover:shadow-lg'}`}
               >
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-14 w-auto object-contain mb-3"
+                    className="h-18 w-auto object-contain"
                   />
                 ) : (
-                  <div className="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
-                    <Building2 className="w-7 h-7 text-gray-400" />
-                  </div>
+                  <span className="text-base font-semibold text-gray-700 text-center">{partner.name}</span>
                 )}
-                <span className="text-base font-semibold text-gray-700 text-center">{partner.name}</span>
               </div>
             ))}
           </div>
@@ -139,20 +133,17 @@ export function PartnersPage() {
             {localPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-6 bg-green-50 rounded-lg hover:shadow-lg transition-shadow"
+                className={`flex flex-col items-center justify-center p-6 rounded-lg transition-shadow ${partner.logo ? '' : 'bg-green-50 hover:shadow-lg'}`}
               >
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-14 w-auto object-contain mb-3"
+                    className="h-18 w-auto object-contain"
                   />
                 ) : (
-                  <div className="w-14 h-14 bg-green-200 rounded-lg flex items-center justify-center mb-3">
-                    <Building2 className="w-7 h-7 text-green-600" />
-                  </div>
+                  <span className="text-base font-semibold text-green-700 text-center">{partner.name}</span>
                 )}
-                <span className="text-base font-semibold text-green-700 text-center">{partner.name}</span>
               </div>
             ))}
           </div>

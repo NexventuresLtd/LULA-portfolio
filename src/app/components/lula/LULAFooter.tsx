@@ -37,7 +37,7 @@ export default function NGOFooter() {
                 className="h-16 w-auto max-w-[230px] object-contain brightness-0 invert sm:h-20 sm:max-w-[280px]"
               />
             </div>
-            <p className="text-green-100 mb-6 max-w-md">
+            <p className="text-green-100 mb-6 max-w-md text-justify">
               {t('footer.description')}
             </p>
             <div className="flex gap-3">
