@@ -349,7 +349,7 @@ export function AdminInterestsPage() {
       </Dialog>
 
       <Dialog open={selectedInterest !== null} onOpenChange={() => setSelectedInterest(null)}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-5xl">
           <DialogHeader>
             <DialogTitle>{selectedInterest?.name}</DialogTitle>
             <DialogDescription>

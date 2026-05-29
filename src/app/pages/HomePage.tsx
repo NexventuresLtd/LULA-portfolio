@@ -146,7 +146,7 @@ function HomePage() {
           alt="Children in community"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-20 max-w-4xl mx-auto px-4 text-center text-white">
+        <div className="relative z-20 max-w-5xl mx-auto px-4 text-center text-white">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 leading-tight font-bold">
             {t('hero.title')}
           </h1>
@@ -171,7 +171,7 @@ function HomePage() {
 
       {/* Stats Section */}
       <section className="py-8 sm:py-10 md:py-12 bg-gradient-to-br from-green-50 to-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-md overflow-hidden p-3 sm:p-5 md:p-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-center">
               {stats.map((stat, index) => (
@@ -190,7 +190,7 @@ function HomePage() {
 
       {/* Mission Statement */}
       <section className="py-12 sm:py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <Badge className="mb-4 bg-green-100 text-green-700 hover:bg-green-100 text-xs sm:text-sm">{t('common.ourMission')}</Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 text-gray-900">
             {t('home.mission.heading')}
@@ -203,7 +203,7 @@ function HomePage() {
 
       {/* Featured Projects */}
       <section className="py-16 sm:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl mb-2 sm:mb-4 text-gray-900">{t('home.featuredProjects')}</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600">{t('home.projects.subtitle')}</p>
@@ -259,7 +259,7 @@ function HomePage() {
 
       {/* Impact Stories Carousel */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-green-900 to-green-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl mb-2 sm:mb-4">{t('home.testimonials')}</h2>
             <p className="text-base sm:text-lg md:text-xl text-green-100">{t('home.impact.subtitle')}</p>
@@ -306,7 +306,7 @@ function HomePage() {
 
       {/* Partners */}
       <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl text-center mb-8 sm:mb-12 text-gray-900">{t('home.partners')}</h2>
           {featuredPartners.length > 0 ? (
             <>
@@ -354,7 +354,7 @@ function HomePage() {
 
       {/* Latest News */}
       <section className="py-16 sm:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl mb-2 sm:mb-4 text-gray-900">{t('home.latestNews')}</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600">{t('home.news.subtitle')}</p>
@@ -402,7 +402,7 @@ function HomePage() {
           alt="Join Us"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-20 max-w-4xl mx-auto px-4 text-center text-white">
+        <div className="relative z-20 max-w-5xl mx-auto px-4 text-center text-white">
           <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 font-bold">
             {t('home.cta.title')}
           </h2>

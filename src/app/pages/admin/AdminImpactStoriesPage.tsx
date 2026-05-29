@@ -99,7 +99,7 @@ export function AdminImpactStoriesPage() {
               Add Impact Story
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingStory ? 'Edit Impact Story' : 'Add New Impact Story'}</DialogTitle>
               <DialogDescription>

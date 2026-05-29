@@ -102,7 +102,7 @@ export function TestimonialsSection() {
           </p>
         </div>
 
-        <Carousel className="w-full max-w-5xl mx-auto">
+        <Carousel className="w-full max-w-6xl mx-auto">
           <CarouselContent>
             {innovations.map((innovation, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2 p-2">

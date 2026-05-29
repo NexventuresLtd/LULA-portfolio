@@ -66,7 +66,7 @@ export function NewsPage() {
           alt="News & Publications"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
+        <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
           <div className="mb-8">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
               News & Publications
@@ -77,7 +77,7 @@ export function NewsPage() {
           </div>
 
           {/* Integrated Search & Filter Bar */}
-          <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-3 flex flex-col md:flex-row gap-3">
+          <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl p-3 flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
               <Input
@@ -114,7 +114,7 @@ export function NewsPage() {
       </section>
 
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           {currentArticles.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">No articles found matching your search.</p>

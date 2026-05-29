@@ -95,7 +95,7 @@ function AboutPage() {
           alt="Community gathering"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-20 max-w-4xl mx-auto px-4 text-center text-white">
+        <div className="relative z-20 max-w-5xl mx-auto px-4 text-center text-white">
           <Badge className="mb-4 bg-white/20 text-white border-white/30">
             {t('nav.about')}
           </Badge>
@@ -110,7 +110,7 @@ function AboutPage() {
 
       {/* Mission & Vision */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="border-2 border-green-100 hover:shadow-xl transition-shadow">
               <CardContent className="p-8">
@@ -135,7 +135,7 @@ function AboutPage() {
 
       {/* Our Story */}
       <section id="story-section" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <img
@@ -155,7 +155,7 @@ function AboutPage() {
 
       {/* Core Values */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl mb-4 text-gray-900">{t('common.ourValues')}</h2>
             <p className="text-xl text-gray-600">{t('about.valuesSubtitle')}</p>
@@ -178,7 +178,7 @@ function AboutPage() {
 
       {/* Timeline */}
       <section className="py-20 bg-gradient-to-br from-green-50 to-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl mb-4 text-gray-900">{t('about.journey')}</h2>
             <p className="text-xl text-gray-600">{t('about.journeySubtitle')}</p>
@@ -204,7 +204,7 @@ function AboutPage() {
 
       {/* Operational Regions */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl mb-4 text-gray-900">{t('about.whereWeWork')}</h2>
             <p className="text-xl text-gray-600">{t('about.whereWeWorkSubtitle')}</p>

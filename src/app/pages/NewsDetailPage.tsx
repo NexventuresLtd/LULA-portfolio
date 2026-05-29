@@ -32,7 +32,7 @@ export function NewsDetailPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <span className="inline-block px-3 py-1 bg-green-500 text-white rounded-full text-sm font-medium mb-4">
               {article.category}
             </span>
@@ -48,7 +48,7 @@ export function NewsDetailPage() {
       </section>
 
       <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link to="/news">
             <Button variant="ghost" className="mb-8">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -254,7 +254,7 @@ export function AdminEnquiriesPage() {
       </Dialog>
 
       <Dialog open={selectedEnquiry !== null} onOpenChange={() => setSelectedEnquiry(null)}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-5xl">
           <DialogHeader>
             <DialogTitle>{selectedEnquiry?.subject}</DialogTitle>
             <DialogDescription>

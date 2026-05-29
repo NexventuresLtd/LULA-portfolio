@@ -64,7 +64,7 @@ export function ProjectsPage() {
           alt="Our Projects"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+        <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {t("projects.title")}
@@ -77,7 +77,7 @@ export function ProjectsPage() {
       </section>
 
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="all" className="mb-12">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-4">
               <TabsTrigger value="all" onClick={() => setFilter("all")}>{t("projects.all")}</TabsTrigger>

@@ -24,7 +24,7 @@ export function TeamPage() {
           alt="Our Team"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+        <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {t('team.title')}
@@ -37,7 +37,7 @@ export function TeamPage() {
       </section>
 
       <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('team.leadership')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -91,7 +91,7 @@ export function TeamPage() {
       </section>
 
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('team.staff')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -129,7 +129,7 @@ export function TeamPage() {
       </section>
 
       <section className="py-16 bg-green-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-6">{t('team.joinTitle')}</h2>
           <p className="text-xl text-green-100 mb-8">
             {t('team.joinText')}
