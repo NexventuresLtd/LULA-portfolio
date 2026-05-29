@@ -16,7 +16,7 @@ A responsive React + Vite landing page for LULA, a community development initiat
 
 ## Admin Access
 
-- **Admin URL:** [https://lula-asbl.org/admin/login](https://lula-asbl.org/admin/login)
+- **Admin URL:** [https://lula-asbl.org/login](https://lula-asbl.org/login)
 - **Email:** dev@lula-asbl.org
 - **Password:** DevAdmin2025!
 
