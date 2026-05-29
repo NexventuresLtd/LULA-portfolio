@@ -100,7 +100,7 @@ export function GetInvolvedPage() {
       <section id="hero-section" className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-black/60 z-10" />
         <img
-          src={appearanceSettings.getInvolvedHeroBackground || "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
+          src={appearanceSettings.getInvolvedHeroBackground}
           alt="Get Involved"
           className="absolute inset-0 w-full h-full object-cover"
         />

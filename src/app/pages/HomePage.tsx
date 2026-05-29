@@ -17,7 +17,7 @@ function HomePage() {
   const { impactStories, projects, news, partners, appearanceSettings } = useContent();
   const [viewportWidth, setViewportWidth] = useState(1024);
 
-  const heroBackground = appearanceSettings.homeHeroBackground || "https://images.unsplash.com/photo-1509099836639-18ba1795216d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
+  const heroBackground = appearanceSettings.homeHeroBackground || "";
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);
@@ -365,7 +365,7 @@ function HomePage() {
       <section id="cta" className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-black/40 z-10" />
         <img
-          src={appearanceSettings.homeCTABackground || "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
+          src={appearanceSettings.homeCTABackground}
           alt="Join Us"
           className="absolute inset-0 w-full h-full object-cover"
         />

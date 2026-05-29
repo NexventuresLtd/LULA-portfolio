@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { User, Building2, Lock, Palette, Save, ExternalLink, Upload } from "lucide-react";
+import { User, Building2, Lock, Palette, Save, ExternalLink, Upload, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "../../components/ui/textarea";
 import { useContent } from "../../context/ContentContext";
@@ -101,6 +101,30 @@ export function AdminSettingsPage() {
       toast.success("Appearance settings saved successfully!");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to save appearance settings.");
+    }
+  };
+
+  const handleRevertToDefault = async () => {
+    const defaults = {
+      homeHeroBackground: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      aboutHeroBackground: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      aboutStoryBackground: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      teamHeroBackground: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      contactHeroBackground: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      programsHeroBackground: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      projectsHeroBackground: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      newsHeroBackground: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      impactStoriesHeroBackground: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      partnersHeroBackground: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      getInvolvedHeroBackground: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      homeCTABackground: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+    };
+    setAppearanceData(defaults);
+    try {
+      await updateAppearanceSettings(defaults);
+      toast.success('Reverted to default images!');
+    } catch (error) {
+      toast.error('Failed to revert. Please try again.');
     }
   };
 
@@ -769,7 +793,11 @@ export function AdminSettingsPage() {
                   </p>
                 </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-3">
+                  <Button type="button" variant="outline" onClick={handleRevertToDefault} className="gap-2">
+                    <RotateCcw className="w-4 h-4" />
+                    Revert to Default
+                  </Button>
                   <Button type="button" onClick={handleSaveAppearance} className="bg-green-600 hover:bg-green-700">
                     <Save className="w-4 h-4 mr-2" />
                     Save Background Images

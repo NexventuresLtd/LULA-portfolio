@@ -10,8 +10,8 @@ function AboutPage() {
   const { t } = useLanguage();
   useSEO("About Us - Our Mission & Story", "Learn about Let Us Live Association (LULA), a community-based humanitarian organization with 100+ staff serving 850,000 beneficiaries in North and South Kivu, DR Congo.");
   const { aboutContent, appearanceSettings } = useContent();
-  const heroBackground = appearanceSettings.aboutHeroBackground || "https://images.unsplash.com/photo-1515658323406-25d61c141a6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
-  const storyBackground = appearanceSettings.aboutStoryBackground || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920";
+  const heroBackground = appearanceSettings.aboutHeroBackground || "";
+  const storyBackground = appearanceSettings.aboutStoryBackground || "";
 
   const coreValues = [
     {

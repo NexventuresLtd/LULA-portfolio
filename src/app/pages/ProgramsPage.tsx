@@ -26,7 +26,7 @@ export function ProgramsPage() {
       <section id="hero-section" className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
         <img
-          src={appearanceSettings.programsHeroBackground || "https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
+          src={appearanceSettings.programsHeroBackground}
           alt="Our Programs"
           className="absolute inset-0 w-full h-full object-cover"
         />

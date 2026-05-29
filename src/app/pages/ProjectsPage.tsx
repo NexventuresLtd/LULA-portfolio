@@ -60,7 +60,7 @@ export function ProjectsPage() {
       <section id="hero-section" className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
         <img
-          src={appearanceSettings.projectsHeroBackground || "https://images.unsplash.com/photo-1542810634-71277d95dcbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
+          src={appearanceSettings.projectsHeroBackground}
           alt="Our Projects"
           className="absolute inset-0 w-full h-full object-cover"
         />
