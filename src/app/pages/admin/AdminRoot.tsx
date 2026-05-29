@@ -25,6 +25,11 @@ export default function AdminRoot() {
   useEffect(() => {
     const token = localStorage.getItem(TOKEN_KEY);
 
+    // Set noindex for admin pages
+    let robotsMeta = document.querySelector('meta[name="robots"]') as HTMLMetaElement;
+    if (robotsMeta) robotsMeta.content = 'noindex, nofollow';
+    document.title = 'Admin Dashboard | LULA';
+
     // No token — redirect to login
     if (!token) {
       navigate('/admin/login', { replace: true });

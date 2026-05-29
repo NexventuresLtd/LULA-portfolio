@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO';
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { useLanguage } from "../context/LanguageProvider";
@@ -19,6 +20,7 @@ import {
 
 export function NewsPage() {
   const { t } = useLanguage();
+  useSEO("News & Updates", "Stay informed about LULA latest programs, partnerships, and community impact in Eastern DR Congo.");
   const { news } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');

@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO';
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useLanguage } from "../context/LanguageProvider";
@@ -12,6 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 
 export function GetInvolvedPage() {
   const { t } = useLanguage();
+  useSEO("Get Involved - Donate, Volunteer or Partner", "Support LULA through donations, volunteering, or partnerships. Your contribution transforms lives in Eastern DR Congo.");
   const { addInterest } = useContent();
   const navigate = useNavigate();
   const [donationAmount, setDonationAmount] = useState("");

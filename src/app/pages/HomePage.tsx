@@ -9,9 +9,11 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useEffect, useState } from 'react';
+import { useSEO } from '../hooks/useSEO';
 
 function HomePage() {
   const { t } = useLanguage();
+  useSEO("Empowering Communities in Eastern DR Congo", "LULA protects children, empowers women, and strengthens communities in Eastern DR Congo through HIV prevention, health education, and sustainable development programs in North and South Kivu.");
   const { impactStories, projects, news, partners, appearanceSettings } = useContent();
   const [viewportWidth, setViewportWidth] = useState(1024);
 

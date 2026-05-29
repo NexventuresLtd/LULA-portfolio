@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO';
 import { useState } from "react";
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
@@ -13,6 +14,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function ContactPage() {
   const { t } = useLanguage();
+  useSEO("Contact Us - Get in Touch", "Contact Let Us Live Association in Goma, North Kivu, DR Congo. Reach out to learn about our humanitarian work or get involved.");
   const { addEnquiry, orgSettings } = useContent();
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [emailError, setEmailError] = useState("");

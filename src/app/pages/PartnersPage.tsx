@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO';
 import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -7,6 +8,7 @@ import { useContent } from "../context/ContentContext";
 
 export function PartnersPage() {
   const { t } = useLanguage();
+  useSEO("Our Partners - Collaborations for Impact", "LULA partners with ViiV Healthcare, AWDF, Empower Health Organization and others to maximize humanitarian impact in Eastern DR Congo.");
   const { partners } = useContent();
 
   // Filter partners by type

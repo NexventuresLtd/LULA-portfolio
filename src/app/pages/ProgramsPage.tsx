@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO';
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
@@ -7,6 +8,7 @@ import { Link } from "react-router";
 
 export function ProgramsPage() {
   const { t } = useLanguage();
+  useSEO("Programs - HIV Prevention, Child Protection & Women Empowerment", "Explore LULA programs: HIV prevention, sexual reproductive health, child protection, women empowerment, peacebuilding, and community health in Eastern DRC.");
   const { programs } = useContent();
 
   const iconMap: { [key: string]: any } = {

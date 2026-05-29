@@ -1,3 +1,4 @@
+import { useSEO } from '../hooks/useSEO';
 import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent } from "../components/ui/card";
 import { Mail, Linkedin, User } from "lucide-react";
@@ -7,6 +8,7 @@ import { useContent } from "../context/ContentContext";
 
 export function TeamPage() {
   const { t } = useLanguage();
+  useSEO("Our Team - Leadership & Staff", "Meet the dedicated team behind LULA: professionals committed to transforming lives through humanitarian work in Eastern DR Congo.");
   const { teamMembers, appearanceSettings } = useContent();
   const heroBackground = appearanceSettings.teamHeroBackground || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c";
 
