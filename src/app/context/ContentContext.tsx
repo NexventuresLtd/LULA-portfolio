@@ -491,16 +491,17 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   const updateOrgSettings = async (settings: Partial<OrgSettings>) => {
     const updated = { ...orgSettings, ...settings };
     setOrgSettings(updated);
-    // Persist to backend by embedding in vision field
     const currentVision = aboutContent.vision || '';
     const visionWithOrg = embedOrgSettings(currentVision, updated);
+    const rawStory = aboutContent.story || '';
+    const storyWithAppearance = Object.keys(appearanceSettings).length > 0 ? embedAppearance(rawStory, appearanceSettings) : rawStory;
     try {
       await requestJson<any>('/site-content/', {
         method: 'PUT',
         body: JSON.stringify({
           mission: aboutContent.mission,
           vision: visionWithOrg,
-          story: aboutContent.story,
+          story: storyWithAppearance,
         }),
       });
     } catch (error) {
@@ -512,12 +513,11 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
   const updateAppearanceSettings = async (settings: Record<string, string>) => {
     setAppearanceSettings(settings);
-    // Persist to backend by embedding in story field
     const rawStory = aboutContent.story || '';
     const storyWithAppearance = embedAppearance(rawStory, settings);
+    const currentVision = aboutContent.vision || '';
+    const visionWithOrg = embedOrgSettings(currentVision, orgSettings);
     try {
-      const currentVision = aboutContent.vision || '';
-      const visionWithOrg = embedOrgSettings(currentVision, orgSettings);
       await requestJson<any>('/site-content/', {
         method: 'PUT',
         body: JSON.stringify({
