@@ -315,11 +315,15 @@ function HomePage() {
                 {featuredPartners.map((partner) => (
                   <div
                     key={partner.id}
-                    className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 text-center transition-colors hover:bg-gray-100 w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
+                    className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 flex items-center justify-center transition-colors hover:bg-gray-100 w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.75rem)]"
                   >
-                    <p className="text-2xl font-semibold tracking-tight text-gray-500 sm:text-3xl">
-                      {partner.name}
-                    </p>
+                    {partner.logo ? (
+                      <img src={partner.logo} alt={partner.name} className="h-16 w-auto max-w-full object-contain" />
+                    ) : (
+                      <p className="text-2xl font-semibold tracking-tight text-gray-500 sm:text-3xl text-center">
+                        {partner.name}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -328,10 +332,14 @@ function HomePage() {
                 <Slider {...partnersCarouselSettings}>
                   {featuredPartners.map((partner) => (
                     <div key={partner.id} className="px-3">
-                      <div className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 text-center transition-colors hover:bg-gray-100">
-                        <p className="text-xl font-semibold tracking-tight text-gray-500">
-                          {partner.name}
-                        </p>
+                      <div className="rounded-2xl border border-gray-100 bg-gray-50 px-6 py-8 flex items-center justify-center transition-colors hover:bg-gray-100">
+                        {partner.logo ? (
+                          <img src={partner.logo} alt={partner.name} className="h-14 w-auto max-w-full object-contain" />
+                        ) : (
+                          <p className="text-xl font-semibold tracking-tight text-gray-500 text-center">
+                            {partner.name}
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}

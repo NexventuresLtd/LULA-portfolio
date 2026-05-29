@@ -84,7 +84,7 @@ const toPartner = (item: any, featuredOverride?: boolean): Partner => ({
   name: item.name || 'Partner',
   type: item.category === 'government' ? 'government' : item.category === 'local' ? 'local' : 'international',
   logo: item.logo_url || undefined,
-  featured: typeof featuredOverride === 'boolean' ? featuredOverride : item.category === 'international',
+  featured: typeof featuredOverride === 'boolean' ? featuredOverride : (item.is_active ?? true),
 });
 
 const fetchJson = async <T,>(url: string, options?: { requireAuth?: boolean }): Promise<T> => {
@@ -159,7 +159,7 @@ const buildPartnerPayload = (partner: Omit<Partner, 'id'>) => ({
   description: '',
   website_url: '',
   category: partner.type,
-  is_active: true,
+  is_active: partner.featured ?? true,
 });
 
 const toProgram = (item: any): Program => ({
