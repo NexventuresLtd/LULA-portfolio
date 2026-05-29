@@ -36,8 +36,16 @@ export function AdminLoginPage() {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || 'Unable to sign in.');
+        let message = 'Unable to sign in.';
+        try {
+          const data = await response.json();
+          if (data.detail === 'Incorrect email/username or password') {
+            message = 'Incorrect email or password. Please try again.';
+          } else if (data.detail) {
+            message = data.detail;
+          }
+        } catch {}
+        throw new Error(message);
       }
 
       const tokenData = await response.json() as { access_token: string; token_type: string };
