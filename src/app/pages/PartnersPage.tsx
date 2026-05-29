@@ -9,7 +9,7 @@ import { useContent } from "../context/ContentContext";
 export function PartnersPage() {
   const { t } = useLanguage();
   useSEO("Our Partners - Collaborations for Impact", "LULA partners with ViiV Healthcare, AWDF, Empower Health Organization and others to maximize humanitarian impact in Eastern DR Congo.");
-  const { partners } = useContent();
+  const { partners, appearanceSettings } = useContent();
 
   // Filter partners by type
   const internationalPartners = partners.filter(p => p.type === 'international');
@@ -44,7 +44,7 @@ export function PartnersPage() {
       <section id="hero-section" className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
         <img
-          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          src={appearanceSettings.partnersHeroBackground || "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
           alt="Our Partners"
           className="absolute inset-0 w-full h-full object-cover"
         />

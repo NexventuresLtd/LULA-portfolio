@@ -21,7 +21,7 @@ import {
 export function NewsPage() {
   const { t } = useLanguage();
   useSEO("News & Updates", "Stay informed about LULA latest programs, partnerships, and community impact in Eastern DR Congo.");
-  const { news } = useContent();
+  const { news, appearanceSettings } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +62,7 @@ export function NewsPage() {
       <section id="hero-section" className="relative h-[500px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
         <img
-          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          src={appearanceSettings.newsHeroBackground || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
           alt="News & Publications"
           className="absolute inset-0 w-full h-full object-cover"
         />

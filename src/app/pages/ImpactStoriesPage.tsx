@@ -17,7 +17,7 @@ import {
 export function ImpactStoriesPage() {
   const { t } = useLanguage();
   useSEO("Impact Stories - Real Stories of Change", "Read real stories from communities served by LULA in Eastern DR Congo. See how our programs transform lives.");
-  const { impactStories } = useContent();
+  const { impactStories, appearanceSettings } = useContent();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
 
@@ -34,7 +34,7 @@ export function ImpactStoriesPage() {
       <section id="hero-section" className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
         <img
-          src="https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          src={appearanceSettings.impactStoriesHeroBackground || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
           alt="Impact Stories"
           className="absolute inset-0 w-full h-full object-cover"
         />

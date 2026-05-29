@@ -9,7 +9,7 @@ import { Link } from "react-router";
 export function ProgramsPage() {
   const { t } = useLanguage();
   useSEO("Programs - HIV Prevention, Child Protection & Women Empowerment", "Explore LULA programs: HIV prevention, sexual reproductive health, child protection, women empowerment, peacebuilding, and community health in Eastern DRC.");
-  const { programs } = useContent();
+  const { programs, appearanceSettings } = useContent();
 
   const iconMap: { [key: string]: any } = {
     'Shield': Shield,
@@ -26,7 +26,7 @@ export function ProgramsPage() {
       <section id="hero-section" className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
         <img
-          src="https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          src={appearanceSettings.programsHeroBackground || "https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
           alt="Our Programs"
           className="absolute inset-0 w-full h-full object-cover"
         />

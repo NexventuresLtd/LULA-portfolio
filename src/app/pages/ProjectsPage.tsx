@@ -16,7 +16,7 @@ import { Link } from "react-router";
 export function ProjectsPage() {
   const { t } = useLanguage();
   useSEO("Projects - Active Interventions in Eastern DRC", "View LULA active projects: Breaking the Cycle, Women SRHR Education, Women Empowerment and more across North and South Kivu refugee camps.");
-  const { projects, addInterest } = useContent();
+  const { projects, addInterest, appearanceSettings } = useContent();
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
@@ -60,7 +60,7 @@ export function ProjectsPage() {
       <section id="hero-section" className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/60 to-green-800/50 z-10" />
         <img
-          src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          src={appearanceSettings.projectsHeroBackground || "https://images.unsplash.com/photo-1542810634-71277d95dcbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
           alt="Our Projects"
           className="absolute inset-0 w-full h-full object-cover"
         />

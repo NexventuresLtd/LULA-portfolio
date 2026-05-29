@@ -365,7 +365,7 @@ function HomePage() {
       <section id="cta" className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-black/40 z-10" />
         <img
-          src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          src={appearanceSettings.homeCTABackground || "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"}
           alt="Join Us"
           className="absolute inset-0 w-full h-full object-cover"
         />
