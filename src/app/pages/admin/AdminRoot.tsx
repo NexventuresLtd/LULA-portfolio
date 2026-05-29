@@ -104,7 +104,7 @@ export default function AdminRoot() {
             <h2 className="text-xl font-bold text-gray-900 mb-2">Session Expired</h2>
             <p className="text-gray-600 mb-6">Your session has expired. Please log in again to continue.</p>
             <div className="flex flex-col gap-3">
-              <Link to="/admin/login">
+              <Link to="/login">
                 <Button className="w-full bg-green-600 hover:bg-green-700">
                   Log In Again
                 </Button>
