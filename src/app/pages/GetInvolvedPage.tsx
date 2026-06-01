@@ -10,13 +10,15 @@ import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
 import { Heart, HandHeart, Handshake, CheckCircle, MessageCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 
 export function GetInvolvedPage() {
   const { t } = useLanguage();
   useSEO("Get Involved - Donate, Volunteer or Partner", "Support LULA through donations, volunteering, or partnerships. Your contribution transforms lives in Eastern DR Congo.");
-  const { addInterest, appearanceSettings } = useContent();
+  const { addInterest, appearanceSettings, orgSettings } = useContent();
   const navigate = useNavigate();
   const [donationAmount, setDonationAmount] = useState("");
+  const [currency, setCurrency] = useState("USD");
   const [isVolunteerDialogOpen, setIsVolunteerDialogOpen] = useState(false);
   const [isPartnerDialogOpen, setIsPartnerDialogOpen] = useState(false);
   const [isDonateDialogOpen, setIsDonateDialogOpen] = useState(false);
@@ -92,7 +94,6 @@ export function GetInvolvedPage() {
     setShowVolunteerSuccess(false);
     setShowPartnerSuccess(false);
     setShowDonateSuccess(false);
-    navigate('/');
   };
 
   return (
@@ -134,19 +135,67 @@ export function GetInvolvedPage() {
               <CardContent>
                 <div className="space-y-6">
                   <div>
-                    <Label htmlFor="custom">Amount</Label>
-                    <Input
-                      id="custom"
-                      placeholder="Enter amount with currency (e.g. 50 USD, 100 EUR)"
-                      className="mt-2"
-                      value={donationAmount}
-                      onChange={(e) => setDonationAmount(e.target.value)}
-                    />
+                    <Label>Quick Select Amount</Label>
+                    <div className="grid grid-cols-3 gap-2 mt-2">
+                      {['10', '25', '50', '100', '250', '500'].map((amt) => (
+                        <Button
+                          key={amt}
+                          type="button"
+                          variant={donationAmount === amt ? 'default' : 'outline'}
+                          onClick={() => setDonationAmount(amt)}
+                          className="h-10"
+                        >
+                          {amt}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
 
-                  <Button size="lg" className="w-full bg-gray-900 hover:bg-black text-white" onClick={() => setIsDonateDialogOpen(true)}>
-                    {t('common.donate')} {donationAmount}
-                  </Button>
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <Label htmlFor="custom">Or Enter Amount</Label>
+                      <Input
+                        id="custom"
+                        placeholder="Enter amount"
+                        className="mt-2"
+                        value={donationAmount}
+                        onChange={(e) => setDonationAmount(e.target.value)}
+                      />
+                    </div>
+                    <div className="w-28">
+                      <Label>Currency</Label>
+                      <Select value={currency} onValueChange={setCurrency}>
+                        <SelectTrigger className="mt-2">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="USD">USD</SelectItem>
+                          <SelectItem value="EUR">EUR</SelectItem>
+                          <SelectItem value="GBP">GBP</SelectItem>
+                          <SelectItem value="CDF">CDF</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {orgSettings.paymentDetails && (
+                    <div className="bg-gray-50 p-4 rounded-lg border">
+                      <h4 className="font-semibold text-gray-900 mb-2">Payment Details</h4>
+                      <p className="text-sm text-gray-600 whitespace-pre-line">{orgSettings.paymentDetails}</p>
+                    </div>
+                  )}
+
+                  <a
+                    href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello LULA, I would like to donate ${donationAmount} ${currency}. Please share payment details.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <Button size="lg" className="w-full bg-green-600 hover:bg-green-700 text-white gap-2">
+                      <MessageCircle className="w-5 h-5" />
+                      Donate {donationAmount ? `${donationAmount} ${currency}` : ''} via WhatsApp
+                    </Button>
+                  </a>
                 </div>
               </CardContent>
             </Card>

@@ -406,6 +406,7 @@ export interface OrgSettings {
   phone: string;
   address: string;
   website: string;
+  paymentDetails: string;
 }
 
 interface ContentContextType {
@@ -488,7 +489,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     email: 'letusliveassociation@gmail.com',
     phone: '+243 890 423 191',
     address: 'Avenue Kabasha, No. 01, Goma, North Kivu, DR Congo',
-    website: 'www.lula-asbl.org'
+    website: 'www.lula-asbl.org',
+    paymentDetails: ''
   });
 
   const updateOrgSettings = async (settings: Partial<OrgSettings>) => {

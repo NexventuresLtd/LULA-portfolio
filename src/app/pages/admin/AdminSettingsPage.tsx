@@ -28,7 +28,8 @@ export function AdminSettingsPage() {
     email: orgSettings.email,
     phone: orgSettings.phone,
     address: orgSettings.address,
-    website: orgSettings.website || "www.lula-asbl.org"
+    website: orgSettings.website || "www.lula-asbl.org",
+    paymentDetails: orgSettings.paymentDetails || ""
   });
 
   // Sync orgData when backend data loads
@@ -39,7 +40,8 @@ export function AdminSettingsPage() {
       email: orgSettings.email,
       phone: orgSettings.phone,
       address: orgSettings.address,
-      website: orgSettings.website || "www.lula-asbl.org"
+      website: orgSettings.website || "www.lula-asbl.org",
+      paymentDetails: orgSettings.paymentDetails || ""
     });
   }, [orgSettings]);
 
@@ -102,7 +104,8 @@ export function AdminSettingsPage() {
         email: orgData.email,
         phone: orgData.phone,
         address: orgData.address,
-        website: orgData.website
+        website: orgData.website,
+        paymentDetails: orgData.paymentDetails
       });
       toast.success("Organization settings saved!");
     } catch (error) {
@@ -360,6 +363,17 @@ export function AdminSettingsPage() {
                     value={orgData.address}
                     onChange={(e) => setOrgData({ ...orgData, address: e.target.value })}
                     rows={3}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="org-payment">Payment Details (Bank, Mobile Money, etc.)</Label>
+                  <Textarea
+                    id="org-payment"
+                    value={orgData.paymentDetails}
+                    onChange={(e) => setOrgData({ ...orgData, paymentDetails: e.target.value })}
+                    rows={4}
+                    placeholder="e.g. Bank: XYZ Bank&#10;Account: 123456&#10;Mobile Money: +243 890 423 191&#10;Name: Let Us Live Association"
                   />
                 </div>
 
