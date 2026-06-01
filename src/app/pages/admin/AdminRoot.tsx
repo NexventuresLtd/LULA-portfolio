@@ -32,7 +32,7 @@ export default function AdminRoot() {
 
     // No token — redirect to login
     if (!token) {
-      navigate('/admin/login', { replace: true });
+      navigate('/login', { replace: true });
       return;
     }
 

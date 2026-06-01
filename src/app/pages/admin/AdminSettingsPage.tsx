@@ -31,6 +31,18 @@ export function AdminSettingsPage() {
     website: orgSettings.website || "www.lula-asbl.org"
   });
 
+  // Sync orgData when backend data loads
+  useEffect(() => {
+    setOrgData({
+      name: orgSettings.name || "Let Us Live Association",
+      acronym: "LULA",
+      email: orgSettings.email,
+      phone: orgSettings.phone,
+      address: orgSettings.address,
+      website: orgSettings.website || "www.lula-asbl.org"
+    });
+  }, [orgSettings]);
+
   // Site Appearance Settings (from context)
   const [appearanceData, setAppearanceData] = useState({
     homeHeroBackground: appearanceSettings.homeHeroBackground || "",
@@ -82,16 +94,20 @@ export function AdminSettingsPage() {
     });
   };
 
-  const handleSaveOrganization = (e: React.FormEvent) => {
+  const handleSaveOrganization = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateOrgSettings({
-      name: orgData.name,
-      email: orgData.email,
-      phone: orgData.phone,
-      address: orgData.address,
-      website: orgData.website
-    });
-    toast.success("Organization settings updated successfully!");
+    try {
+      await updateOrgSettings({
+        name: orgData.name,
+        email: orgData.email,
+        phone: orgData.phone,
+        address: orgData.address,
+        website: orgData.website
+      });
+      toast.success("Organization settings saved!");
+    } catch (error) {
+      toast.error("Failed to save organization settings.");
+    }
   };
 
   const handleSaveAppearance = async () => {

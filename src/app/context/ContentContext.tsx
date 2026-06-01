@@ -409,6 +409,7 @@ export interface OrgSettings {
 }
 
 interface ContentContextType {
+  isLoading: boolean;
   programs: Program[];
   addProgram: (program: Omit<Program, 'id'>) => Promise<void>;
   updateProgram: (id: string, program: Partial<Program>) => Promise<void>;
@@ -467,6 +468,7 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export function ContentProvider({ children }: { children: ReactNode }) {
   // Initial data
+  const [isLoading, setIsLoading] = useState(true);
   const [programs, setPrograms] = useState<Program[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
@@ -496,18 +498,14 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     const visionWithOrg = embedOrgSettings(currentVision, updated);
     const rawStory = aboutContent.story || '';
     const storyWithAppearance = Object.keys(appearanceSettings).length > 0 ? embedAppearance(rawStory, appearanceSettings) : rawStory;
-    try {
-      await requestJson<any>('/site-content/', {
-        method: 'PUT',
-        body: JSON.stringify({
-          mission: aboutContent.mission,
-          vision: visionWithOrg,
-          story: storyWithAppearance,
-        }),
-      });
-    } catch (error) {
-      console.warn('Failed to persist org settings to backend', error);
-    }
+    await requestJson<any>('/site-content/', {
+      method: 'PUT',
+      body: JSON.stringify({
+        mission: aboutContent.mission,
+        vision: visionWithOrg,
+        story: storyWithAppearance,
+      }),
+    });
   };
 
   const [appearanceSettings, setAppearanceSettings] = useState<Record<string, string>>({});
@@ -604,6 +602,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         if (!cancelled) {
           console.warn('Unable to load content from backend, keeping local fallback data.', error);
         }
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
     };
 
@@ -901,6 +901,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   return (
     <ContentContext.Provider
       value={{
+        isLoading,
         programs,
         addProgram,
         updateProgram,
