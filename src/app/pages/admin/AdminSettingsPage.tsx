@@ -179,7 +179,7 @@ export function AdminSettingsPage() {
       </div>
 
       <Tabs defaultValue="account" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 sm:w-auto lg:w-[600px]">
+        <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
           <TabsTrigger value="account">
             <User className="w-4 h-4 mr-2" />
             Account
