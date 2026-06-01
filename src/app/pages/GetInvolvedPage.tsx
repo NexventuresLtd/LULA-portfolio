@@ -19,6 +19,14 @@ export function GetInvolvedPage() {
   const navigate = useNavigate();
   const [donationAmount, setDonationAmount] = useState("");
   const [currency, setCurrency] = useState("USD");
+
+  const currencyAmounts: Record<string, string[]> = {
+    USD: ['10', '25', '50', '100', '250', '500'],
+    EUR: ['10', '25', '50', '100', '250', '500'],
+    GBP: ['10', '20', '50', '100', '200', '500'],
+    CDF: ['5000', '10000', '25000', '50000', '100000', '250000'],
+    RWF: ['5000', '10000', '25000', '50000', '100000', '250000'],
+  };
   const [isVolunteerDialogOpen, setIsVolunteerDialogOpen] = useState(false);
   const [isPartnerDialogOpen, setIsPartnerDialogOpen] = useState(false);
   const [isDonateDialogOpen, setIsDonateDialogOpen] = useState(false);
@@ -137,7 +145,7 @@ export function GetInvolvedPage() {
                   <div>
                     <Label>Quick Select Amount</Label>
                     <div className="grid grid-cols-3 gap-2 mt-2">
-                      {['10', '25', '50', '100', '250', '500'].map((amt) => (
+                      {(currencyAmounts[currency] || currencyAmounts.USD).map((amt) => (
                         <Button
                           key={amt}
                           type="button"
@@ -145,7 +153,7 @@ export function GetInvolvedPage() {
                           onClick={() => setDonationAmount(amt)}
                           className="h-10"
                         >
-                          {amt}
+                          {Number(amt).toLocaleString()}
                         </Button>
                       ))}
                     </div>
@@ -173,6 +181,7 @@ export function GetInvolvedPage() {
                           <SelectItem value="EUR">EUR</SelectItem>
                           <SelectItem value="GBP">GBP</SelectItem>
                           <SelectItem value="CDF">CDF</SelectItem>
+                          <SelectItem value="RWF">RWF</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
