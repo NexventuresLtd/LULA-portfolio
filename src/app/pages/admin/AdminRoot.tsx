@@ -90,9 +90,9 @@ export default function AdminRoot() {
   }
 
   return (
-    <div className="relative flex min-h-screen bg-gray-50">
+    <div className="relative min-h-screen bg-gray-50">
       <AdminSidebar />
-      <div className="flex-1 ml-64">
+      <div className="lg:ml-64 pt-14 lg:pt-0 min-h-screen">
         <Outlet />
       </div>
 
