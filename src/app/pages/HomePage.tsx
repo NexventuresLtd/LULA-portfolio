@@ -41,7 +41,7 @@ function HomePage() {
   }, []);
 
   const stats = [
-    { icon: Users, value: '50,000+', label: t('home.stats.beneficiaries') },
+    { icon: Users, value: '150,000+', label: t('home.stats.beneficiaries') },
     { icon: MapPin, value: '12', label: t('home.stats.regions') },
     { icon: Briefcase, value: '25+', label: t('home.stats.programs') },
     { icon: HandHeart, value: '40+', label: t('home.stats.partners') },
@@ -198,7 +198,7 @@ function HomePage() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 text-gray-900">
             {t('home.mission.heading')}
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed text-justify">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed text-center">
             {t('home.mission.text')}
           </p>
         </div>

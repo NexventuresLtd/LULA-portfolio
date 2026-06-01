@@ -8,7 +8,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
-import { Heart, HandHeart, Handshake, CheckCircle } from "lucide-react";
+import { Heart, HandHeart, Handshake, CheckCircle, MessageCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
 
 export function GetInvolvedPage() {
@@ -368,13 +368,19 @@ export function GetInvolvedPage() {
               </div>
             </div>
           </DialogHeader>
-          <DialogFooter className="sm:justify-end mt-4">
+          <DialogFooter className="sm:justify-end mt-4 gap-2">
+            <a href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <Button type="button" variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50">
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </Button>
+            </a>
             <Button
               type="button"
               className="bg-green-600 hover:bg-green-700 text-white"
               onClick={handleSuccessDialogClose}
             >
-              OK, Go to Home
+              OK
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -395,13 +401,19 @@ export function GetInvolvedPage() {
               </div>
             </div>
           </DialogHeader>
-          <DialogFooter className="sm:justify-end mt-4">
+          <DialogFooter className="sm:justify-end mt-4 gap-2">
+            <a href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <Button type="button" variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50">
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </Button>
+            </a>
             <Button
               type="button"
               className="bg-green-600 hover:bg-green-700 text-white"
               onClick={handleSuccessDialogClose}
             >
-              OK, Go to Home
+              OK
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -422,13 +434,19 @@ export function GetInvolvedPage() {
               </div>
             </div>
           </DialogHeader>
-          <DialogFooter className="sm:justify-end mt-4">
+          <DialogFooter className="sm:justify-end mt-4 gap-2">
+            <a href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <Button type="button" variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50">
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </Button>
+            </a>
             <Button
               type="button"
               className="bg-green-600 hover:bg-green-700 text-white"
               onClick={handleSuccessDialogClose}
             >
-              OK, Go to Home
+              OK
             </Button>
           </DialogFooter>
         </DialogContent>

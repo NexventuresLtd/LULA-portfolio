@@ -235,7 +235,13 @@ export function ContactPage() {
               </div>
             </div>
           </DialogHeader>
-          <DialogFooter className="sm:justify-end mt-4">
+          <DialogFooter className="sm:justify-end mt-4 gap-2">
+            <a href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <Button type="button" variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50">
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </Button>
+            </a>
             <Button
               type="button"
               className="bg-green-600 hover:bg-green-700 text-white"

@@ -8,12 +8,12 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, MessageCircle } from "lucide-react";
 
 export function ProjectDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { projects, addInterest } = useContent();
+  const { projects, addInterest, orgSettings } = useContent();
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
@@ -163,7 +163,13 @@ export function ProjectDetailPage() {
               </div>
             </div>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="gap-2">
+            <a href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <Button type="button" variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50">
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </Button>
+            </a>
             <Button className="bg-green-600 hover:bg-green-700" onClick={() => setShowSuccess(false)}>OK</Button>
           </DialogFooter>
         </DialogContent>

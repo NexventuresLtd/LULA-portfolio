@@ -10,7 +10,7 @@ import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { MapPin, Users, Calendar, ArrowRight, HandHeart, CheckCircle } from "lucide-react";
+import { MapPin, Users, Calendar, ArrowRight, HandHeart, CheckCircle, MessageCircle } from "lucide-react";
 import { Link } from "react-router";
 
 export function ProjectsPage() {
@@ -241,13 +241,19 @@ export function ProjectsPage() {
               </div>
             </div>
           </DialogHeader>
-          <DialogFooter className="sm:justify-end mt-4">
+          <DialogFooter className="sm:justify-end mt-4 gap-2">
+            <a href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <Button type="button" variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50">
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </Button>
+            </a>
             <Button
               type="button"
               className="bg-green-600 hover:bg-green-700 text-white"
               onClick={handleSuccessDialogClose}
             >
-              OK, Go to Home
+              OK
             </Button>
           </DialogFooter>
         </DialogContent>
