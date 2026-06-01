@@ -16,7 +16,7 @@ import { Link } from "react-router";
 export function ProjectsPage() {
   const { t } = useLanguage();
   useSEO("Projects - Active Interventions in Eastern DRC", "View LULA active projects: Breaking the Cycle, Women SRHR Education, Women Empowerment and more across North and South Kivu refugee camps.");
-  const { projects, addInterest, appearanceSettings } = useContent();
+  const { projects, addInterest, appearanceSettings, orgSettings } = useContent();
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
@@ -52,7 +52,6 @@ export function ProjectsPage() {
 
   const handleSuccessDialogClose = () => {
     setShowSuccessDialog(false);
-    navigate('/');
   };
 
   return (
