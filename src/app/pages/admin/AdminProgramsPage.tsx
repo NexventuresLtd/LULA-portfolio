@@ -189,8 +189,8 @@ export function AdminProgramsPage() {
           </form>
         </div>
       ) : (
-        <div className="p-8">
-          <div className="flex justify-between items-center mb-8">
+        <div className="p-4 sm:p-6 lg:p-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Programs Management</h1>
               <p className="text-gray-600 mt-2">Manage your organization's programs</p>
@@ -213,7 +213,7 @@ export function AdminProgramsPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredPrograms.length === 0 ? (
               <Card className="col-span-full">
                 <CardContent className="py-12 text-center text-gray-500">

@@ -108,8 +108,8 @@ export function AdminInterestsPage() {
   };
 
   return (
-    <div className="p-8">
-      <div className="flex justify-between items-center mb-8">
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Interests & Donations Management</h1>
           <p className="text-gray-600 mt-2">Track people interested in donating, volunteering, and partnering</p>
@@ -120,7 +120,7 @@ export function AdminInterestsPage() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 lg:mb-8">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-gray-600">Total Interests</CardTitle>
@@ -168,7 +168,7 @@ export function AdminInterestsPage() {
       <Card>
         <CardHeader>
           <CardTitle>All Interests ({filteredInterests.length})</CardTitle>
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
@@ -179,7 +179,7 @@ export function AdminInterestsPage() {
               />
             </div>
             <Select value={typeFilter} onValueChange={(value: any) => setTypeFilter(value)}>
-              <SelectTrigger className="w-[160px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <SelectValue placeholder="Filter by type" />
               </SelectTrigger>
               <SelectContent>
@@ -190,7 +190,7 @@ export function AdminInterestsPage() {
               </SelectContent>
             </Select>
             <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
-              <SelectTrigger className="w-[160px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
@@ -203,7 +203,7 @@ export function AdminInterestsPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
+          <div className="overflow-x-auto"><Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
@@ -272,7 +272,7 @@ export function AdminInterestsPage() {
                         value={interest.status}
                         onValueChange={(value: any) => handleStatusChange(interest.id, value)}
                       >
-                        <SelectTrigger className="w-[140px]">
+                        <SelectTrigger className="w-[130px]">
                           <Badge className={getStatusColor(interest.status)}>
                             {interest.status}
                           </Badge>
@@ -306,7 +306,7 @@ export function AdminInterestsPage() {
                 ))
               )}
             </TableBody>
-          </Table>
+          </Table></div>
         </CardContent>
       </Card>
 

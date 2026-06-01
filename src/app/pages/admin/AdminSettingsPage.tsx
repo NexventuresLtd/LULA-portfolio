@@ -172,14 +172,14 @@ export function AdminSettingsPage() {
 
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
         <p className="text-gray-600 mt-2">Manage your account and organization settings</p>
       </div>
 
       <Tabs defaultValue="account" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
+        <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 sm:w-auto lg:w-[600px]">
           <TabsTrigger value="account">
             <User className="w-4 h-4 mr-2" />
             Account
@@ -285,7 +285,7 @@ export function AdminSettingsPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSaveOrganization} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="org-name">Organization Name</Label>
                     <Input
@@ -367,7 +367,7 @@ export function AdminSettingsPage() {
                   <div className="grid grid-cols-1 gap-6">
                     {/* Home Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="home-hero" className="text-base font-semibold">Home Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -414,7 +414,7 @@ export function AdminSettingsPage() {
 
                     {/* About Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="about-hero" className="text-base font-semibold">About Us Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -461,7 +461,7 @@ export function AdminSettingsPage() {
 
                     {/* About Page Our Story Section */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="about-story" className="text-base font-semibold">About Us Page - Our Story Section</Label>
                         <Button
                           type="button"
@@ -508,7 +508,7 @@ export function AdminSettingsPage() {
 
                     {/* Team Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="team-hero" className="text-base font-semibold">Team Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -539,7 +539,7 @@ export function AdminSettingsPage() {
 
                     {/* Programs Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="programs-hero" className="text-base font-semibold">Programs Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -570,7 +570,7 @@ export function AdminSettingsPage() {
 
                     {/* Projects Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="projects-hero" className="text-base font-semibold">Projects Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -601,7 +601,7 @@ export function AdminSettingsPage() {
 
                     {/* News Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="news-hero" className="text-base font-semibold">News Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -632,7 +632,7 @@ export function AdminSettingsPage() {
 
                     {/* Impact Stories Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="impact-hero" className="text-base font-semibold">Impact Stories Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -663,7 +663,7 @@ export function AdminSettingsPage() {
 
                     {/* Partners Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="partners-hero" className="text-base font-semibold">Partners Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -694,7 +694,7 @@ export function AdminSettingsPage() {
 
                     {/* Contact Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="contact-hero" className="text-base font-semibold">Contact Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -725,7 +725,7 @@ export function AdminSettingsPage() {
 
                     {/* Get Involved Page Hero */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="getinvolved-hero" className="text-base font-semibold">Get Involved Page - Hero Section</Label>
                         <Button
                           type="button"
@@ -756,7 +756,7 @@ export function AdminSettingsPage() {
 
                     {/* Home Page CTA Section */}
                     <div className="border rounded-lg p-4 bg-gray-50">
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
                         <Label htmlFor="home-cta" className="text-base font-semibold">Home Page - CTA Section (Near Footer)</Label>
                         <Button
                           type="button"

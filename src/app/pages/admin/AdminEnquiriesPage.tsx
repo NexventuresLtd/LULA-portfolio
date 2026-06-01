@@ -81,8 +81,8 @@ export function AdminEnquiriesPage() {
   };
 
   return (
-    <div className="p-8">
-      <div className="flex justify-between items-center mb-8">
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Enquiries Management</h1>
           <p className="text-gray-600 mt-2">Manage contact form submissions from the website</p>
@@ -96,7 +96,7 @@ export function AdminEnquiriesPage() {
       <Card>
         <CardHeader>
           <CardTitle>All Enquiries ({filteredEnquiries.length})</CardTitle>
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
@@ -107,7 +107,7 @@ export function AdminEnquiriesPage() {
               />
             </div>
             <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[180px]">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
@@ -120,7 +120,7 @@ export function AdminEnquiriesPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
+          <div className="overflow-x-auto"><Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
@@ -177,7 +177,7 @@ export function AdminEnquiriesPage() {
                         value={enquiry.status}
                         onValueChange={(value: any) => handleStatusChange(enquiry.id, value)}
                       >
-                        <SelectTrigger className="w-[140px]">
+                        <SelectTrigger className="w-[130px]">
                           <Badge className={getStatusColor(enquiry.status)}>
                             {enquiry.status}
                           </Badge>
@@ -211,7 +211,7 @@ export function AdminEnquiriesPage() {
                 ))
               )}
             </TableBody>
-          </Table>
+          </Table></div>
         </CardContent>
       </Card>
 
@@ -294,7 +294,7 @@ export function AdminEnquiriesPage() {
                   setSelectedEnquiry({ ...selectedEnquiry, status: value });
                 }}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]">
                   <Badge className={getStatusColor(selectedEnquiry?.status || 'new')}>
                     {selectedEnquiry?.status}
                   </Badge>
