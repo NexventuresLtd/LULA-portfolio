@@ -2,7 +2,7 @@ import { useSEO } from '../hooks/useSEO';
 import { useMemo, useState } from "react";
 import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent } from "../components/ui/card";
-import { Quote } from "lucide-react";
+import { Quote, User } from "lucide-react";
 import { useContent } from "../context/ContentContext";
 import {
   Pagination,
@@ -61,12 +61,18 @@ export function ImpactStoriesPage() {
               {currentStories.map((story, index) => (
                 <Card key={`${story.id}-${index}`} className="border-none shadow-lg hover:shadow-xl transition-shadow">
                   <CardContent className="p-0">
-                    <div className="aspect-[16/9] overflow-hidden">
-                      <img
-                        src={story.image}
-                        alt={story.name}
-                        className="w-full h-full object-cover"
-                      />
+                    <div className="aspect-[16/9] overflow-hidden bg-gray-100">
+                      {story.image ? (
+                        <img
+                          src={story.image}
+                          alt={story.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <User className="w-16 h-16 text-gray-300" />
+                        </div>
+                      )}
                     </div>
                     <div className="p-8">
                       <div className="mb-4 flex items-center gap-2">

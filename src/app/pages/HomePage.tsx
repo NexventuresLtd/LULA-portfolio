@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ArrowRight, Users, MapPin, Briefcase, HandHeart, TrendingUp, Quote } from 'lucide-react';
+import { ArrowRight, Users, MapPin, Briefcase, HandHeart, TrendingUp, Quote, User } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -18,6 +18,20 @@ function HomePage() {
   const [viewportWidth, setViewportWidth] = useState(1024);
 
   const heroBackground = appearanceSettings.homeHeroBackground || "";
+  const heroSlides = [
+    heroBackground,
+    appearanceSettings.homeHeroBackground2 || '',
+    appearanceSettings.homeHeroBackground3 || '',
+  ].filter(Boolean);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (heroSlides.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [heroSlides.length]);
 
   useEffect(() => {
     const updateViewportWidth = () => setViewportWidth(window.innerWidth);
@@ -127,11 +141,14 @@ function HomePage() {
       {/* Hero Section */}
       <section id="hero-section" className="relative w-full max-w-none min-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/40 to-green-900/30 z-10" />
-        <img
-          src={heroBackground}
-          alt="Children in community"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        {heroSlides.map((slide, i) => (
+          <img
+            key={i}
+            src={slide}
+            alt="Community"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+          />
+        ))}
         <div className="relative z-20 max-w-5xl mx-auto px-4 text-center text-white">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 leading-tight font-bold">
             {t('hero.title')}
@@ -259,12 +276,18 @@ function HomePage() {
                       <Quote className="h-8 w-8 sm:h-10 sm:w-10 text-gray-300 mb-3 sm:mb-4 flex-shrink-0" />
                       <p className="text-sm sm:text-base text-green-50 mb-4 sm:mb-6 leading-relaxed italic flex-grow">"{story.quote}"</p>
                       <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex-shrink-0">
-                          <img
-                            src={story.image}
-                            alt={story.name}
-                            className="w-full h-full object-cover"
-                          />
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex-shrink-0 bg-green-800">
+                          {story.image ? (
+                            <img
+                              src={story.image}
+                              alt={story.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <User className="w-6 h-6 text-green-300" />
+                            </div>
+                          )}
                         </div>
                         <div className="min-w-0">
                           <div className="font-semibold text-sm sm:text-base truncate">{story.name}</div>

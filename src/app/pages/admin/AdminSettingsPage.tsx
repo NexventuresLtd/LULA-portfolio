@@ -34,6 +34,8 @@ export function AdminSettingsPage() {
   // Site Appearance Settings (from context)
   const [appearanceData, setAppearanceData] = useState({
     homeHeroBackground: appearanceSettings.homeHeroBackground || "",
+    homeHeroBackground2: appearanceSettings.homeHeroBackground2 || "",
+    homeHeroBackground3: appearanceSettings.homeHeroBackground3 || "",
     aboutHeroBackground: appearanceSettings.aboutHeroBackground || "",
     aboutStoryBackground: appearanceSettings.aboutStoryBackground || "",
     teamHeroBackground: appearanceSettings.teamHeroBackground || "",
@@ -107,6 +109,8 @@ export function AdminSettingsPage() {
   const handleRevertToDefault = async () => {
     const defaults = {
       homeHeroBackground: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      homeHeroBackground2: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+      homeHeroBackground3: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
       aboutHeroBackground: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
       aboutStoryBackground: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
       teamHeroBackground: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
@@ -410,6 +414,38 @@ export function AdminSettingsPage() {
                           <img src={appearanceData.homeHeroBackground} alt="Preview" className="w-full h-24 object-cover rounded" />
                         </div>
                       )}
+                      <div className="mt-4 space-y-3">
+                        <div>
+                          <Label className="text-sm text-gray-600">Slide 2 (optional)</Label>
+                          <div className="flex gap-2 mt-1">
+                            <Input
+                              value={appearanceData.homeHeroBackground2}
+                              onChange={(e) => handleImageUrlChange("homeHeroBackground2", e.target.value)} onBlur={handleImageUrlBlur}
+                              placeholder="Paste image URL for slide 2"
+                            />
+                            <input type="file" accept="image/*" className="hidden" id="home-hero2-upload" onChange={handleImageUpload('homeHeroBackground2')} />
+                            <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('home-hero2-upload')?.click()}>
+                              <Upload className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          {appearanceData.homeHeroBackground2 && <img src={appearanceData.homeHeroBackground2} alt="Slide 2" className="mt-1 w-full h-16 object-cover rounded border" />}
+                        </div>
+                        <div>
+                          <Label className="text-sm text-gray-600">Slide 3 (optional)</Label>
+                          <div className="flex gap-2 mt-1">
+                            <Input
+                              value={appearanceData.homeHeroBackground3}
+                              onChange={(e) => handleImageUrlChange("homeHeroBackground3", e.target.value)} onBlur={handleImageUrlBlur}
+                              placeholder="Paste image URL for slide 3"
+                            />
+                            <input type="file" accept="image/*" className="hidden" id="home-hero3-upload" onChange={handleImageUpload('homeHeroBackground3')} />
+                            <Button type="button" variant="outline" size="icon" onClick={() => document.getElementById('home-hero3-upload')?.click()}>
+                              <Upload className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          {appearanceData.homeHeroBackground3 && <img src={appearanceData.homeHeroBackground3} alt="Slide 3" className="mt-1 w-full h-16 object-cover rounded border" />}
+                        </div>
+                      </div>
                     </div>
 
                     {/* About Page Hero */}
