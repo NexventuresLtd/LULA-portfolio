@@ -5,7 +5,7 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
-import { Plus, Edit, Trash2, Quote, AlertCircle } from "lucide-react";
+import { Plus, Edit, Trash2, Quote, AlertCircle, Upload, User } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import { Switch } from "../../components/ui/switch";
@@ -159,14 +159,50 @@ export function AdminImpactStoriesPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image">Photo URL *</Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="https://..."
-                    required
-                  />
+                  <Label htmlFor="image">Photo URL (optional)</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="image"
+                      value={formData.image}
+                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                      placeholder="Paste image URL or upload"
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="impact-story-image-upload"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        const fd = new FormData();
+                        fd.append('file', file);
+                        try {
+                          const token = localStorage.getItem('lula-admin-token');
+                          const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org'}/api/media/upload`, {
+                            method: 'POST',
+                            headers: { 'Authorization': `Bearer ${token}` },
+                            body: fd,
+                          });
+                          if (!res.ok) throw new Error();
+                          const data = await res.json();
+                          setFormData({ ...formData, image: `${import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org'}${data.url}` });
+                          toast.success('Image uploaded!');
+                        } catch {
+                          toast.error('Upload failed.');
+                        }
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={() => document.getElementById('impact-story-image-upload')?.click()}
+                    >
+                      <Upload className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  {formData.image && <img src={formData.image} alt="Preview" className="mt-2 h-20 w-auto rounded border object-cover" />}
                 </div>
                 <div className="flex items-center justify-between rounded-lg border border-gray-200 p-4">
                   <div>
@@ -234,11 +270,17 @@ export function AdminImpactStoriesPage() {
               </CardHeader>
               <CardContent>
                 <div className="flex gap-4 mb-4">
-                  <img
-                    src={story.image}
-                    alt={story.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
+                  {story.image ? (
+                    <img
+                      src={story.image}
+                      alt={story.name}
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                      <User className="w-8 h-8 text-gray-400" />
+                    </div>
+                  )}
                   <div>
                     <h4 className="font-semibold text-gray-900">{story.name}</h4>
                     <p className="text-sm text-gray-600">{story.role}</p>
