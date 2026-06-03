@@ -14,69 +14,21 @@ function AboutPage() {
   const storyBackground = appearanceSettings.aboutStoryBackground || "";
 
   const coreValues = [
-    {
-      icon: Heart,
-      title: 'Compassion',
-      description: 'We lead with empathy and deep care for the communities we serve.',
-    },
-    {
-      icon: Shield,
-      title: 'Integrity',
-      description: 'Transparency and accountability guide all our actions and decisions.',
-    },
-    {
-      icon: Users,
-      title: 'Community-Centered',
-      description: 'Local voices and needs drive our programs and initiatives.',
-    },
-    {
-      icon: Award,
-      title: 'Excellence',
-      description: 'We strive for the highest quality in everything we do.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Sustainability',
-      description: 'Creating long-term solutions that empower communities.',
-    },
-    {
-      icon: Lightbulb,
-      title: 'Innovation',
-      description: 'Embracing creative approaches to complex challenges.',
-    },
+    { icon: Heart, title: t('about.value1.title'), description: t('about.value1.desc') },
+    { icon: Shield, title: t('about.value2.title'), description: t('about.value2.desc') },
+    { icon: Users, title: t('about.value3.title'), description: t('about.value3.desc') },
+    { icon: Award, title: t('about.value4.title'), description: t('about.value4.desc') },
+    { icon: TrendingUp, title: t('about.value5.title'), description: t('about.value5.desc') },
+    { icon: Lightbulb, title: t('about.value6.title'), description: t('about.value6.desc') },
   ];
 
   const timeline = [
-    {
-      year: '2015',
-      title: 'LULA Founded',
-      description: 'Established in Goma to address urgent humanitarian needs in North Kivu.',
-    },
-    {
-      year: '2017',
-      title: 'First Major Partnership',
-      description: 'Partnered with UNICEF for child protection programs in refugee camps.',
-    },
-    {
-      year: '2019',
-      title: 'Women Empowerment Initiative',
-      description: 'Launched comprehensive vocational training programs for 5,000 women.',
-    },
-    {
-      year: '2021',
-      title: 'Health Education Expansion',
-      description: 'Extended HIV prevention and SRH education to 12 regions.',
-    },
-    {
-      year: '2023',
-      title: 'Economic Empowerment Fund',
-      description: 'Created microfinance program supporting 2,000 women-led businesses.',
-    },
-    {
-      year: '2026',
-      title: 'Reaching 50,000 Beneficiaries',
-      description: 'Milestone achievement with impact across Eastern DRC.',
-    },
+    { year: '2015', title: t('about.timeline1.title'), description: t('about.timeline1.desc') },
+    { year: '2017', title: t('about.timeline2.title'), description: t('about.timeline2.desc') },
+    { year: '2019', title: t('about.timeline3.title'), description: t('about.timeline3.desc') },
+    { year: '2021', title: t('about.timeline4.title'), description: t('about.timeline4.desc') },
+    { year: '2023', title: t('about.timeline5.title'), description: t('about.timeline5.desc') },
+    { year: '2025', title: t('about.timeline6.title'), description: t('about.timeline6.desc') },
   ];
 
   const regions = [
@@ -100,7 +52,7 @@ function AboutPage() {
             {t('nav.about')}
           </Badge>
           <h1 className="text-5xl md:text-6xl mb-4">
-            Our Story
+            {t('admin.ourStory')}
           </h1>
           <p className="text-xl text-green-100">
             {t('about.heroSubtitle')}
