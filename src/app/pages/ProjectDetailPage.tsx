@@ -31,7 +31,7 @@ export function ProjectDetailPage() {
           <Link to="/projects">
             <Button className="bg-green-600 hover:bg-green-700">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Projects
+              {t('nav.projects')}
             </Button>
           </Link>
         </div>
@@ -58,7 +58,7 @@ export function ProjectDetailPage() {
         <Link to="/projects">
           <Button variant="ghost" className="mb-8">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Projects
+            {t('nav.projects')}
           </Button>
         </Link>
 
