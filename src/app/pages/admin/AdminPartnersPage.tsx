@@ -127,7 +127,7 @@ export function AdminPartnersPage() {
           title={partner.featured ? 'Click to remove from homepage' : 'Click to feature on homepage'}
         >
           <Star className={`w-3 h-3 ${partner.featured ? 'fill-yellow-700' : ''}`} />
-          {partner.featured ? 'Featured' : 'Feature'}
+          {partner.featured ? t('admin.featured') : t('admin.featured')}
         </button>
       </div>
       <CardContent className="p-6">
@@ -179,15 +179,15 @@ export function AdminPartnersPage() {
           </DialogTrigger>
           <DialogContent className="max-w-5xl">
             <DialogHeader>
-              <DialogTitle>{editingPartner ? 'Edit Partner' : 'Add New Partner'}</DialogTitle>
+              <DialogTitle>{editingPartner ? t('admin.edit') + ' ' + t('admin.partners') : t('admin.addPartner')}</DialogTitle>
               <DialogDescription>
-                {editingPartner ? 'Update the partner details below' : 'Fill in the details to add a new partner'}
+                {editingPartner ? t('admin.update') : t('admin.addPartner')}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Organization Name *</Label>
+                  <Label htmlFor="name">{t('form.name')} *</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -196,20 +196,20 @@ export function AdminPartnersPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="type">Partner Type *</Label>
+                  <Label htmlFor="type">{t('admin.category')} *</Label>
                   <Select value={formData.type} onValueChange={(value: 'international' | 'government' | 'local') => setFormData({ ...formData, type: value })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="international">International Partner</SelectItem>
-                      <SelectItem value="government">Government Partner</SelectItem>
-                      <SelectItem value="local">Local Partner</SelectItem>
+                      <SelectItem value="international">{t('admin.partners')} (International)</SelectItem>
+                      <SelectItem value="government">{t('admin.partners')} (Government)</SelectItem>
+                      <SelectItem value="local">{t('admin.partners')} (Local)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="logo">Logo URL or Upload (Optional)</Label>
+                  <Label htmlFor="logo">{t('admin.imageUrl')}</Label>
                   <div className="flex gap-2">
                     <Input
                       id="logo"
@@ -235,11 +235,11 @@ export function AdminPartnersPage() {
                     </Button>
                   </div>
                   <p className="text-xs text-gray-500">
-                    Enter the URL of the partner's logo image, upload an image, or leave blank to use default icon
+                    
                   </p>
                   {formData.logo && (
                     <div className="mt-2 p-4 border rounded-lg bg-gray-50">
-                      <p className="text-sm text-gray-600 mb-2">Logo Preview:</p>
+                      <p className="text-sm text-gray-600 mb-2">{t('admin.imageUrl')}:</p>
                       <img src={formData.logo} alt="Logo preview" className="max-w-xs max-h-24 object-contain" />
                     </div>
                   )}
@@ -253,20 +253,18 @@ export function AdminPartnersPage() {
                     />
                     <Label htmlFor="featured" className="flex items-center gap-2 cursor-pointer">
                       <Star className="w-4 h-4 text-yellow-600" />
-                      Feature on Homepage
+                      {t('admin.featured')}
                     </Label>
                   </div>
                   <p className="text-xs text-gray-500">
-                    Featured partners will appear in the looping carousel on the homepage
+                    
                   </p>
                 </div>
               </div>
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
-                  Cancel
-                </Button>
+                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>{t("admin.cancel")}</Button>
                 <Button type="submit" className="bg-green-600 hover:bg-green-700">
-                  {editingPartner ? 'Update Partner' : 'Add Partner'}
+                  {editingPartner ? t('admin.update') : t('admin.addPartner')}
                 </Button>
               </DialogFooter>
             </form>
@@ -277,7 +275,7 @@ export function AdminPartnersPage() {
       {partners.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-gray-500">
-            No partners found. Click "Add Partner" to add your first partner.
+            {t("admin.noResults")}
           </CardContent>
         </Card>
       ) : (
@@ -285,7 +283,7 @@ export function AdminPartnersPage() {
           {/* International Partners */}
           {internationalPartners.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">International Partners</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('admin.partners')} (International)</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {internationalPartners.map(partner => (
                   <PartnerCard key={partner.id} partner={partner} />
@@ -297,7 +295,7 @@ export function AdminPartnersPage() {
           {/* Government Partners */}
           {governmentPartners.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Government Partners</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('admin.partners')} (Government)</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {governmentPartners.map(partner => (
                   <PartnerCard key={partner.id} partner={partner} />
@@ -309,7 +307,7 @@ export function AdminPartnersPage() {
           {/* Local Partners */}
           {localPartners.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Local Partners</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('admin.partners')} (Local)</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {localPartners.map(partner => (
                   <PartnerCard key={partner.id} partner={partner} />
