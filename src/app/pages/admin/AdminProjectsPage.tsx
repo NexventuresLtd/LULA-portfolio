@@ -210,22 +210,22 @@ export function AdminProjectsPage() {
         <div className="p-8 max-w-6xl mx-auto">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900">
-              {editingProject ? 'Edit Project' : 'Add New Project'}
+              {editingProject ? t('admin.edit') + ' ' + t('admin.projects') : t('admin.addProject')}
             </h1>
             <p className="text-gray-600 mt-1">
-              {editingProject ? 'Update the project details below' : 'Fill in the details to create a new project'}
+              {editingProject ? t('admin.update') : t('admin.addProject')}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Project Details</CardTitle>
+                <CardTitle>{t('admin.programDetails')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="title">Project Title *</Label>
+                    <Label htmlFor="title">{t('admin.title')} *</Label>
                     <Input
                       id="title"
                       value={formData.title}
@@ -235,7 +235,7 @@ export function AdminProjectsPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="category">Category *</Label>
+                    <Label htmlFor="category">{t('admin.category')} *</Label>
                     <Input
                       id="category"
                       value={formData.category}
@@ -247,7 +247,7 @@ export function AdminProjectsPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="region">Region *</Label>
+                    <Label htmlFor="region">{t('admin.region')} *</Label>
                     <Select value={formData.region} onValueChange={(value) => setFormData({ ...formData, region: value })}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a region" />
@@ -260,7 +260,7 @@ export function AdminProjectsPage() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="status">Project Status *</Label>
+                    <Label htmlFor="status">{t('admin.status')} *</Label>
                     <Select value={formData.status} onValueChange={(value: 'active' | 'completed' | 'planned') => setFormData({ ...formData, status: value })}>
                       <SelectTrigger>
                         <SelectValue />
@@ -281,11 +281,11 @@ export function AdminProjectsPage() {
                   />
                   <Label htmlFor="featured" className="flex items-center gap-2 cursor-pointer">
                     <Star className="w-4 h-4 text-yellow-600" />
-                    Feature on Homepage
+                    {t('admin.featured')}
                   </Label>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image">Featured Image URL or Upload *</Label>
+                  <Label htmlFor="image">{t('admin.imageUrl')} *</Label>
                   <div className="flex gap-2">
                     <Input
                       id="image"
@@ -313,7 +313,7 @@ export function AdminProjectsPage() {
                   </div>
                   {formData.image && (
                     <div className="mt-2 p-4 border rounded-lg bg-gray-50">
-                      <p className="text-sm text-gray-600 mb-2">Image Preview:</p>
+                      <p className="text-sm text-gray-600 mb-2">{t("admin.imageUrl")}:</p>
                       <img src={formData.image} alt="Preview" className="max-w-xs max-h-48 object-cover rounded" />
                     </div>
                   )}
@@ -329,7 +329,7 @@ export function AdminProjectsPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="duration">Project Duration</Label>
+                    <Label htmlFor="duration">Duration</Label>
                     <Input
                       id="duration"
                       value={formData.duration}
@@ -343,7 +343,7 @@ export function AdminProjectsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Project Description *</CardTitle>
+                <CardTitle>{t('admin.description')} *</CardTitle>
               </CardHeader>
               <CardContent>
                 <ReactQuill
@@ -359,11 +359,9 @@ export function AdminProjectsPage() {
             </Card>
 
             <div className="flex justify-end gap-3 sticky bottom-0 bg-white py-4 border-t">
-              <Button type="button" variant="outline" onClick={handleCancelClick}>
-                Cancel
-              </Button>
+              <Button type="button" variant="outline" onClick={handleCancelClick}>{t("admin.cancel")}</Button>
               <Button type="submit" className="bg-green-600 hover:bg-green-700">
-                {editingProject ? 'Update Project' : 'Publish Project'}
+                {editingProject ? t('admin.update') : t('admin.publish')}
               </Button>
             </div>
           </form>
@@ -378,9 +376,9 @@ export function AdminProjectsPage() {
                   <AlertCircle className="w-6 h-6 text-red-600" />
                 </div>
                 <div>
-                  <DialogTitle className="text-xl">Discard Changes?</DialogTitle>
+                  <DialogTitle className="text-xl">{t('admin.discard')}</DialogTitle>
                   <DialogDescription className="mt-1">
-                    Are you sure you want to discard your changes? All unsaved progress will be lost.
+                    {t('admin.discardDesc')}
                   </DialogDescription>
                 </div>
               </div>
@@ -390,9 +388,7 @@ export function AdminProjectsPage() {
                 type="button"
                 variant="outline"
                 onClick={handleCancelDiscard}
-              >
-                Cancel
-              </Button>
+              >{t("admin.cancel")}</Button>
               <Button
                 type="button"
                 className="bg-red-600 hover:bg-red-700 text-white"
@@ -424,7 +420,7 @@ export function AdminProjectsPage() {
         <div className="relative">
           <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
           <Input
-            placeholder="Search projects by title, category, region, or description..."
+            placeholder={t("admin.search") + "..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -437,8 +433,8 @@ export function AdminProjectsPage() {
           <Card className="col-span-full">
             <CardContent className="py-12 text-center text-gray-500">
               {projects.length === 0 
-                ? "No projects found. Click \"Add Project\" to create your first project."
-                : "No projects match your search."}
+                ? t("admin.noResults")
+                : t("admin.noResults")}
             </CardContent>
           </Card>
         ) : (
@@ -522,9 +518,9 @@ export function AdminProjectsPage() {
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Delete Project?</DialogTitle>
+                <DialogTitle className="text-xl">{t('admin.deleteConfirm')}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  This will permanently remove "{projectToDelete?.title}" from the admin dashboard.
+                  {t('admin.deleteDesc')}
                 </DialogDescription>
               </div>
             </div>
@@ -534,16 +530,12 @@ export function AdminProjectsPage() {
               type="button"
               variant="outline"
               onClick={() => setDeleteDialogOpen(false)}
-            >
-              Cancel
-            </Button>
+            >{t("admin.cancel")}</Button>
             <Button
               type="button"
               className="bg-red-600 hover:bg-red-700 text-white"
               onClick={handleConfirmDelete}
-            >
-              Delete Project
-            </Button>
+            >{t("admin.delete")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
