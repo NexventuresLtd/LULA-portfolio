@@ -42,10 +42,10 @@ export function AdminProjectsPage() {
   // Filter projects based on search term
   const filteredProjects = useMemo(() => {
     return projects.filter(project =>
-      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      getLocalizedValue(project.title, 'en').toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.region.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchTerm.toLowerCase())
+      getLocalizedValue(project.description, 'en').toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [projects, searchTerm]);
 
@@ -480,7 +480,7 @@ export function AdminProjectsPage() {
                       <MapPin className="h-4 w-4" />
                       <span>{project.region}</span>
                     </div>
-                    <CardTitle className="text-lg line-clamp-2">{project.title}</CardTitle>
+                    <CardTitle className="text-lg line-clamp-2">{getLocalizedValue(project.title, "en")}</CardTitle>
                   </div>
                   <div className="flex gap-1">
                     <Button
@@ -511,7 +511,7 @@ export function AdminProjectsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: project.description }} />
+                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: getLocalizedValue(project.description, "en") }} />
               </CardContent>
             </Card>
           ))

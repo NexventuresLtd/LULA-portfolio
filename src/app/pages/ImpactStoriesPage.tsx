@@ -84,8 +84,8 @@ export function ImpactStoriesPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-gray-700 text-lg mb-4 italic">"{story.quote}"</p>
-                      <p className="text-gray-600 leading-relaxed mb-6">{story.story}</p>
+                      <p className="text-gray-700 text-lg mb-4 italic">"{getLocalizedValue(story.quote, language)}"</p>
+                      <p className="text-gray-600 leading-relaxed mb-6">{getLocalizedValue(story.story, language)}</p>
                       <div className="border-t border-gray-200 pt-6">
                         <div className="flex items-start gap-4">
                           <div className="flex-1">

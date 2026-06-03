@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { ArrowLeft, MapPin, Users, Calendar, HandHeart } from "lucide-react";
 import { useLanguage } from "../context/LanguageProvider";
+import { getLocalizedValue } from "../utils/i18nContent";
 import { useContent } from "../context/ContentContext";
 import { Badge } from "../components/ui/badge";
 import { Input } from "../components/ui/input";
@@ -14,7 +15,7 @@ import { CheckCircle, MessageCircle } from "lucide-react";
 export function ProjectDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { projects, addInterest, orgSettings } = useContent();
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -80,7 +81,7 @@ export function ProjectDetailPage() {
             </Badge>
           </div>
 
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">{project.title}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-6">{getLocalizedValue(project.title, language)}</h1>
 
           <div className="flex flex-wrap gap-6 mb-8">
             <div className="flex items-center gap-2 text-gray-600">
@@ -104,7 +105,7 @@ export function ProjectDetailPage() {
 
         <div
           className="prose prose-lg max-w-none text-justify"
-          dangerouslySetInnerHTML={{ __html: project.description }}
+          dangerouslySetInnerHTML={{ __html: getLocalizedValue(project.description, language) }}
         />
 
         {project.status === 'active' && (
@@ -122,7 +123,7 @@ export function ProjectDetailPage() {
       <Dialog open={showVolunteerDialog} onOpenChange={setShowVolunteerDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("common.volunteer")} - {project.title}</DialogTitle>
+            <DialogTitle>{t("common.volunteer")} - {getLocalizedValue(project.title, language)}</DialogTitle>
             <DialogDescription>{t("form.volunteerAppDesc")}</DialogDescription>
           </DialogHeader>
           <form onSubmit={(e) => {
@@ -132,7 +133,7 @@ export function ProjectDetailPage() {
               email: form.email,
               phone: form.phone,
               type: 'volunteer',
-              message: `Interested in volunteering for: ${project.title}. ${form.message}`
+              message: `Interested in volunteering for: ${getLocalizedValue(project.title, "en")}. ${form.message}`
             });
             setForm({ name: '', email: '', phone: '', message: '' });
             setShowVolunteerDialog(false);

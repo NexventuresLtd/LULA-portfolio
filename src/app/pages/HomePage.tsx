@@ -275,7 +275,7 @@ function HomePage() {
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-colors min-h-[280px] sm:min-h-[300px] flex flex-col">
                     <CardContent className="p-4 sm:p-6 flex flex-col h-full">
                       <Quote className="h-8 w-8 sm:h-10 sm:w-10 text-gray-300 mb-3 sm:mb-4 flex-shrink-0" />
-                      <p className="text-sm sm:text-base text-green-50 mb-4 sm:mb-6 leading-relaxed italic flex-grow">"{story.quote}"</p>
+                      <p className="text-sm sm:text-base text-green-50 mb-4 sm:mb-6 leading-relaxed italic flex-grow">"{getLocalizedValue(story.quote, language)}"</p>
                       <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex-shrink-0 bg-green-800">
                           {story.image ? (
@@ -365,7 +365,7 @@ function HomePage() {
                 </div>
                 <CardContent className="p-4 sm:p-6 flex-grow flex flex-col">
                   <div className="text-xs sm:text-sm text-gray-500 mb-2">{item.date}</div>
-                  <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-900 line-clamp-2">{item.title}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-900 line-clamp-2">{getLocalizedValue(item.title, language)}</h3>
                   <Link to="/news" className="text-green-600 hover:text-green-700 font-medium inline-flex items-center text-sm mt-auto">
                     {t('common.readMore')}
                     <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />

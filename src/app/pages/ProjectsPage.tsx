@@ -44,7 +44,7 @@ export function ProjectsPage() {
       email: volunteerForm.email,
       phone: volunteerForm.phone,
       type: 'volunteer',
-      message: `Interested in volunteering for: ${selectedProject?.title}. ${volunteerForm.message}`
+      message: `Interested in volunteering for: ${getLocalizedValue(selectedProject?.title, "en")}. ${volunteerForm.message}`
     });
     setVolunteerForm({ name: "", email: "", phone: "", message: "" });
     setShowVolunteerDialog(false);
@@ -157,7 +157,7 @@ export function ProjectsPage() {
       <Dialog open={showVolunteerDialog} onOpenChange={setShowVolunteerDialog}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{t("common.volunteer")} - {selectedProject?.title}</DialogTitle>
+            <DialogTitle>{t("common.volunteer")} - {getLocalizedValue(selectedProject?.title, language)}</DialogTitle>
             <DialogDescription>
               {t("form.volunteerAppDesc")}
             </DialogDescription>
