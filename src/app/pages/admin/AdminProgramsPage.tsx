@@ -126,7 +126,7 @@ export function AdminProgramsPage() {
         <div className="p-8 max-w-3xl mx-auto">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900">
-              {editingProgram ? 'Edit Program' : 'Add New Program'}
+              {editingProgram ? t('admin.editProgram') : t('admin.addNewProgram')}
             </h1>
           </div>
 
@@ -181,11 +181,9 @@ export function AdminProgramsPage() {
             </Card>
 
             <div className="flex justify-end gap-3">
-              <Button type="button" variant="outline" onClick={() => setShowDiscardDialog(true)}>
-                Cancel
-              </Button>
+              <Button type="button" variant="outline" onClick={() => setShowDiscardDialog(true)}>{t("admin.cancel")}</Button>
               <Button type="submit" className="bg-green-600 hover:bg-green-700">
-                {editingProgram ? 'Update Program' : 'Publish Program'}
+                {editingProgram ? t('admin.update') : t('admin.publish')}
               </Button>
             </div>
           </form>
@@ -205,7 +203,7 @@ export function AdminProgramsPage() {
             <div className="relative">
               <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
               <Input
-                placeholder="Search programs..."
+                placeholder={t("admin.search") + "..."}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -218,8 +216,8 @@ export function AdminProgramsPage() {
               <Card className="col-span-full">
                 <CardContent className="py-12 text-center text-gray-500">
                   {programs.length === 0
-                    ? "No programs found. Click \"Add Program\" to create your first program."
-                    : "No programs match your search."}
+                    ? t("admin.noResults")
+                    : t("admin.noResults")}
                 </CardContent>
               </Card>
             ) : (
@@ -269,17 +267,15 @@ export function AdminProgramsPage() {
                     <AlertCircle className="w-6 h-6 text-red-600" />
                   </div>
                   <div>
-                    <DialogTitle className="text-xl">Delete Program?</DialogTitle>
+                    <DialogTitle className="text-xl">{t('admin.deleteConfirm')}</DialogTitle>
                     <DialogDescription className="mt-1">
-                      This will permanently remove "{programToDelete?.title}".
+                      {t('admin.deleteDesc')}
                     </DialogDescription>
                   </div>
                 </div>
               </DialogHeader>
               <DialogFooter className="sm:justify-end gap-2 mt-4">
-                <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-                  Cancel
-                </Button>
+                <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>{t("admin.cancel")}</Button>
                 <Button type="button" className="bg-red-600 hover:bg-red-700 text-white" onClick={handleConfirmDelete}>
                   Delete Program
                 </Button>
@@ -298,20 +294,16 @@ export function AdminProgramsPage() {
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Discard Changes?</DialogTitle>
+                <DialogTitle className="text-xl">{t('admin.discard')}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  All unsaved progress will be lost.
+                  {t('admin.discardDesc')}
                 </DialogDescription>
               </div>
             </div>
           </DialogHeader>
           <DialogFooter className="sm:justify-end gap-2 mt-4">
-            <Button type="button" variant="outline" onClick={() => setShowDiscardDialog(false)}>
-              Cancel
-            </Button>
-            <Button type="button" className="bg-red-600 hover:bg-red-700 text-white" onClick={handleConfirmDiscard}>
-              Discard
-            </Button>
+            <Button type="button" variant="outline" onClick={() => setShowDiscardDialog(false)}>{t("admin.cancel")}</Button>
+            <Button type="button" className="bg-red-600 hover:bg-red-700 text-white" onClick={handleConfirmDiscard}>{t("admin.discard")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
