@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import type { Project } from "../../context/ContentContext";
 import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
 import { Language } from "../../context/LanguageProvider";
-import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
+import { getAllLanguageValues, setLocalizedValue, getLocalizedValue } from "../../utils/i18nContent";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 

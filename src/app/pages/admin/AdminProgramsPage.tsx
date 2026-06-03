@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import type { Program } from "../../context/ContentContext";
 import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
 import { Language } from "../../context/LanguageProvider";
-import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
+import { getAllLanguageValues, setLocalizedValue, getLocalizedValue } from "../../utils/i18nContent";
 
 const iconMap: { [key: string]: any } = {
   'Shield': Shield,
