@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
-import { Plus, Edit, Trash2, AlertCircle, Upload } from "lucide-react";
+import { Plus, Edit, Trash2, AlertCircle, Upload, Search } from "lucide-react";
 import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
@@ -27,6 +27,14 @@ export function AdminNewsPage() {
     category: '',
     content: ''
   });
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredNews = useMemo(() => {
+    return news.filter(item =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [news, searchTerm]);
 
   // React Quill modules configuration
   const modules = {
@@ -162,22 +170,22 @@ export function AdminNewsPage() {
         <div className="p-8 max-w-6xl mx-auto">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900">
-              {editingNews ? 'Edit News Article' : 'Add New News Article'}
+              {editingNews ? t('admin.edit') + ' ' + t('admin.news') : t('admin.addNews')}
             </h1>
             <p className="text-gray-600 mt-1">
-              {editingNews ? 'Update the article details below' : 'Fill in the details to create a new article'}
+              {editingNews ? t('admin.update') : t('admin.addNews')}
             </p>
           </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Article Details</CardTitle>
+              <CardTitle>{t('admin.programDetails')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Article Title *</Label>
+                  <Label htmlFor="title">{t('admin.title')} *</Label>
                   <Input
                     id="title"
                     value={formData.title}
@@ -187,7 +195,7 @@ export function AdminNewsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="date">Publication Date *</Label>
+                  <Label htmlFor="date">Date *</Label>
                   <Input
                     id="date"
                     type="date"
@@ -199,7 +207,7 @@ export function AdminNewsPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category *</Label>
+                  <Label htmlFor="category">{t('admin.category')} *</Label>
                   <Input
                     id="category"
                     value={formData.category}
@@ -209,7 +217,7 @@ export function AdminNewsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image">Featured Image URL or Upload *</Label>
+                  <Label htmlFor="image">{t('admin.imageUrl')} *</Label>
                   <div className="flex gap-2">
                     <Input
                       id="image"
@@ -237,7 +245,7 @@ export function AdminNewsPage() {
                   </div>
                   {formData.image && (
                     <div className="mt-2 p-4 border rounded-lg bg-gray-50">
-                      <p className="text-sm text-gray-600 mb-2">Image Preview:</p>
+                      <p className="text-sm text-gray-600 mb-2">{t('admin.imageUrl')}:</p>
                       <img src={formData.image} alt="Preview" className="max-w-xs max-h-48 object-cover rounded" />
                     </div>
                   )}
@@ -248,7 +256,7 @@ export function AdminNewsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Article Content *</CardTitle>
+              <CardTitle>{t('admin.content')} *</CardTitle>
             </CardHeader>
             <CardContent>
               <ReactQuill
@@ -264,11 +272,9 @@ export function AdminNewsPage() {
           </Card>
 
           <div className="flex justify-end gap-3 sticky bottom-0 bg-white py-4 border-t">
-            <Button type="button" variant="outline" onClick={handleCancelClick}>
-              Cancel
-            </Button>
+            <Button type="button" variant="outline" onClick={handleCancelClick}>{t("admin.cancel")}</Button>
             <Button type="submit" className="bg-green-600 hover:bg-green-700">
-              {editingNews ? 'Update Article' : 'Publish Article'}
+              {editingNews ? t('admin.update') : t('admin.publish')}
             </Button>
           </div>
         </form>
@@ -283,9 +289,9 @@ export function AdminNewsPage() {
                   <AlertCircle className="w-6 h-6 text-red-600" />
                 </div>
                 <div>
-                  <DialogTitle className="text-xl">Discard Changes?</DialogTitle>
+                  <DialogTitle className="text-xl">{t('admin.discard')}</DialogTitle>
                   <DialogDescription className="mt-1">
-                    Are you sure you want to discard your changes? All unsaved progress will be lost.
+                    {t('admin.discardDesc')}
                   </DialogDescription>
                 </div>
               </div>
@@ -295,16 +301,12 @@ export function AdminNewsPage() {
                 type="button"
                 variant="outline"
                 onClick={handleCancelDiscard}
-              >
-                Cancel
-              </Button>
+              >{t("admin.cancel")}</Button>
               <Button
                 type="button"
                 className="bg-red-600 hover:bg-red-700 text-white"
                 onClick={handleConfirmDiscard}
-              >
-                OK, Go Back to Articles
-              </Button>
+              >{t("admin.discard")}</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -318,23 +320,34 @@ export function AdminNewsPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{t("admin.newsMgmt")}</h1>
-          <p className="text-gray-600 mt-2">Manage your organization's news and updates</p>
+          <p className="text-gray-600 mt-2">{t('admin.newsMgmtDesc')}</p>
         </div>
         <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenEditor()}>
-          <Plus className="w-5 h-5 mr-2" />
-          Add News Article
+          <Plus className="w-5 h-5 mr-2" />{t("admin.addNews")}
         </Button>
       </div>
 
+      <div className="mb-8">
+        <div className="relative">
+          <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+          <Input
+            placeholder={t("admin.search") + "..."}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {news.length === 0 ? (
+        {filteredNews.length === 0 ? (
           <Card className="col-span-full">
             <CardContent className="py-12 text-center text-gray-500">
-              No news articles found. Click "Add News Article" to create your first article.
+              {t("admin.noResults")}
             </CardContent>
           </Card>
         ) : (
-          news.map((item) => (
+          filteredNews.map((item) => (
             <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -389,7 +402,7 @@ export function AdminNewsPage() {
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Delete News Article?</DialogTitle>
+                <DialogTitle className="text-xl">{t('admin.deleteConfirm')}</DialogTitle>
                 <DialogDescription className="mt-1">
                   {newsToDelete
                     ? `This will permanently remove “${newsToDelete.title}”. This action cannot be undone.`
@@ -399,16 +412,12 @@ export function AdminNewsPage() {
             </div>
           </DialogHeader>
           <DialogFooter className="sm:justify-end gap-2 mt-4">
-            <Button type="button" variant="outline" onClick={handleCancelDelete}>
-              Cancel
-            </Button>
+            <Button type="button" variant="outline" onClick={handleCancelDelete}>{t("admin.cancel")}</Button>
             <Button
               type="button"
               className="bg-red-600 hover:bg-red-700 text-white"
               onClick={handleConfirmDelete}
-            >
-              Delete Article
-            </Button>
+            >{t("admin.delete")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
