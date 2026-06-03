@@ -247,7 +247,7 @@ function HomePage() {
               ))}
             </Slider>
           ) : (
-            <div className="text-center text-gray-400">No featured projects to display</div>
+            <div className="text-center text-gray-400">{t("admin.noResults")}</div>
           )}
           <div className="text-center mt-8 sm:mt-12">
             <Link to="/projects">
@@ -300,7 +300,7 @@ function HomePage() {
               ))}
             </Slider>
           ) : (
-            <div className="text-center text-green-100/80">No featured impact stories to display.</div>
+            <div className="text-center text-green-100/80">{t("admin.noResults")}</div>
           )}
           <div className="text-center mt-8 sm:mt-12">
             <Link to="/impact-stories">
@@ -337,7 +337,7 @@ function HomePage() {
               </div>
             </div>
           ) : (
-            <div className="text-center text-gray-400">No featured partners to display</div>
+            <div className="text-center text-gray-400">{t("admin.noResults")}</div>
           )}
         </div>
       </section>
