@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import type { NewsItem } from "../../context/ContentContext";
 import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
 import { Language } from "../../context/LanguageProvider";
-import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
+import { getAllLanguageValues, setLocalizedValue, getLocalizedValue } from "../../utils/i18nContent";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -35,8 +35,8 @@ export function AdminNewsPage() {
 
   const filteredNews = useMemo(() => {
     return news.filter(item =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchTerm.toLowerCase())
+      getLocalizedValue(item.title, 'en').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.category || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [news, searchTerm]);
 
@@ -373,7 +373,7 @@ export function AdminNewsPage() {
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
                     <p className="text-sm text-gray-500 mb-2">{item.date}</p>
-                    <CardTitle className="text-lg line-clamp-2">{item.title}</CardTitle>
+                    <CardTitle className="text-lg line-clamp-2">{getLocalizedValue(item.title, "en")}</CardTitle>
                   </div>
                   <div className="flex gap-1">
                     <Button
@@ -395,7 +395,7 @@ export function AdminNewsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: item.content }} />
+                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: getLocalizedValue(item.content, "en") }} />
               </CardContent>
             </Card>
           ))

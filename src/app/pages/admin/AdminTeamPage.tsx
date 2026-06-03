@@ -308,7 +308,7 @@ export function AdminTeamPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-700">{member.bio}</p>
+                  <p className="text-sm text-gray-700">{getLocalizedValue(member.bio, "en")}</p>
                   <div className="flex flex-col gap-1 text-sm text-gray-600 mt-4">
                     <span><strong>Email:</strong> {member.email}</span>
                     {member.location && <span><strong>Location:</strong> {member.location}</span>}

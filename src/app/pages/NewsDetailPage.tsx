@@ -1,10 +1,13 @@
 import { useParams, Link } from "react-router";
 import { Button } from "../components/ui/button";
 import { Calendar, ArrowLeft } from "lucide-react";
+import { getLocalizedValue } from "../utils/i18nContent";
+import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 
 export function NewsDetailPage() {
   const { id } = useParams();
+  const { language } = useLanguage();
   const { news } = useContent();
   
   const article = news.find(n => n.id === id);
@@ -27,7 +30,7 @@ export function NewsDetailPage() {
       <section className="relative h-[400px] overflow-hidden">
         <img
           src={article.image}
-          alt={article.title}
+          alt={getLocalizedValue(article.title, language || "en")}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -37,7 +40,7 @@ export function NewsDetailPage() {
               {article.category}
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {article.title}
+              {getLocalizedValue(article.title, language || "en")}
             </h1>
             <div className="flex items-center text-white/90">
               <Calendar className="w-4 h-4 mr-2" />
@@ -58,7 +61,7 @@ export function NewsDetailPage() {
           
           <div 
             className="prose prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: article.content }}
+            dangerouslySetInnerHTML={{ __html: getLocalizedValue(article.content, language || "en") }}
           />
         </div>
       </section>
