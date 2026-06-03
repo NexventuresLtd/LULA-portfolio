@@ -101,9 +101,9 @@ export function AdminImpactStoriesPage() {
           </DialogTrigger>
           <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingStory ? 'Edit Impact Story' : 'Add New Impact Story'}</DialogTitle>
+              <DialogTitle>{editingStory ? t('admin.edit') + ' ' + t('admin.impactStories') : t('admin.addStory')}</DialogTitle>
               <DialogDescription>
-                {editingStory ? 'Update the impact story details below' : 'Fill in the details to add a new impact story'}
+                {editingStory ? t('admin.update') : t('admin.addStory')}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
@@ -206,8 +206,8 @@ export function AdminImpactStoriesPage() {
                 </div>
                 <div className="flex items-center justify-between rounded-lg border border-gray-200 p-4">
                   <div>
-                    <Label htmlFor="featured" className="text-sm font-semibold text-gray-900">Featured on homepage</Label>
-                    <p className="text-sm text-gray-500 mt-1">Show this story in the featured impact stories carousel.</p>
+                    <Label htmlFor="featured" className="text-sm font-semibold text-gray-900">{t("admin.featured")}</Label>
+                    <p className="text-sm text-gray-500 mt-1"></p>
                   </div>
                   <Switch
                     id="featured"
@@ -217,11 +217,9 @@ export function AdminImpactStoriesPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
-                  Cancel
-                </Button>
+                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>{t("admin.cancel")}</Button>
                 <Button type="submit" className="bg-green-600 hover:bg-green-700">
-                  {editingStory ? 'Update Story' : 'Add Story'}
+                  {editingStory ? t('admin.update') : t('admin.addStory')}
                 </Button>
               </DialogFooter>
             </form>
@@ -233,7 +231,7 @@ export function AdminImpactStoriesPage() {
         {impactStories.length === 0 ? (
           <Card className="col-span-full">
             <CardContent className="py-12 text-center text-gray-500">
-              No impact stories found. Click "Add Impact Story" to create your first story.
+              {t("admin.noResults")}
             </CardContent>
           </Card>
         ) : (
@@ -313,24 +311,20 @@ export function AdminImpactStoriesPage() {
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Delete Impact Story?</DialogTitle>
+                <DialogTitle className="text-xl">{t('admin.deleteConfirm')}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  This will permanently remove "{storyToDelete?.title}" from the admin dashboard.
+                  {t("admin.deleteDesc")} "{storyToDelete?.title}" from the admin dashboard.
                 </DialogDescription>
               </div>
             </div>
           </DialogHeader>
           <DialogFooter className="sm:justify-end gap-2 mt-4">
-            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
-            </Button>
+            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>{t("admin.cancel")}</Button>
             <Button
               type="button"
               className="bg-red-600 hover:bg-red-700 text-white"
               onClick={handleConfirmDelete}
-            >
-              Delete Story
-            </Button>
+            >{t("admin.delete")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
