@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { ArrowLeft, MapPin, Users, Calendar, HandHeart } from "lucide-react";
+import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
 import { Badge } from "../components/ui/badge";
 import { Input } from "../components/ui/input";
@@ -13,6 +14,7 @@ import { CheckCircle, MessageCircle } from "lucide-react";
 export function ProjectDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { projects, addInterest, orgSettings } = useContent();
   const [showVolunteerDialog, setShowVolunteerDialog] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
