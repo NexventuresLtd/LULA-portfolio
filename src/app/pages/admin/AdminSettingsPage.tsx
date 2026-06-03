@@ -7,9 +7,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/ta
 import { User, Building2, Lock, Palette, Save, ExternalLink, Upload, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "../../components/ui/textarea";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 
 export function AdminSettingsPage() {
+  const { t } = useLanguage();
   const { orgSettings, updateOrgSettings, appearanceSettings, updateAppearanceSettings } = useContent();
 
   // Account Settings
@@ -204,31 +206,25 @@ export function AdminSettingsPage() {
       <Tabs defaultValue="account" className="space-y-6">
         <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
           <TabsTrigger value="account">
-            <User className="w-4 h-4 mr-2" />
-            Account
-          </TabsTrigger>
+            <User className="w-4 h-4 mr-2" />{t("admin.settings.account")}          </TabsTrigger>
           <TabsTrigger value="organization">
-            <Building2 className="w-4 h-4 mr-2" />
-            Organization
-          </TabsTrigger>
+            <Building2 className="w-4 h-4 mr-2" />{t("admin.settings.organization")}          </TabsTrigger>
           <TabsTrigger value="appearance">
-            <Palette className="w-4 h-4 mr-2" />
-            Appearance
-          </TabsTrigger>
+            <Palette className="w-4 h-4 mr-2" />{t("admin.settings.appearance")}          </TabsTrigger>
         </TabsList>
 
         {/* Account Settings Tab */}
         <TabsContent value="account">
           <Card>
             <CardHeader>
-              <CardTitle>Account Settings</CardTitle>
-              <CardDescription>Manage your personal account information and security</CardDescription>
+              <CardTitle>{t("admin.settings.accountTitle")}</CardTitle>
+              <CardDescription>{t("admin.settings.accountDesc")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSaveAccount} className="space-y-6">
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="account-name">Full Name</Label>
+                    <Label htmlFor="account-name">{t("admin.settings.fullName")}</Label>
                     <Input
                       id="account-name"
                       value={accountData.name}
@@ -237,7 +233,7 @@ export function AdminSettingsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="account-email">Email Address</Label>
+                    <Label htmlFor="account-email">{t("admin.settings.emailAddress")}</Label>
                     <Input
                       id="account-email"
                       type="email"
@@ -250,11 +246,11 @@ export function AdminSettingsPage() {
                 <div className="border-t pt-6">
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                     <Lock className="w-5 h-5" />
-                    Change Password
+                    {t("admin.settings.changePassword")}
                   </h3>
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="current-password">Current Password</Label>
+                      <Label htmlFor="current-password">{t("admin.settings.currentPassword")}</Label>
                       <Input
                         id="current-password"
                         type="password"
@@ -265,7 +261,7 @@ export function AdminSettingsPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="new-password">New Password</Label>
+                      <Label htmlFor="new-password">{t("admin.settings.newPassword")}</Label>
                       <Input
                         id="new-password"
                         type="password"
@@ -276,7 +272,7 @@ export function AdminSettingsPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="confirm-password">Confirm New Password</Label>
+                      <Label htmlFor="confirm-password">{t("admin.settings.confirmPassword")}</Label>
                       <Input
                         id="confirm-password"
                         type="password"
@@ -303,14 +299,14 @@ export function AdminSettingsPage() {
         <TabsContent value="organization">
           <Card>
             <CardHeader>
-              <CardTitle>Organization Information</CardTitle>
-              <CardDescription>Update your organization's public information</CardDescription>
+              <CardTitle>{t("admin.settings.orgTitle")}</CardTitle>
+              <CardDescription>{t("admin.settings.orgDesc")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSaveOrganization} className="space-y-6">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="org-name">Organization Name</Label>
+                    <Label htmlFor="org-name">{t("admin.settings.orgName")}</Label>
                     <Input
                       id="org-name"
                       value={orgData.name}
@@ -319,7 +315,7 @@ export function AdminSettingsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="org-acronym">Acronym</Label>
+                    <Label htmlFor="org-acronym">{t("admin.settings.acronym")}</Label>
                     <Input
                       id="org-acronym"
                       value={orgData.acronym}
@@ -328,7 +324,7 @@ export function AdminSettingsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="org-email">Contact Email</Label>
+                    <Label htmlFor="org-email">{t("admin.settings.contactEmail")}</Label>
                     <Input
                       id="org-email"
                       type="email"
@@ -338,7 +334,7 @@ export function AdminSettingsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="org-phone">Phone Number</Label>
+                    <Label htmlFor="org-phone">{t("admin.settings.phoneNumber")}</Label>
                     <Input
                       id="org-phone"
                       value={orgData.phone}
@@ -347,7 +343,7 @@ export function AdminSettingsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="org-website">Website</Label>
+                    <Label htmlFor="org-website">{t("admin.settings.website")}</Label>
                     <Input
                       id="org-website"
                       value={orgData.website}
@@ -357,7 +353,7 @@ export function AdminSettingsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="org-address">Address</Label>
+                  <Label htmlFor="org-address">{t("admin.settings.address")}</Label>
                   <Textarea
                     id="org-address"
                     value={orgData.address}
@@ -367,7 +363,7 @@ export function AdminSettingsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="org-payment">Payment Details (Bank, Mobile Money, etc.)</Label>
+                  <Label htmlFor="org-payment">{t("admin.settings.paymentDetails")}</Label>
                   <Textarea
                     id="org-payment"
                     value={orgData.paymentDetails}
@@ -392,8 +388,8 @@ export function AdminSettingsPage() {
         <TabsContent value="appearance">
           <Card>
             <CardHeader>
-              <CardTitle>Background Images</CardTitle>
-              <CardDescription>Customize background images across your website. Click "View Location" to see where each image appears.</CardDescription>
+              <CardTitle>{t("admin.settings.bgImages")}</CardTitle>
+              <CardDescription>{t("admin.settings.bgImagesDesc")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSaveAppearance} className="space-y-6">
@@ -855,7 +851,7 @@ export function AdminSettingsPage() {
 
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                   <p className="text-sm text-green-800">
-                    <strong>Note:</strong> Changes are saved to the backend and reflect across the site immediately.
+                    <strong>Note:</strong> {t("admin.settings.note")}
                   </p>
                 </div>
 
