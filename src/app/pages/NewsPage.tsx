@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { useLanguage } from "../context/LanguageProvider";
 import { useContent } from "../context/ContentContext";
+import { getLocalizedValue } from "../utils/i18nContent";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -19,7 +20,7 @@ import {
 } from "../components/ui/pagination";
 
 export function NewsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   useSEO("News & Updates", "Stay informed about LULA latest programs, partnerships, and community impact in Eastern DR Congo.");
   const { news, appearanceSettings } = useContent();
   const [searchQuery, setSearchQuery] = useState('');

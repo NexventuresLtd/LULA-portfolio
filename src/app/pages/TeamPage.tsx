@@ -5,9 +5,10 @@ import { Mail, Linkedin, User } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router";
 import { useContent } from "../context/ContentContext";
+import { getLocalizedValue } from "../utils/i18nContent";
 
 export function TeamPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   useSEO("Our Team - Leadership & Staff", "Meet the dedicated team behind LULA: professionals committed to transforming lives through humanitarian work in Eastern DR Congo.");
   const { teamMembers, appearanceSettings } = useContent();
   const heroBackground = appearanceSettings.teamHeroBackground || "";
@@ -64,8 +65,8 @@ export function TeamPage() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                    <div className="text-green-600 font-medium mb-3">{member.role}</div>
-                    <p className="text-gray-600 text-sm mb-4">{member.bio}</p>
+                    <div className="text-green-600 font-medium mb-3">{getLocalizedValue(member.role, language)}</div>
+                    <p className="text-gray-600 text-sm mb-4">{getLocalizedValue(member.bio, language)}</p>
                     <div className="flex gap-2">
                       <a href={`mailto:${member.email}`}>
                         <Button size="sm" variant="outline">
@@ -118,7 +119,7 @@ export function TeamPage() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
-                    <div className="text-green-600 text-sm font-medium mb-1">{member.role}</div>
+                    <div className="text-green-600 text-sm font-medium mb-1">{getLocalizedValue(member.role, language)}</div>
                     <div className="text-gray-500 text-sm">{member.location}</div>
                   </div>
                 </CardContent>

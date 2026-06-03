@@ -4,6 +4,7 @@ import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent } from "../components/ui/card";
 import { Quote, User } from "lucide-react";
 import { useContent } from "../context/ContentContext";
+import { getLocalizedValue } from "../utils/i18nContent";
 import {
   Pagination,
   PaginationContent,
@@ -15,7 +16,7 @@ import {
 } from "../components/ui/pagination";
 
 export function ImpactStoriesPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   useSEO("Impact Stories - Real Stories of Change", "Read real stories from communities served by LULA in Eastern DR Congo. See how our programs transform lives.");
   const { impactStories, appearanceSettings } = useContent();
   const [currentPage, setCurrentPage] = useState(1);

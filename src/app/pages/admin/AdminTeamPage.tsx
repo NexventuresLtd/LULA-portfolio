@@ -11,6 +11,9 @@ import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { TeamMember } from "../../context/ContentContext";
+import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
+import { Language } from "../../context/LanguageProvider";
+import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
 
 export function AdminTeamPage() {
   const { t } = useLanguage();
@@ -21,6 +24,7 @@ export function AdminTeamPage() {
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'leadership' | 'staff'>('all');
+  const [formLang, setFormLang] = useState<Language>('en');
   const [formData, setFormData] = useState({
     name: '',
     role: '',
@@ -131,7 +135,10 @@ export function AdminTeamPage() {
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
-              <div className="space-y-4 py-4">
+              <div className="mb-4 pt-4">
+                <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
+              </div>
+              <div className="space-y-4 py-2">
                 <div className="space-y-2">
                   <Label htmlFor="name">{t("admin.fullName")} *</Label>
                   <Input
@@ -145,8 +152,8 @@ export function AdminTeamPage() {
                   <Label htmlFor="role">{t("admin.role")} *</Label>
                   <Input
                     id="role"
-                    value={formData.role}
-                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                    value={getAllLanguageValues(formData.role)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, role: setLocalizedValue(formData.role, formLang, e.target.value) })}
                     required
                   />
                 </div>
@@ -154,8 +161,8 @@ export function AdminTeamPage() {
                   <Label htmlFor="bio">{t("admin.bio")} *</Label>
                   <Textarea
                     id="bio"
-                    value={formData.bio}
-                    onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                    value={getAllLanguageValues(formData.bio)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, bio: setLocalizedValue(formData.bio, formLang, e.target.value) })}
                     required
                     rows={3}
                   />

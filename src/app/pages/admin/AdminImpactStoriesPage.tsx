@@ -11,6 +11,9 @@ import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import { Switch } from "../../components/ui/switch";
 import type { ImpactStory } from "../../context/ContentContext";
+import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
+import { Language } from "../../context/LanguageProvider";
+import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
 
 export function AdminImpactStoriesPage() {
   const { t } = useLanguage();
@@ -19,6 +22,7 @@ export function AdminImpactStoriesPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [storyToDelete, setStoryToDelete] = useState<ImpactStory | null>(null);
   const [editingStory, setEditingStory] = useState<ImpactStory | null>(null);
+  const [formLang, setFormLang] = useState<Language>('en');
   const [formData, setFormData] = useState({
     title: '',
     quote: '',
@@ -107,13 +111,16 @@ export function AdminImpactStoriesPage() {
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
-              <div className="space-y-4 py-4">
+              <div className="mb-4 pt-4">
+                <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
+              </div>
+              <div className="space-y-4 py-2">
                 <div className="space-y-2">
                   <Label htmlFor="title">{t("admin.title")} *</Label>
                   <Input
                     id="title"
-                    value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    value={getAllLanguageValues(formData.title)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, title: setLocalizedValue(formData.title, formLang, e.target.value) })}
                     required
                   />
                 </div>
@@ -140,8 +147,8 @@ export function AdminImpactStoriesPage() {
                   <Label htmlFor="quote">{t("admin.quote")} *</Label>
                   <Textarea
                     id="quote"
-                    value={formData.quote}
-                    onChange={(e) => setFormData({ ...formData, quote: e.target.value })}
+                    value={getAllLanguageValues(formData.quote)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, quote: setLocalizedValue(formData.quote, formLang, e.target.value) })}
                     required
                     rows={2}
                     placeholder="A brief, impactful quote from the person"
@@ -151,8 +158,8 @@ export function AdminImpactStoriesPage() {
                   <Label htmlFor="story">{t("admin.story")} *</Label>
                   <Textarea
                     id="story"
-                    value={formData.story}
-                    onChange={(e) => setFormData({ ...formData, story: e.target.value })}
+                    value={getAllLanguageValues(formData.story)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, story: setLocalizedValue(formData.story, formLang, e.target.value) })}
                     required
                     rows={6}
                     placeholder="The complete impact story..."

@@ -11,6 +11,9 @@ import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Project } from "../../context/ContentContext";
+import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
+import { Language } from "../../context/LanguageProvider";
+import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -23,6 +26,7 @@ export function AdminProjectsPage() {
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [formLang, setFormLang] = useState<Language>('en');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -218,6 +222,10 @@ export function AdminProjectsPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-500">Select language to enter content:</p>
+              <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
+            </div>
             <Card>
               <CardHeader>
                 <CardTitle>{t('admin.programDetails')}</CardTitle>
@@ -347,8 +355,8 @@ export function AdminProjectsPage() {
               </CardHeader>
               <CardContent>
                 <ReactQuill
-                  value={formData.description}
-                  onChange={(value) => setFormData({ ...formData, description: value })}
+                  value={getAllLanguageValues(formData.description)[formLang]}
+                  onChange={(value) => setFormData({ ...formData, description: setLocalizedValue(formData.description, formLang, value) })}
                   modules={modules}
                   formats={formats}
                   placeholder="Write the full project description and details..."

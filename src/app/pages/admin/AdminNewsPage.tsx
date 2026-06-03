@@ -9,6 +9,9 @@ import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { NewsItem } from "../../context/ContentContext";
+import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
+import { Language } from "../../context/LanguageProvider";
+import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -28,6 +31,7 @@ export function AdminNewsPage() {
     content: ''
   });
   const [searchTerm, setSearchTerm] = useState('');
+  const [formLang, setFormLang] = useState<Language>('en');
 
   const filteredNews = useMemo(() => {
     return news.filter(item =>
@@ -178,6 +182,10 @@ export function AdminNewsPage() {
           </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-500">Select language to enter content:</p>
+            <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
+          </div>
           <Card>
             <CardHeader>
               <CardTitle>{t('admin.programDetails')}</CardTitle>
@@ -188,8 +196,8 @@ export function AdminNewsPage() {
                   <Label htmlFor="title">{t('admin.title')} *</Label>
                   <Input
                     id="title"
-                    value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    value={getAllLanguageValues(formData.title)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, title: setLocalizedValue(formData.title, formLang, e.target.value) })}
                     required
                     className="text-lg"
                   />
@@ -260,8 +268,8 @@ export function AdminNewsPage() {
             </CardHeader>
             <CardContent>
               <ReactQuill
-                value={formData.content}
-                onChange={(value) => setFormData({ ...formData, content: value })}
+                value={getAllLanguageValues(formData.content)[formLang]}
+                onChange={(value) => setFormData({ ...formData, content: setLocalizedValue(formData.content, formLang, value) })}
                 modules={modules}
                 formats={formats}
                 placeholder="Write the full news article content..."
