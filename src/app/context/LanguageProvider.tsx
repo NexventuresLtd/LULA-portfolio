@@ -375,6 +375,11 @@ const translations: Record<Language, Record<string, string>> = {
     'about.timeline5.desc': 'Created microfinance program supporting 2,000 women-led businesses.',
     'about.timeline6.title': 'Reaching 850,000 Beneficiaries',
     'about.timeline6.desc': 'Milestone achievement with impact across Eastern DRC.',
+    'news.title': 'News & Publications',
+    'news.subtitle': 'Stay informed about our latest activities, impact stories, and published reports',
+    'news.searchPlaceholder': 'Search news, articles, and publications...',
+    'news.allCategories': 'All Categories',
+    'news.noResults': 'No articles found matching your search.',
   },
   fr: {
     // Navigation
@@ -740,6 +745,11 @@ const translations: Record<Language, Record<string, string>> = {
     'about.timeline5.desc': 'Creation d un programme de microfinance soutenant 2 000 entreprises.',
     'about.timeline6.title': 'Atteindre 850 000 Beneficiaires',
     'about.timeline6.desc': 'Etape importante avec un impact a travers l Est de la RDC.',
+    'news.title': 'Actualites & Publications',
+    'news.subtitle': 'Restez informe de nos dernieres activites, histoires d impact et rapports publies',
+    'news.searchPlaceholder': 'Rechercher actualites, articles et publications...',
+    'news.allCategories': 'Toutes les Categories',
+    'news.noResults': 'Aucun article trouve correspondant a votre recherche.',
   },
   sw: {
     // Navigation
@@ -1105,6 +1115,11 @@ const translations: Record<Language, Record<string, string>> = {
     'about.timeline5.desc': 'Uundaji wa programu ya mikopo midogo inayosaidia biashara 2,000.',
     'about.timeline6.title': 'Kufikia Wanufaika 850,000',
     'about.timeline6.desc': 'Hatua muhimu yenye athari katika Mashariki mwa DRC.',
+    'news.title': 'Habari & Machapisho',
+    'news.subtitle': 'Endelea kupata habari kuhusu shughuli zetu za hivi karibuni na ripoti zilizochapishwa',
+    'news.searchPlaceholder': 'Tafuta habari, makala, na machapisho...',
+    'news.allCategories': 'Kategoria Zote',
+    'news.noResults': 'Hakuna makala yanayolingana na utafutaji wako.',
   },
 };
 

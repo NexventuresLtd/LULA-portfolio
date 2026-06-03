@@ -69,10 +69,10 @@ export function NewsPage() {
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
           <div className="mb-8">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-              {t('nav.news')}
+              {t('news.title')}
             </h1>
             <p className="text-xl text-green-100 max-w-3xl">
-              {t("home.news.subtitle")}
+              {t("news.subtitle")}
             </p>
           </div>
 
@@ -82,7 +82,7 @@ export function NewsPage() {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
               <Input
                 type="text"
-                placeholder="Search news, articles, and publications..."
+                placeholder={t("news.searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -98,12 +98,12 @@ export function NewsPage() {
                 setCurrentPage(1);
               }}>
                 <SelectTrigger className="w-full md:w-[220px] py-6 border-2 border-gray-200 bg-gray-50 hover:bg-gray-100 focus:ring-2 focus:ring-black focus:border-black transition-colors">
-                  <SelectValue placeholder={t("admin.category")} />
+                  <SelectValue placeholder={t("news.allCategories")} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
                     <SelectItem key={category} value={category}>
-                      {category === 'all' ? t('admin.category') : category}
+                      {category === 'all' ? t('news.allCategories') : category}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -117,7 +117,7 @@ export function NewsPage() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           {currentArticles.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No articles found matching your search.</p>
+              <p className="text-gray-500 text-lg">{t("news.noResults")}</p>
             </div>
           ) : (
             <>
