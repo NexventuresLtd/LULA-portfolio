@@ -133,7 +133,7 @@ export function ProjectsPage() {
                   <div className="flex items-center justify-between">
                     <Link to={`/projects/${project.id}`}>
                       <Button variant="link" className="p-0 h-auto text-green-600">
-                        View Details <ArrowRight className="w-4 h-4 ml-1" />
+                        {t("projects.viewDetails")} <ArrowRight className="w-4 h-4 ml-1" />
                       </Button>
                     </Link>
                     {project.status === 'active' && (
