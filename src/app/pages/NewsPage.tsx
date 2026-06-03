@@ -69,10 +69,10 @@ export function NewsPage() {
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
           <div className="mb-8">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-              News & Publications
+              {t('nav.news')}
             </h1>
             <p className="text-xl text-green-100 max-w-3xl">
-              Stay informed about our latest activities, impact stories, and published reports
+              {t("home.news.subtitle")}
             </p>
           </div>
 
@@ -98,12 +98,12 @@ export function NewsPage() {
                 setCurrentPage(1);
               }}>
                 <SelectTrigger className="w-full md:w-[220px] py-6 border-2 border-gray-200 bg-gray-50 hover:bg-gray-100 focus:ring-2 focus:ring-black focus:border-black transition-colors">
-                  <SelectValue placeholder="All Categories" />
+                  <SelectValue placeholder={t("admin.category")} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
                     <SelectItem key={category} value={category}>
-                      {category === 'all' ? 'All Categories' : category}
+                      {category === 'all' ? t('admin.category') : category}
                     </SelectItem>
                   ))}
                 </SelectContent>
