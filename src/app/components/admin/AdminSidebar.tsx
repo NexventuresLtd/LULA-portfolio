@@ -45,7 +45,7 @@ export function AdminSidebar() {
     return location.pathname.startsWith(path);
   };
 
-  const SidebarContent = () => (
+  const sidebarContent = (
     <>
       <div className="p-4 lg:p-6 border-b border-gray-800">
         <Link to="/admin" className="flex flex-col gap-2" onClick={() => setMobileOpen(false)}>
@@ -125,12 +125,12 @@ export function AdminSidebar() {
 
       {/* Mobile sidebar drawer */}
       <div className={`lg:hidden fixed top-0 left-0 h-screen w-72 bg-gray-900 text-white flex flex-col z-50 transform transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <SidebarContent />
+        {sidebarContent}
       </div>
 
       {/* Desktop sidebar */}
       <div className="hidden lg:flex fixed left-0 top-0 h-screen w-64 bg-gray-900 text-white flex-col">
-        <SidebarContent />
+        {sidebarContent}
       </div>
     </>
   );
