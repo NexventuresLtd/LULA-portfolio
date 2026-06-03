@@ -49,20 +49,14 @@ export function AdminDashboardPage() {
     }
   ];
 
-  const recentProjects = projects.slice(0, 2).map(p => ({
-    action: t('admin.projects'),
-    detail: p.title,
-  }));
-  const recentNews = news.slice(0, 1).map(n => ({
-    action: t('admin.news'),
-    detail: n.title,
-  }));
-  const recentImpact = impactStories.slice(0, 1).map(s => ({
-    action: t('admin.impactStories'),
-    detail: `${s.name} - ${s.role}`,
-  }));
-
-  const recentActivity = [...recentProjects, ...recentNews, ...recentImpact].slice(0, 4);
+  // Build recent activity from all content types sorted by recency
+  const recentActivity = [
+    ...projects.map(p => ({ type: t('admin.projects'), title: p.title, date: p.duration || '', link: '/admin/projects' })),
+    ...news.map(n => ({ type: t('admin.news'), title: n.title, date: n.date, link: '/admin/news' })),
+    ...impactStories.map(s => ({ type: t('admin.impactStories'), title: s.title || s.name, date: '', link: '/admin/impact-stories' })),
+    ...enquiries.slice(0, 3).map(e => ({ type: t('admin.enquiries'), title: `${e.name} — ${e.subject}`, date: e.date, link: '/admin/enquiries' })),
+    ...interests.slice(0, 3).map(i => ({ type: t('admin.interests'), title: `${i.name} (${i.type})`, date: i.date, link: '/admin/interests' })),
+  ].slice(0, 6);
 
   const quickActions = [
     {
@@ -125,12 +119,13 @@ export function AdminDashboardPage() {
             {recentActivity.length > 0 ? (
               <div className="space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex justify-between items-start pb-4 border-b last:border-0">
+                  <Link key={index} to={activity.link} className="flex justify-between items-start pb-4 border-b last:border-0 hover:bg-gray-50 -mx-2 px-2 rounded">
                     <div className="flex-1">
-                      <div className="font-medium text-gray-900">{activity.action}</div>
-                      <div className="text-sm text-gray-600 line-clamp-1">{activity.detail}</div>
+                      <div className="text-xs font-medium text-green-600 uppercase">{activity.type}</div>
+                      <div className="text-sm font-medium text-gray-900 line-clamp-1">{activity.title}</div>
                     </div>
-                  </div>
+                    {activity.date && <span className="text-xs text-gray-400 ml-2 whitespace-nowrap">{activity.date}</span>}
+                  </Link>
                 ))}
               </div>
             ) : (
