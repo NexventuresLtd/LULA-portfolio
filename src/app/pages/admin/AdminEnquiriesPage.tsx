@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "../../components/ui/select";
 import { Mail, Phone, Calendar, Search, Trash2, AlertCircle, Eye, RefreshCw } from "lucide-react";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import {
@@ -31,6 +32,7 @@ import {
 } from "../../components/ui/dialog";
 
 export function AdminEnquiriesPage() {
+  const { t } = useLanguage();
   const { enquiries, updateEnquiryStatus, deleteEnquiry, refreshEnquiries } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'in-progress' | 'resolved'>('all');
@@ -84,13 +86,11 @@ export function AdminEnquiriesPage() {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Enquiries Management</h1>
-          <p className="text-gray-600 mt-2">Manage contact form submissions from the website</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t("admin.enquiriesMgmt")}</h1>
+          <p className="text-gray-600 mt-2">{t("admin.enquiriesMgmtDesc")}</p>
         </div>
         <Button variant="outline" onClick={() => refreshEnquiries()} className="gap-2">
-          <RefreshCw className="w-4 h-4" />
-          Refresh
-        </Button>
+          <RefreshCw className="w-4 h-4" />{t("admin.refresh")}</Button>
       </div>
 
       <Card>

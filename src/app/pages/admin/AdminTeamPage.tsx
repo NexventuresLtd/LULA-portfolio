@@ -7,11 +7,13 @@ import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { Plus, Edit, Trash2, Search, AlertCircle, User } from "lucide-react";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { TeamMember } from "../../context/ContentContext";
 
 export function AdminTeamPage() {
+  const { t } = useLanguage();
   const { teamMembers, addTeamMember, updateTeamMember, deleteTeamMember } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -113,15 +115,13 @@ export function AdminTeamPage() {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Team Management</h1>
-          <p className="text-gray-600 mt-2">Manage your organization's team members</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t("admin.teamMgmt")}</h1>
+          <p className="text-gray-600 mt-2">{t("admin.teamMgmtDesc")}</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenDialog()}>
-              <Plus className="w-5 h-5 mr-2" />
-              Add Team Member
-            </Button>
+              <Plus className="w-5 h-5 mr-2" />{t("admin.addTeamMember")}</Button>
           </DialogTrigger>
           <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>

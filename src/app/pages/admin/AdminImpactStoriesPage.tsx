@@ -6,12 +6,14 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Plus, Edit, Trash2, Quote, AlertCircle, Upload, User } from "lucide-react";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import { Switch } from "../../components/ui/switch";
 import type { ImpactStory } from "../../context/ContentContext";
 
 export function AdminImpactStoriesPage() {
+  const { t } = useLanguage();
   const { impactStories, addImpactStory, updateImpactStory, deleteImpactStory } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -89,15 +91,13 @@ export function AdminImpactStoriesPage() {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Impact Stories Management</h1>
-          <p className="text-gray-600 mt-2">Manage testimonials and impact stories</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t("admin.impactMgmt")}</h1>
+          <p className="text-gray-600 mt-2">{t("admin.impactMgmtDesc")}</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenDialog()}>
-              <Plus className="w-5 h-5 mr-2" />
-              Add Impact Story
-            </Button>
+              <Plus className="w-5 h-5 mr-2" />{t("admin.addStory")}</Button>
           </DialogTrigger>
           <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>

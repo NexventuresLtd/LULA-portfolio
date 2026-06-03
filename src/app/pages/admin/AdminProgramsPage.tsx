@@ -6,6 +6,7 @@ import { Label } from "../../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { Plus, Edit, Trash2, AlertCircle, Search, Shield, Heart, Stethoscope, GraduationCap, Handshake, Users, Briefcase, ArrowRight } from "lucide-react";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Program } from "../../context/ContentContext";
@@ -23,6 +24,7 @@ const iconMap: { [key: string]: any } = {
 const iconOptions = ['Shield', 'Heart', 'Stethoscope', 'GraduationCap', 'Handshake', 'Users', 'Briefcase'];
 
 export function AdminProgramsPage() {
+  const { t } = useLanguage();
   const { programs, addProgram, updateProgram, deleteProgram } = useContent();
   const [isEditing, setIsEditing] = useState(false);
   const [showDiscardDialog, setShowDiscardDialog] = useState(false);
@@ -192,13 +194,11 @@ export function AdminProgramsPage() {
         <div className="p-4 sm:p-6 lg:p-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Programs Management</h1>
-              <p className="text-gray-600 mt-2">Manage your organization's programs</p>
+              <h1 className="text-3xl font-bold text-gray-900">{t("admin.programsMgmt")}</h1>
+              <p className="text-gray-600 mt-2">{t("admin.programsMgmtDesc")}</p>
             </div>
             <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenEditor()}>
-              <Plus className="w-5 h-5 mr-2" />
-              Add Program
-            </Button>
+              <Plus className="w-5 h-5 mr-2" />{t("admin.addProgram")}</Button>
           </div>
 
           <div className="mb-8">

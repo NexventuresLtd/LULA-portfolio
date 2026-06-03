@@ -5,6 +5,7 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
 import { Plus, Edit, Trash2, AlertCircle, Upload } from "lucide-react";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { NewsItem } from "../../context/ContentContext";
@@ -12,6 +13,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export function AdminNewsPage() {
+  const { t } = useLanguage();
   const { news, addNews, updateNews, deleteNews } = useContent();
   const [isEditing, setIsEditing] = useState(false);
   const [showDiscardDialog, setShowDiscardDialog] = useState(false);
@@ -315,7 +317,7 @@ export function AdminNewsPage() {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">News Management</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t("admin.newsMgmt")}</h1>
           <p className="text-gray-600 mt-2">Manage your organization's news and updates</p>
         </div>
         <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenEditor()}>

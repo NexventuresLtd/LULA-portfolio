@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "../../components/ui/select";
 import { Mail, Phone, Calendar, Search, Trash2, Heart, HandHeart, Handshake, AlertCircle, Eye, RefreshCw } from "lucide-react";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import {
@@ -31,6 +32,7 @@ import {
 } from "../../components/ui/dialog";
 
 export function AdminInterestsPage() {
+  const { t } = useLanguage();
   const { interests, updateInterestStatus, deleteInterest, refreshInterests } = useContent();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<'all' | 'donate' | 'volunteer' | 'partner'>('all');
@@ -111,13 +113,11 @@ export function AdminInterestsPage() {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Interests & Donations Management</h1>
-          <p className="text-gray-600 mt-2">Track people interested in donating, volunteering, and partnering</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t("admin.interestsMgmt")}</h1>
+          <p className="text-gray-600 mt-2">{t("admin.interestsMgmtDesc")}</p>
         </div>
         <Button variant="outline" onClick={() => refreshInterests()} className="gap-2">
-          <RefreshCw className="w-4 h-4" />
-          Refresh
-        </Button>
+          <RefreshCw className="w-4 h-4" />{t("admin.refresh")}</Button>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 lg:mb-8">

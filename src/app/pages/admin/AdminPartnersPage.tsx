@@ -7,11 +7,13 @@ import { Checkbox } from "../../components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { Plus, Edit, Trash2, Upload, Building2, Star, AlertCircle } from "lucide-react";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Partner } from "../../context/ContentContext";
 
 export function AdminPartnersPage() {
+  const { t } = useLanguage();
   const { partners, addPartner, updatePartner, deletePartner } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -167,15 +169,13 @@ export function AdminPartnersPage() {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 lg:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Partners Management</h1>
-          <p className="text-gray-600 mt-2">Manage your organization's partners</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t("admin.partnersMgmt")}</h1>
+          <p className="text-gray-600 mt-2">{t("admin.partnersMgmtDesc")}</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-green-600 hover:bg-green-700" onClick={() => handleOpenDialog()}>
-              <Plus className="w-5 h-5 mr-2" />
-              Add Partner
-            </Button>
+              <Plus className="w-5 h-5 mr-2" />{t("admin.addPartner")}</Button>
           </DialogTrigger>
           <DialogContent className="max-w-5xl">
             <DialogHeader>
