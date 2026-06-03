@@ -109,7 +109,7 @@ export function AdminImpactStoriesPage() {
             <form onSubmit={handleSubmit}>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Story Title *</Label>
+                  <Label htmlFor="title">{t("admin.title")} *</Label>
                   <Input
                     id="title"
                     value={formData.title}
@@ -118,7 +118,7 @@ export function AdminImpactStoriesPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="name">Person's Name *</Label>
+                  <Label htmlFor="name">{t("admin.personName")} *</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -127,7 +127,7 @@ export function AdminImpactStoriesPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="role">Role/Description *</Label>
+                  <Label htmlFor="role">{t("admin.personRole")} *</Label>
                   <Input
                     id="role"
                     value={formData.role}
@@ -137,7 +137,7 @@ export function AdminImpactStoriesPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="quote">Short Quote *</Label>
+                  <Label htmlFor="quote">{t("admin.quote")} *</Label>
                   <Textarea
                     id="quote"
                     value={formData.quote}
@@ -148,7 +148,7 @@ export function AdminImpactStoriesPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="story">Full Story *</Label>
+                  <Label htmlFor="story">{t("admin.story")} *</Label>
                   <Textarea
                     id="story"
                     value={formData.story}
@@ -159,7 +159,7 @@ export function AdminImpactStoriesPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image">Photo URL (optional)</Label>
+                  <Label htmlFor="image">{t("admin.photoUrl")}</Label>
                   <div className="flex gap-2">
                     <Input
                       id="image"

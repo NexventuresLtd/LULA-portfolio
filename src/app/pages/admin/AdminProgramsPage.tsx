@@ -133,11 +133,11 @@ export function AdminProgramsPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Program Details</CardTitle>
+                <CardTitle>{t("admin.programDetails")}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Program Title *</Label>
+                  <Label htmlFor="title">{t("admin.programTitle")} *</Label>
                   <Input
                     id="title"
                     value={formData.title}
@@ -146,7 +146,7 @@ export function AdminProgramsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description *</Label>
+                  <Label htmlFor="description">{t("admin.description")} *</Label>
                   <Input
                     id="description"
                     value={formData.description}
@@ -156,7 +156,7 @@ export function AdminProgramsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="beneficiaries">Beneficiaries</Label>
+                  <Label htmlFor="beneficiaries">{t("admin.beneficiaries")}</Label>
                   <Input
                     id="beneficiaries"
                     value={formData.beneficiaries}
@@ -165,7 +165,7 @@ export function AdminProgramsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="icon">Icon</Label>
+                  <Label htmlFor="icon">{t("admin.icon")}</Label>
                   <Select value={formData.icon} onValueChange={(value) => setFormData({ ...formData, icon: value })}>
                     <SelectTrigger>
                       <SelectValue />

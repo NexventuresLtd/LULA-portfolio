@@ -133,7 +133,7 @@ export function AdminTeamPage() {
             <form onSubmit={handleSubmit}>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name *</Label>
+                  <Label htmlFor="name">{t("admin.fullName")} *</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -142,7 +142,7 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="role">Role/Position *</Label>
+                  <Label htmlFor="role">{t("admin.role")} *</Label>
                   <Input
                     id="role"
                     value={formData.role}
@@ -151,7 +151,7 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="bio">Bio/Description *</Label>
+                  <Label htmlFor="bio">{t("admin.bio")} *</Label>
                   <Textarea
                     id="bio"
                     value={formData.bio}
@@ -161,7 +161,7 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email">{t("form.email")} *</Label>
                   <Input
                     id="email"
                     type="email"
@@ -171,7 +171,7 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="location">Location (Optional)</Label>
+                  <Label htmlFor="location">{t("admin.location")}</Label>
                   <Input
                     id="location"
                     value={formData.location}
@@ -180,7 +180,7 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image">Photo URL *</Label>
+                  <Label htmlFor="image">{t("admin.photoUrl")} *</Label>
                   <Input
                     id="image"
                     value={formData.image}
@@ -190,7 +190,7 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="linkedin">LinkedIn URL (Optional)</Label>
+                  <Label htmlFor="linkedin">LinkedIn</Label>
                   <Input
                     id="linkedin"
                     value={formData.linkedin}
@@ -199,7 +199,7 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="type">Team Type *</Label>
+                  <Label htmlFor="type">{t("admin.teamType")} *</Label>
                   <Select value={formData.type} onValueChange={(value: 'leadership' | 'staff') => setFormData({ ...formData, type: value })}>
                     <SelectTrigger>
                       <SelectValue />

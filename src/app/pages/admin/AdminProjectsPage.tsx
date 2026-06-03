@@ -320,7 +320,7 @@ export function AdminProjectsPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="beneficiaries">Beneficiaries</Label>
+                    <Label htmlFor="beneficiaries">{t("admin.beneficiaries")}</Label>
                     <Input
                       id="beneficiaries"
                       value={formData.beneficiaries}
