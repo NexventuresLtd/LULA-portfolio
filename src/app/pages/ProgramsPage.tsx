@@ -55,7 +55,7 @@ export function ProgramsPage() {
                       <IconComponent className="w-7 h-7" />
                     </div>
                     <CardTitle className="text-xl">{getLocalizedValue(program.title, language)}</CardTitle>
-                    <CardDescription className="text-base">{program.description}</CardDescription>
+                    <CardDescription className="text-base">{getLocalizedValue(program.description, language)}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">

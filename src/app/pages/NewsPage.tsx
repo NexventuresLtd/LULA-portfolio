@@ -37,7 +37,7 @@ export function NewsPage() {
   const filteredArticles = news.filter(article => {
     const matchesSearch =
       article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      article.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      getLocalizedValue(article.content, 'en').toLowerCase().includes(searchQuery.toLowerCase()) ||
       article.category.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
@@ -144,9 +144,9 @@ export function NewsPage() {
                           {article.category}
                         </span>
                       </div>
-                      <CardTitle className="text-xl">{article.title}</CardTitle>
+                      <CardTitle className="text-xl">{getLocalizedValue(article.title, language)}</CardTitle>
                       <CardDescription className="line-clamp-3">
-                        {article.content.replace(/<[^>]*>/g, '').substring(0, 150)}...
+                        {getLocalizedValue(article.content, language).replace(/<[^>]*>/g, '').substring(0, 150)}...
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
