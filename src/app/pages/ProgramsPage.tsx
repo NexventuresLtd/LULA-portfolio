@@ -60,8 +60,7 @@ export function ProgramsPage() {
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                       <span className="text-sm font-semibold text-green-600">{program.beneficiaries}</span>
                       <Link to="/get-involved">
-                        <Button variant="link" className="p-0 h-auto text-green-600 hover:text-green-700">
-                          Support It <ArrowRight className="w-4 h-4 ml-1" />
+                        <Button variant="link" className="p-0 h-auto text-green-600 hover:text-green-700">{t("programs.supportIt")} <ArrowRight className="w-4 h-4 ml-1" />
                         </Button>
                       </Link>
                     </div>

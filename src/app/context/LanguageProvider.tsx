@@ -408,6 +408,8 @@ const translations: Record<Language, Record<string, string>> = {
     'involved.thankYouVolunteerDesc': 'We have received your application. Our team will contact you soon with next steps.',
     'involved.thankYouPartnerDesc': 'We have received your partnership inquiry. We will be in touch shortly.',
     'involved.thankYouDonateDesc': 'We have received your donation request. Our team will contact you with payment details.',
+    'contact.whatsapp': 'Chat on WhatsApp',
+    'involved.supportProject': 'Want to support this project?',
   },
   fr: {
     // Navigation
@@ -806,6 +808,8 @@ const translations: Record<Language, Record<string, string>> = {
     'involved.thankYouVolunteerDesc': 'Nous avons recu votre candidature. Notre equipe vous contactera bientot.',
     'involved.thankYouPartnerDesc': 'Nous avons recu votre demande de partenariat. Nous vous contacterons sous peu.',
     'involved.thankYouDonateDesc': 'Nous avons recu votre demande de don. Notre equipe vous contactera avec les details de paiement.',
+    'contact.whatsapp': 'Discuter sur WhatsApp',
+    'involved.supportProject': 'Vous voulez soutenir ce projet?',
   },
   sw: {
     // Navigation
@@ -1204,6 +1208,8 @@ const translations: Record<Language, Record<string, string>> = {
     'involved.thankYouVolunteerDesc': 'Tumepokea maombi yako. Timu yetu itawasiliana nawe hivi karibuni.',
     'involved.thankYouPartnerDesc': 'Tumepokea ombi lako la ushirikiano. Tutawasiliana nawe hivi karibuni.',
     'involved.thankYouDonateDesc': 'Tumepokea ombi lako la mchango. Timu yetu itawasiliana nawe na maelezo ya malipo.',
+    'contact.whatsapp': 'Zungumza WhatsApp',
+    'involved.supportProject': 'Unataka kusaidia mradi huu?',
   },
 };
 

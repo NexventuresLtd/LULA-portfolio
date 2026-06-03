@@ -107,11 +107,11 @@ export function ProjectDetailPage() {
 
         {project.status === 'active' && (
           <div className="mt-10 p-6 bg-green-50 rounded-xl border border-green-200">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Want to support this project?</h3>
-            <p className="text-gray-600 mb-4">Join our team of volunteers making a difference on the ground.</p>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">{t("involved.supportProject")}</h3>
+            <p className="text-gray-600 mb-4">{t("involved.volunteerDesc")}</p>
             <Button className="bg-green-600 hover:bg-green-700" onClick={() => setShowVolunteerDialog(true)}>
               <HandHeart className="w-4 h-4 mr-2" />
-              Volunteer for this Project
+              {t("common.volunteer")}
             </Button>
           </div>
         )}
@@ -120,8 +120,8 @@ export function ProjectDetailPage() {
       <Dialog open={showVolunteerDialog} onOpenChange={setShowVolunteerDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Volunteer for {project.title}</DialogTitle>
-            <DialogDescription>Fill out the form to express your interest.</DialogDescription>
+            <DialogTitle>{t("common.volunteer")} - {project.title}</DialogTitle>
+            <DialogDescription>{t("form.volunteerAppDesc")}</DialogDescription>
           </DialogHeader>
           <form onSubmit={(e) => {
             e.preventDefault();
@@ -143,7 +143,7 @@ export function ProjectDetailPage() {
               <div><Label>Message</Label><Textarea value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Why do you want to volunteer?" /></div>
             </div>
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setShowVolunteerDialog(false)}>Cancel</Button>
+              <Button type="button" variant="outline" onClick={() => setShowVolunteerDialog(false)}>{t("admin.cancel")}</Button>
               <Button type="submit" className="bg-green-600 hover:bg-green-700">Submit</Button>
             </DialogFooter>
           </form>
@@ -158,8 +158,8 @@ export function ProjectDetailPage() {
                 <CheckCircle className="w-6 h-6 text-green-600" />
               </div>
               <div>
-                <DialogTitle>Thank You!</DialogTitle>
-                <DialogDescription>We've received your application. Our team will contact you soon.</DialogDescription>
+                <DialogTitle>{t("form.thankYouVolunteer")}</DialogTitle>
+                <DialogDescription>{t("involved.thankYouVolunteerDesc")}</DialogDescription>
               </div>
             </div>
           </DialogHeader>

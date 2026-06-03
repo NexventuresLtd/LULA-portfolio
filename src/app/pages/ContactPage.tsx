@@ -178,7 +178,7 @@ export function ContactPage() {
                       className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-colors"
                     >
                       <MessageCircle className="w-4 h-4" />
-                      Chat on WhatsApp
+                      {t("contact.whatsapp")}
                     </a>
                   </CardContent>
                 </Card>

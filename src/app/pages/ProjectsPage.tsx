@@ -142,9 +142,7 @@ export function ProjectsPage() {
                         className="bg-green-600 hover:bg-green-700 text-white"
                         onClick={() => handleVolunteerClick(project)}
                       >
-                        <HandHeart className="w-4 h-4 mr-2" />
-                        Volunteer
-                      </Button>
+                        <HandHeart className="w-4 h-4 mr-2" />{t("common.volunteer")}</Button>
                     )}
                   </div>
                 </CardContent>
@@ -158,9 +156,9 @@ export function ProjectsPage() {
       <Dialog open={showVolunteerDialog} onOpenChange={setShowVolunteerDialog}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Volunteer for {selectedProject?.title}</DialogTitle>
+            <DialogTitle>{t("common.volunteer")} - {selectedProject?.title}</DialogTitle>
             <DialogDescription>
-              Fill out the form below to express your interest in volunteering for this project.
+              {t("form.volunteerAppDesc")}
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleVolunteerSubmit}>

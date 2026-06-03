@@ -221,9 +221,7 @@ export function GetInvolvedPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="outline" className="w-full" onClick={() => setIsVolunteerDialogOpen(true)}>
-                    Apply to Volunteer
-                  </Button>
+                  <Button variant="outline" className="w-full" onClick={() => setIsVolunteerDialogOpen(true)}>{t("involved.applyVolunteer")}</Button>
                 </CardContent>
               </Card>
 
@@ -238,9 +236,7 @@ export function GetInvolvedPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="outline" className="w-full" onClick={() => setIsPartnerDialogOpen(true)}>
-                    Partnership Inquiry
-                  </Button>
+                  <Button variant="outline" className="w-full" onClick={() => setIsPartnerDialogOpen(true)}>{t("involved.partnerInquiry")}</Button>
                 </CardContent>
               </Card>
             </div>
