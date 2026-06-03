@@ -95,7 +95,7 @@ export function AdminEnquiriesPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>All Enquiries ({filteredEnquiries.length})</CardTitle>
+          <CardTitle>{t("admin.enquiriesMgmt")} ({filteredEnquiries.length})</CardTitle>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -123,11 +123,11 @@ export function AdminEnquiriesPage() {
           <div className="overflow-x-auto"><Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Subject</TableHead>
-                <TableHead>Contact</TableHead>
+                <TableHead>{t("form.name")}</TableHead>
+                <TableHead>{t("contact.subject")}</TableHead>
+                <TableHead>{t("nav.contact")}</TableHead>
                 <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>{t("admin.status")}</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -135,7 +135,7 @@ export function AdminEnquiriesPage() {
               {filteredEnquiries.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-gray-500 py-8">
-                    No enquiries found
+                    {t("admin.noResults")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -231,17 +231,15 @@ export function AdminEnquiriesPage() {
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Delete Enquiry?</DialogTitle>
+                <DialogTitle className="text-xl">{t("admin.deleteConfirm")}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  This will permanently remove "{enquiryToDelete?.subject}" from the admin dashboard.
+                  {t("admin.deleteDesc")}
                 </DialogDescription>
               </div>
             </div>
           </DialogHeader>
           <DialogFooter className="sm:justify-end gap-2 mt-4">
-            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
-            </Button>
+            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>{t("admin.cancel")}</Button>
             <Button
               type="button"
               className="bg-red-600 hover:bg-red-700 text-white"
@@ -263,7 +261,7 @@ export function AdminEnquiriesPage() {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <h4 className="font-semibold text-sm text-gray-700 mb-1">Contact Information</h4>
+              <h4 className="font-semibold text-sm text-gray-700 mb-1">{t("nav.contact")}</h4>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm">
                   <Mail className="w-4 h-4 text-gray-400" />
@@ -282,11 +280,11 @@ export function AdminEnquiriesPage() {
               </div>
             </div>
             <div>
-              <h4 className="font-semibold text-sm text-gray-700 mb-1">Message</h4>
+              <h4 className="font-semibold text-sm text-gray-700 mb-1">{t("form.message")}</h4>
               <p className="text-sm text-gray-600 whitespace-pre-wrap">{selectedEnquiry?.message}</p>
             </div>
             <div>
-              <h4 className="font-semibold text-sm text-gray-700 mb-1">Status</h4>
+              <h4 className="font-semibold text-sm text-gray-700 mb-1">{t("admin.status")}</h4>
               <Select
                 value={selectedEnquiry?.status}
                 onValueChange={(value: any) => {

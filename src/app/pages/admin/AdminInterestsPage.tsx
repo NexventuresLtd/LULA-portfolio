@@ -123,7 +123,7 @@ export function AdminInterestsPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 lg:mb-8">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Interests</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">{t("admin.interestsMgmt")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total}</div>
@@ -132,7 +132,7 @@ export function AdminInterestsPage() {
         </Card>
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Donations</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">{t("common.donate")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -143,7 +143,7 @@ export function AdminInterestsPage() {
         </Card>
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Volunteers</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">{t("common.volunteer")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -154,7 +154,7 @@ export function AdminInterestsPage() {
         </Card>
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Partnerships</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">{t("admin.partners")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -167,7 +167,7 @@ export function AdminInterestsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>All Interests ({filteredInterests.length})</CardTitle>
+          <CardTitle>{t("admin.interestsMgmt")} ({filteredInterests.length})</CardTitle>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -183,10 +183,10 @@ export function AdminInterestsPage() {
                 <SelectValue placeholder="Filter by type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="donate">Donations</SelectItem>
-                <SelectItem value="volunteer">Volunteers</SelectItem>
-                <SelectItem value="partner">Partnerships</SelectItem>
+                <SelectItem value="all">{t("admin.search")}</SelectItem>
+                <SelectItem value="donate">{t("common.donate")}</SelectItem>
+                <SelectItem value="volunteer">{t("common.volunteer")}</SelectItem>
+                <SelectItem value="partner">{t("admin.partners")}</SelectItem>
               </SelectContent>
             </Select>
             <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
@@ -194,7 +194,7 @@ export function AdminInterestsPage() {
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="all">{t("admin.status")}</SelectItem>
                 <SelectItem value="new">New</SelectItem>
                 <SelectItem value="contacted">Contacted</SelectItem>
                 <SelectItem value="completed">Completed</SelectItem>
@@ -206,11 +206,11 @@ export function AdminInterestsPage() {
           <div className="overflow-x-auto"><Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
+                <TableHead>{t("form.name")}</TableHead>
                 <TableHead>Type</TableHead>
-                <TableHead>Contact</TableHead>
+                <TableHead>{t("nav.contact")}</TableHead>
                 <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>{t("admin.status")}</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -218,7 +218,7 @@ export function AdminInterestsPage() {
               {filteredInterests.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-gray-500 py-8">
-                    No interests found
+                    {t("admin.noResults")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -326,17 +326,15 @@ export function AdminInterestsPage() {
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Delete Interest?</DialogTitle>
+                <DialogTitle className="text-xl">{t("admin.deleteConfirm")}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  This will permanently remove "{interestToDelete?.name}" from the admin dashboard.
+                  {t("admin.deleteDesc")}
                 </DialogDescription>
               </div>
             </div>
           </DialogHeader>
           <DialogFooter className="sm:justify-end gap-2 mt-4">
-            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
-            </Button>
+            <Button type="button" variant="outline" onClick={() => setDeleteDialogOpen(false)}>{t("admin.cancel")}</Button>
             <Button
               type="button"
               className="bg-red-600 hover:bg-red-700 text-white"
@@ -367,7 +365,7 @@ export function AdminInterestsPage() {
               </Badge>
             </div>
             <div>
-              <h4 className="font-semibold text-sm text-gray-700 mb-1">Contact Information</h4>
+              <h4 className="font-semibold text-sm text-gray-700 mb-1">{t("nav.contact")}</h4>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-sm">
                   <Mail className="w-4 h-4 text-gray-400" />
@@ -386,11 +384,11 @@ export function AdminInterestsPage() {
               </div>
             </div>
             <div>
-              <h4 className="font-semibold text-sm text-gray-700 mb-1">Message</h4>
+              <h4 className="font-semibold text-sm text-gray-700 mb-1">{t("form.message")}</h4>
               <p className="text-sm text-gray-600 whitespace-pre-wrap">{selectedInterest?.message}</p>
             </div>
             <div>
-              <h4 className="font-semibold text-sm text-gray-700 mb-1">Status</h4>
+              <h4 className="font-semibold text-sm text-gray-700 mb-1">{t("admin.status")}</h4>
               <Select
                 value={selectedInterest?.status}
                 onValueChange={(value: any) => {
