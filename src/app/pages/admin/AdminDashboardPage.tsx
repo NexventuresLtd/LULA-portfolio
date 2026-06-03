@@ -1,96 +1,87 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Users, FolderKanban, Target, Newspaper, Handshake, MessageCircle, Plus, Mail, Heart } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
+import { useLanguage } from "../../context/LanguageProvider";
 import { Link, useNavigate } from "react-router";
 import { Button } from "../../components/ui/button";
 
 export function AdminDashboardPage() {
+  const { t } = useLanguage();
   const { programs, projects, teamMembers, partners, news, impactStories, enquiries, interests } = useContent();
   const navigate = useNavigate();
 
-  // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split('T')[0];
-
-  // Filter data for today
   const enquiriesToday = enquiries.filter(e => e.date.startsWith(today));
   const interestsToday = interests.filter(i => i.date.startsWith(today));
 
   const stats = [
     {
-      title: "Enquiries Today",
+      title: t('admin.dash.enquiriesToday'),
       value: enquiriesToday.length.toString(),
       icon: Mail,
       color: "text-green-600",
       link: "/admin/enquiries",
-      description: "New contact enquiries"
+      description: t('admin.dash.newEnquiries')
     },
     {
-      title: "Interests & Donations",
+      title: t('admin.dash.interestsToday'),
       value: interestsToday.length.toString(),
       icon: Heart,
       color: "text-green-600",
       link: "/admin/interests",
-      description: "Volunteer, partner & donation requests"
+      description: t('admin.dash.volunteerPartnerDonate')
     },
     {
-      title: "Total Programs",
+      title: t('admin.dash.totalPrograms'),
       value: programs.length.toString(),
       icon: Target,
       color: "text-green-600",
       link: "/admin/programs",
-      description: "Active programs"
+      description: t('admin.dash.activePrograms')
     },
     {
-      title: "Total Partners",
+      title: t('admin.dash.totalPartners'),
       value: partners.length.toString(),
       icon: Handshake,
       color: "text-green-600",
       link: "/admin/partners",
-      description: "Organization partners"
+      description: t('admin.dash.orgPartners')
     }
   ];
 
-  // Get recent items for activity feed
   const recentProjects = projects.slice(0, 2).map(p => ({
-    action: "Project",
+    action: t('admin.projects'),
     detail: p.title,
-    type: "project"
   }));
   const recentNews = news.slice(0, 1).map(n => ({
-    action: "News Article",
+    action: t('admin.news'),
     detail: n.title,
-    type: "news"
   }));
   const recentImpact = impactStories.slice(0, 1).map(s => ({
-    action: "Impact Story",
+    action: t('admin.impactStories'),
     detail: `${s.name} - ${s.role}`,
-    type: "story"
   }));
 
   const recentActivity = [...recentProjects, ...recentNews, ...recentImpact].slice(0, 4);
 
   const quickActions = [
     {
-      label: "Add New Project",
-      color: "bg-gray-600 hover:bg-gray-700",
+      label: t('admin.dash.addProject'),
       icon: FolderKanban,
       onClick: () => navigate('/admin/projects')
     },
     {
-      label: "Add News Article",
-      color: "bg-gray-600 hover:bg-gray-700",
+      label: t('admin.dash.addNewsArticle'),
       icon: Newspaper,
       onClick: () => navigate('/admin/news')
     },
     {
-      label: "Add Partner",
-      color: "bg-gray-600 hover:bg-gray-700",
+      label: t('admin.dash.addPartner'),
       icon: Handshake,
       onClick: () => navigate('/admin/partners')
     },
     {
-      label: "Add Impact Story",
-      color: "bg-gray-600 hover:bg-gray-700",
+      label: t('admin.dash.addImpactStory'),
       icon: MessageCircle,
       onClick: () => navigate('/admin/impact-stories')
     }
@@ -99,8 +90,8 @@ export function AdminDashboardPage() {
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard Overview</h1>
-        <p className="text-gray-600 mt-2">Welcome back to LULA Admin Portal</p>
+        <h1 className="text-3xl font-bold text-gray-900">{t('admin.dash.title')}</h1>
+        <p className="text-gray-600 mt-2">{t('admin.dash.welcome')}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -118,7 +109,7 @@ export function AdminDashboardPage() {
                 <p className="text-xs text-gray-500 mb-4">{stat.description}</p>
               </div>
               <Link to={stat.link} className="text-sm font-medium text-green-600 hover:underline mt-auto">
-                View Details →
+                {t('admin.dash.viewDetails')} →
               </Link>
             </CardContent>
           </Card>
@@ -128,7 +119,7 @@ export function AdminDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Content</CardTitle>
+            <CardTitle>{t('admin.dash.recentContent')}</CardTitle>
           </CardHeader>
           <CardContent>
             {recentActivity.length > 0 ? (
@@ -144,7 +135,7 @@ export function AdminDashboardPage() {
               </div>
             ) : (
               <div className="text-center text-gray-500 py-8">
-                No recent content. Start by adding projects, news, or impact stories.
+                {t('admin.dash.noContent')}
               </div>
             )}
           </CardContent>
@@ -152,7 +143,7 @@ export function AdminDashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle>{t('admin.dash.quickActions')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
@@ -160,7 +151,7 @@ export function AdminDashboardPage() {
                 <button
                   key={index}
                   onClick={action.onClick}
-                  className={`${action.color} text-white rounded-lg p-4 text-sm font-medium transition-colors flex items-center justify-center gap-2`}
+                  className="bg-gray-600 hover:bg-gray-700 text-white rounded-lg p-4 text-sm font-medium transition-colors flex items-center justify-center gap-2"
                 >
                   <Plus className="w-4 h-4" />
                   {action.label}
