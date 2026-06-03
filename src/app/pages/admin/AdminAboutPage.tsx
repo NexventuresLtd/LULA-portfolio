@@ -4,6 +4,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
+import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import { Save, Info } from "lucide-react";
@@ -11,6 +12,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export function AdminAboutPage() {
+  const { t } = useLanguage();
   const { aboutContent, updateAboutContent } = useContent();
   const [formData, setFormData] = useState(aboutContent);
 
@@ -42,12 +44,11 @@ export function AdminAboutPage() {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">About Us Content</h1>
-          <p className="text-gray-600 mt-2">Edit organization mission, vision, and story</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('admin.about')}</h1>
+          <p className="text-gray-600 mt-2">{t('admin.aboutDesc')}</p>
         </div>
         <Button onClick={handleSave} className="bg-green-600 hover:bg-green-700">
-          <Save className="w-4 h-4 mr-2" />
-          Save Changes
+          <Save className="w-4 h-4 mr-2" />{t("admin.save")}
         </Button>
       </div>
 
@@ -56,10 +57,10 @@ export function AdminAboutPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Info className="w-5 h-5 text-green-600" />
-              Mission Statement
+              {t('admin.missionStatement')}
             </CardTitle>
             <CardDescription>
-              Your organization's core purpose and what you aim to achieve
+              {t('admin.missionDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -77,10 +78,10 @@ export function AdminAboutPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Info className="w-5 h-5 text-green-600" />
-              Vision Statement
+              {t('admin.visionStatement')}
             </CardTitle>
             <CardDescription>
-              Your organization's aspirational goals and future direction
+              {t('admin.visionDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -98,15 +99,15 @@ export function AdminAboutPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Info className="w-5 h-5 text-green-600" />
-              Our Story
+              {t('admin.ourStory')}
             </CardTitle>
             <CardDescription>
-              Share your organization's history, background, and journey using the rich text editor below
+              {t('admin.storyDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="story">Story Content</Label>
+              <Label htmlFor="story">{t('admin.content')}</Label>
               <div className="mt-2">
                 <ReactQuill
                   value={formData.story}
@@ -124,14 +125,14 @@ export function AdminAboutPage() {
 
         <Card className="bg-gray-50">
           <CardHeader>
-            <CardTitle className="text-lg">Preview</CardTitle>
+            <CardTitle className="text-lg">{t('admin.preview')}</CardTitle>
             <CardDescription>
-              How your story will appear on the About Us page
+              {t('admin.previewDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="bg-white p-6 rounded-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Story</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('admin.ourStory')}</h3>
               <div 
                 className="prose prose-lg max-w-none"
                 dangerouslySetInnerHTML={{ __html: formData.story }}

@@ -314,6 +314,15 @@ const translations: Record<Language, Record<string, string>> = {
     'admin.dash.addNewsArticle': 'Add News Article',
     'admin.dash.addPartner': 'Add Partner',
     'admin.dash.addImpactStory': 'Add Impact Story',
+    'admin.aboutDesc': 'Edit organization mission, vision, and story',
+    'admin.missionStatement': 'Mission Statement',
+    'admin.missionDesc': 'Your organization core purpose and what you aim to achieve',
+    'admin.visionStatement': 'Vision Statement',
+    'admin.visionDesc': 'Your organization aspirational goals and future direction',
+    'admin.ourStory': 'Our Story',
+    'admin.storyDesc': 'Share your organization history, background, and journey',
+    'admin.preview': 'Preview',
+    'admin.previewDesc': 'How your content will appear on the website',
   },
   fr: {
     // Navigation
@@ -922,6 +931,15 @@ const translations: Record<Language, Record<string, string>> = {
     'admin.dash.addNewsArticle': 'Ongeza Habari',
     'admin.dash.addPartner': 'Ongeza Mshirika',
     'admin.dash.addImpactStory': 'Ongeza Hadithi',
+    'admin.aboutDesc': 'Hariri dhamira, maono, na hadithi ya shirika',
+    'admin.missionStatement': 'Taarifa ya Dhamira',
+    'admin.missionDesc': 'Madhumuni ya msingi ya shirika lako',
+    'admin.visionStatement': 'Taarifa ya Maono',
+    'admin.visionDesc': 'Malengo na mwelekeo wa baadaye wa shirika lako',
+    'admin.ourStory': 'Hadithi Yetu',
+    'admin.storyDesc': 'Shiriki historia na safari ya shirika lako',
+    'admin.preview': 'Hakiki',
+    'admin.previewDesc': 'Jinsi maudhui yako yatakavyoonekana kwenye tovuti',
   },
 };
 
