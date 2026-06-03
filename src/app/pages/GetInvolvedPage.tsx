@@ -119,7 +119,7 @@ export function GetInvolvedPage() {
               {t("involved.title")}
             </h1>
             <p className="text-xl text-gray-100 max-w-3xl">
-              Your support transforms lives and builds stronger communities in Eastern DR Congo
+              {t("involved.subtitle")}
             </p>
           </div>
         </div>
@@ -137,7 +137,7 @@ export function GetInvolvedPage() {
                   <CardTitle className="text-2xl">{t("involved.donate_title")}</CardTitle>
                 </div>
                 <CardDescription className="text-base">
-                  Your donation directly supports our programs in child protection, women's empowerment, and community health.
+                  {t("involved.donateDesc")}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -217,7 +217,7 @@ export function GetInvolvedPage() {
                   </div>
                   <CardTitle>{t("involved.volunteer_title")}</CardTitle>
                   <CardDescription>
-                    Join our team of dedicated volunteers making a difference on the ground.
+                    {t("involved.volunteerDesc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -234,7 +234,7 @@ export function GetInvolvedPage() {
                   </div>
                   <CardTitle>{t("involved.partner_title")}</CardTitle>
                   <CardDescription>
-                    Collaborate with us to amplify impact across Eastern DR Congo.
+                    {t("involved.partnerDesc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -421,7 +421,7 @@ export function GetInvolvedPage() {
               <div>
                 <DialogTitle className="text-xl">{t("form.thankYouVolunteer")}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  We've received your application. Our team will contact you soon with next steps.
+                  {t("involved.thankYouVolunteerDesc")}
                 </DialogDescription>
               </div>
             </div>
@@ -454,7 +454,7 @@ export function GetInvolvedPage() {
               <div>
                 <DialogTitle className="text-xl">{t("form.thankYouPartner")}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  We've received your partnership inquiry. We'll be in touch shortly to discuss collaboration opportunities.
+                  {t("involved.thankYouPartnerDesc")}
                 </DialogDescription>
               </div>
             </div>
@@ -487,7 +487,7 @@ export function GetInvolvedPage() {
               <div>
                 <DialogTitle className="text-xl">{t("form.thankYouDonate")}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  We've received your donation request. Our team will contact you with payment details and next steps.
+                  {t("involved.thankYouDonateDesc")}
                 </DialogDescription>
               </div>
             </div>

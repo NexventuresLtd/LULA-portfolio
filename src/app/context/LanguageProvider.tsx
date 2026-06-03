@@ -402,6 +402,12 @@ const translations: Record<Language, Record<string, string>> = {
     'partners.researchDesc': 'Collaborative research and policy advocacy for child protection',
     'partners.resource': 'Resource Mobilization',
     'partners.resourceDesc': 'Partnership for funding and resource allocation to maximize community impact',
+    'involved.donateDesc': 'Your donation directly supports our programs in child protection, women empowerment, and community health.',
+    'involved.volunteerDesc': 'Join our team of dedicated volunteers making a difference on the ground.',
+    'involved.partnerDesc': 'Collaborate with us to amplify impact across Eastern DR Congo.',
+    'involved.thankYouVolunteerDesc': 'We have received your application. Our team will contact you soon with next steps.',
+    'involved.thankYouPartnerDesc': 'We have received your partnership inquiry. We will be in touch shortly.',
+    'involved.thankYouDonateDesc': 'We have received your donation request. Our team will contact you with payment details.',
   },
   fr: {
     // Navigation
@@ -794,6 +800,12 @@ const translations: Record<Language, Record<string, string>> = {
     'partners.researchDesc': 'Recherche collaborative et plaidoyer politique pour la protection des enfants',
     'partners.resource': 'Mobilisation des Ressources',
     'partners.resourceDesc': 'Partenariat pour le financement et l allocation des ressources',
+    'involved.donateDesc': 'Votre don soutient directement nos programmes de protection des enfants, d autonomisation des femmes et de sante communautaire.',
+    'involved.volunteerDesc': 'Rejoignez notre equipe de benevoles devoues qui font la difference sur le terrain.',
+    'involved.partnerDesc': 'Collaborez avec nous pour amplifier l impact dans l Est de la RDC.',
+    'involved.thankYouVolunteerDesc': 'Nous avons recu votre candidature. Notre equipe vous contactera bientot.',
+    'involved.thankYouPartnerDesc': 'Nous avons recu votre demande de partenariat. Nous vous contacterons sous peu.',
+    'involved.thankYouDonateDesc': 'Nous avons recu votre demande de don. Notre equipe vous contactera avec les details de paiement.',
   },
   sw: {
     // Navigation
@@ -1186,6 +1198,12 @@ const translations: Record<Language, Record<string, string>> = {
     'partners.researchDesc': 'Utafiti wa ushirikiano na utetezi wa sera kwa ulinzi wa watoto',
     'partners.resource': 'Uhamasishaji wa Rasilimali',
     'partners.resourceDesc': 'Ushirikiano wa ufadhili na ugawaji wa rasilimali',
+    'involved.donateDesc': 'Mchango wako unasaidia moja kwa moja programu zetu za ulinzi wa watoto, uwezeshaji wa wanawake, na afya ya jamii.',
+    'involved.volunteerDesc': 'Jiunge na timu yetu ya wajitoleaji waliojitolea wanaoleta mabadiliko.',
+    'involved.partnerDesc': 'Shirikiana nasi kuongeza athari Mashariki mwa DRC.',
+    'involved.thankYouVolunteerDesc': 'Tumepokea maombi yako. Timu yetu itawasiliana nawe hivi karibuni.',
+    'involved.thankYouPartnerDesc': 'Tumepokea ombi lako la ushirikiano. Tutawasiliana nawe hivi karibuni.',
+    'involved.thankYouDonateDesc': 'Tumepokea ombi lako la mchango. Timu yetu itawasiliana nawe na maelezo ya malipo.',
   },
 };
 
