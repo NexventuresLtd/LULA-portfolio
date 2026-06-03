@@ -2,6 +2,7 @@ import { useSEO } from '../hooks/useSEO';
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useLanguage } from "../context/LanguageProvider";
+import { getLocalizedValue } from "../utils/i18nContent";
 import { useContent } from "../context/ContentContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -14,7 +15,7 @@ import { MapPin, Users, Calendar, ArrowRight, HandHeart, CheckCircle, MessageCir
 import { Link } from "react-router";
 
 export function ProjectsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   useSEO("Projects - Active Interventions in Eastern DRC", "View LULA active projects: Breaking the Cycle, Women SRHR Education, Women Empowerment and more across North and South Kivu refugee camps.");
   const { projects, addInterest, appearanceSettings, orgSettings } = useContent();
   const navigate = useNavigate();
@@ -106,9 +107,9 @@ export function ProjectsPage() {
                       {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
                     </span>
                   </div>
-                  <CardTitle className="text-xl">{project.title}</CardTitle>
+                  <CardTitle className="text-xl">{getLocalizedValue(project.title, language)}</CardTitle>
                   <CardDescription className="text-base line-clamp-2">
-                    {project.description.replace(/<[^>]*>/g, '').slice(0, 150)}
+                    {(getLocalizedValue(project.description, language) || '').replace(/<[^>]*>/g, '').slice(0, 150)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

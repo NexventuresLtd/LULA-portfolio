@@ -5,9 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../co
 import { Button } from "../components/ui/button";
 import { Shield, Heart, Stethoscope, GraduationCap, Handshake, Users, Briefcase, ArrowRight } from "lucide-react";
 import { Link } from "react-router";
+import { getLocalizedValue } from "../utils/i18nContent";
 
 export function ProgramsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   useSEO("Programs - HIV Prevention, Child Protection & Women Empowerment", "Explore LULA programs: HIV prevention, sexual reproductive health, child protection, women empowerment, peacebuilding, and community health in Eastern DRC.");
   const { programs, appearanceSettings } = useContent();
 
@@ -53,7 +54,7 @@ export function ProgramsPage() {
                     <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl ${program.color} mb-4`}>
                       <IconComponent className="w-7 h-7" />
                     </div>
-                    <CardTitle className="text-xl">{program.title}</CardTitle>
+                    <CardTitle className="text-xl">{getLocalizedValue(program.title, language)}</CardTitle>
                     <CardDescription className="text-base">{program.description}</CardDescription>
                   </CardHeader>
                   <CardContent>

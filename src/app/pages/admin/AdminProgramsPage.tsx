@@ -10,6 +10,9 @@ import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import type { Program } from "../../context/ContentContext";
+import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
+import { Language } from "../../context/LanguageProvider";
+import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
 
 const iconMap: { [key: string]: any } = {
   'Shield': Shield,
@@ -32,6 +35,7 @@ export function AdminProgramsPage() {
   const [programToDelete, setProgramToDelete] = useState<Program | null>(null);
   const [editingProgram, setEditingProgram] = useState<Program | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [formLang, setFormLang] = useState<Language>('en');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -131,6 +135,10 @@ export function AdminProgramsPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-500">Select language to enter content:</p>
+              <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
+            </div>
             <Card>
               <CardHeader>
                 <CardTitle>{t("admin.programDetails")}</CardTitle>
@@ -140,8 +148,8 @@ export function AdminProgramsPage() {
                   <Label htmlFor="title">{t("admin.programTitle")} *</Label>
                   <Input
                     id="title"
-                    value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    value={getAllLanguageValues(formData.title)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, title: setLocalizedValue(formData.title, formLang, e.target.value) })}
                     required
                   />
                 </div>
@@ -149,8 +157,8 @@ export function AdminProgramsPage() {
                   <Label htmlFor="description">{t("admin.description")} *</Label>
                   <Input
                     id="description"
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    value={getAllLanguageValues(formData.description)[formLang]}
+                    onChange={(e) => setFormData({ ...formData, description: setLocalizedValue(formData.description, formLang, e.target.value) })}
                     placeholder="Short description (1-2 sentences)"
                     required
                   />
