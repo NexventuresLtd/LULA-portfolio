@@ -143,7 +143,7 @@ export function GetInvolvedPage() {
               <CardContent>
                 <div className="space-y-6">
                   <div>
-                    <Label>Quick Select Amount</Label>
+                    <Label>{t("form.quickSelect")}</Label>
                     <div className="grid grid-cols-3 gap-2 mt-2">
                       {(currencyAmounts[currency] || currencyAmounts.USD).map((amt) => (
                         <Button
@@ -161,7 +161,7 @@ export function GetInvolvedPage() {
 
                   <div className="flex gap-2">
                     <div className="flex-1">
-                      <Label htmlFor="custom">Or Enter Amount</Label>
+                      <Label htmlFor="custom">{t("form.orEnterAmount")}</Label>
                       <Input
                         id="custom"
                         placeholder="Enter amount"
@@ -171,7 +171,7 @@ export function GetInvolvedPage() {
                       />
                     </div>
                     <div className="w-28">
-                      <Label>Currency</Label>
+                      <Label>{t("form.currency")}</Label>
                       <Select value={currency} onValueChange={setCurrency}>
                         <SelectTrigger className="mt-2">
                           <SelectValue />
@@ -189,7 +189,7 @@ export function GetInvolvedPage() {
 
                   {orgSettings.paymentDetails && (
                     <div className="bg-gray-50 p-4 rounded-lg border">
-                      <h4 className="font-semibold text-gray-900 mb-2">Payment Details</h4>
+                      <h4 className="font-semibold text-gray-900 mb-2">{t("form.paymentDetails")}</h4>
                       <p className="text-sm text-gray-600 whitespace-pre-line">{orgSettings.paymentDetails}</p>
                     </div>
                   )}
@@ -251,15 +251,15 @@ export function GetInvolvedPage() {
       <Dialog open={isVolunteerDialogOpen} onOpenChange={setIsVolunteerDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Volunteer Application</DialogTitle>
+            <DialogTitle>{t("form.volunteerApp")}</DialogTitle>
             <DialogDescription>
-              Please fill out the form below to apply to volunteer with us.
+              {t("form.volunteerAppDesc")}
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleVolunteerSubmit}>
             <div className="grid grid-cols-4 gap-4">
               <div className="col-span-4">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t("form.name")}</Label>
                 <Input
                   id="name"
                   placeholder="Enter your name"
@@ -268,7 +268,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("form.email")}</Label>
                 <Input
                   id="email"
                   placeholder="Enter your email"
@@ -277,7 +277,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone">{t("form.phone")}</Label>
                 <Input
                   id="phone"
                   placeholder="Enter your phone number"
@@ -286,7 +286,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="message">Message</Label>
+                <Label htmlFor="message">{t("form.message")}</Label>
                 <Textarea
                   id="message"
                   placeholder="Enter your message"
@@ -296,7 +296,7 @@ export function GetInvolvedPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Submit</Button>
+              <Button type="submit">{t("form.submit")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -305,15 +305,15 @@ export function GetInvolvedPage() {
       <Dialog open={isPartnerDialogOpen} onOpenChange={setIsPartnerDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Partner Inquiry</DialogTitle>
+            <DialogTitle>{t("form.partnerInquiry")}</DialogTitle>
             <DialogDescription>
-              Please fill out the form below to inquire about partnering with us.
+              {t("form.partnerInquiryDesc")}
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handlePartnerSubmit}>
             <div className="grid grid-cols-4 gap-4">
               <div className="col-span-4">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t("form.name")}</Label>
                 <Input
                   id="name"
                   placeholder="Enter your name"
@@ -322,7 +322,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("form.email")}</Label>
                 <Input
                   id="email"
                   placeholder="Enter your email"
@@ -331,7 +331,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone">{t("form.phone")}</Label>
                 <Input
                   id="phone"
                   placeholder="Enter your phone number"
@@ -340,7 +340,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="message">Message</Label>
+                <Label htmlFor="message">{t("form.message")}</Label>
                 <Textarea
                   id="message"
                   placeholder="Enter your message"
@@ -350,7 +350,7 @@ export function GetInvolvedPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Submit</Button>
+              <Button type="submit">{t("form.submit")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -359,15 +359,15 @@ export function GetInvolvedPage() {
       <Dialog open={isDonateDialogOpen} onOpenChange={setIsDonateDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Donate</DialogTitle>
+            <DialogTitle>{t("form.donateTitle")}</DialogTitle>
             <DialogDescription>
-              Please fill out the form below to donate to our cause.
+              {t("form.donateDesc")}
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleDonateSubmit}>
             <div className="grid grid-cols-4 gap-4">
               <div className="col-span-4">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t("form.name")}</Label>
                 <Input
                   id="name"
                   placeholder="Enter your name"
@@ -376,7 +376,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("form.email")}</Label>
                 <Input
                   id="email"
                   placeholder="Enter your email"
@@ -385,7 +385,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone">{t("form.phone")}</Label>
                 <Input
                   id="phone"
                   placeholder="Enter your phone number"
@@ -394,7 +394,7 @@ export function GetInvolvedPage() {
                 />
               </div>
               <div className="col-span-4">
-                <Label htmlFor="message">Message</Label>
+                <Label htmlFor="message">{t("form.message")}</Label>
                 <Textarea
                   id="message"
                   placeholder="Enter your message"
@@ -404,7 +404,7 @@ export function GetInvolvedPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Submit</Button>
+              <Button type="submit">{t("form.submit")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -419,7 +419,7 @@ export function GetInvolvedPage() {
                 <CheckCircle className="w-6 h-6 text-green-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Thank You for Volunteering!</DialogTitle>
+                <DialogTitle className="text-xl">{t("form.thankYouVolunteer")}</DialogTitle>
                 <DialogDescription className="mt-1">
                   We've received your application. Our team will contact you soon with next steps.
                 </DialogDescription>
@@ -452,7 +452,7 @@ export function GetInvolvedPage() {
                 <CheckCircle className="w-6 h-6 text-green-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Thank You for Your Interest!</DialogTitle>
+                <DialogTitle className="text-xl">{t("form.thankYouPartner")}</DialogTitle>
                 <DialogDescription className="mt-1">
                   We've received your partnership inquiry. We'll be in touch shortly to discuss collaboration opportunities.
                 </DialogDescription>
@@ -485,7 +485,7 @@ export function GetInvolvedPage() {
                 <CheckCircle className="w-6 h-6 text-green-600" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Thank You for Your Donation!</DialogTitle>
+                <DialogTitle className="text-xl">{t("form.thankYouDonate")}</DialogTitle>
                 <DialogDescription className="mt-1">
                   We've received your donation request. Our team will contact you with payment details and next steps.
                 </DialogDescription>

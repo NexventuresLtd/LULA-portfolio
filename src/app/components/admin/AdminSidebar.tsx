@@ -17,11 +17,14 @@ import {
   X
 } from "lucide-react";
 import { Button } from "../ui/button";
+import { useLanguage, Language } from "../../context/LanguageProvider";
 import headerLogo from "../../../assets/LULA-HeaderLogo.png";
 
 export function AdminSidebar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const { language, setLanguage } = useLanguage();
 
   const navItems = [
     { path: "/admin", icon: LayoutDashboard, label: "Dashboard", exact: true },
@@ -76,7 +79,22 @@ export function AdminSidebar() {
         ))}
       </nav>
 
-      <div className="p-3 lg:p-4 border-t border-gray-800">
+      <div className="p-3 lg:p-4 border-t border-gray-800 space-y-2">
+        <div className="flex gap-1 px-2">
+          {(['en', 'fr', 'sw'] as Language[]).map((lang) => (
+            <button
+              key={lang}
+              onClick={() => setLanguage(lang)}
+              className={`flex-1 py-1.5 text-xs font-medium rounded transition-colors ${
+                language === lang
+                  ? 'bg-green-600 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800'
+              }`}
+            >
+              {lang === 'en' ? 'EN' : lang === 'fr' ? 'FR' : 'SW'}
+            </button>
+          ))}
+        </div>
         <Link to="/" onClick={() => setMobileOpen(false)}>
           <Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-white hover:bg-gray-800">
             <LogOut className="w-5 h-5 mr-3" />
