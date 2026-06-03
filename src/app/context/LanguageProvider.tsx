@@ -627,6 +627,15 @@ const translations: Record<Language, Record<string, string>> = {
     'admin.dash.addNewsArticle': 'Ajouter une Actualité',
     'admin.dash.addPartner': 'Ajouter un Partenaire',
     'admin.dash.addImpactStory': "Ajouter une Histoire",
+    'admin.aboutDesc': 'Modifier la mission, la vision et l histoire',
+    'admin.missionStatement': 'Declaration de Mission',
+    'admin.missionDesc': 'L objectif principal de votre organisation',
+    'admin.visionStatement': 'Declaration de Vision',
+    'admin.visionDesc': 'Les objectifs et la direction future de votre organisation',
+    'admin.ourStory': 'Notre Histoire',
+    'admin.storyDesc': 'Partagez l histoire et le parcours de votre organisation',
+    'admin.preview': 'Apercu',
+    'admin.previewDesc': 'Comment votre contenu apparaitra sur le site web',
   },
   sw: {
     // Navigation
