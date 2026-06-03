@@ -394,7 +394,7 @@ export function AdminProjectsPage() {
                 className="bg-red-600 hover:bg-red-700 text-white"
                 onClick={handleConfirmDiscard}
               >
-                OK, Go Back to Projects
+                {t("admin.discard")}
               </Button>
             </DialogFooter>
           </DialogContent>
