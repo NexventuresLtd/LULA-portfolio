@@ -14,7 +14,7 @@ import { useSEO } from '../hooks/useSEO';
 function HomePage() {
   const { t } = useLanguage();
   useSEO("Empowering Communities in Eastern DR Congo", "LULA protects children, empowers women, and strengthens communities in Eastern DR Congo through HIV prevention, health education, and sustainable development programs in North and South Kivu.");
-  const { impactStories, projects, news, partners, appearanceSettings } = useContent();
+  const { impactStories, projects, news, partners, appearanceSettings, isLoading } = useContent();
   const [viewportWidth, setViewportWidth] = useState(1024);
 
   const heroBackground = appearanceSettings.homeHeroBackground || "";
@@ -236,7 +236,7 @@ function HomePage() {
                         <span>{project.region}</span>
                       </div>
                       <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-gray-900 line-clamp-2">{project.title}</h3>
-                      <p className="text-sm text-gray-600 mb-3 sm:mb-4 line-clamp-2 flex-grow">{project.description.replace(/<[^>]*>/g, '')}</p>
+                      <p className="text-sm text-gray-600 mb-3 sm:mb-4 line-clamp-2 flex-grow">{(project.description || '').replace(/<[^>]*>/g, '')}</p>
                       <Link to="/projects" className="text-green-600 hover:text-green-700 font-medium inline-flex items-center text-sm">
                         {t('common.learnMore')}
                         <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
