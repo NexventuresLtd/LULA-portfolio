@@ -24,20 +24,20 @@ export function AdminSidebar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   const navItems = [
-    { path: "/admin", icon: LayoutDashboard, label: "Dashboard", exact: true },
-    { path: "/admin/programs", icon: Target, label: "Programs" },
-    { path: "/admin/projects", icon: FolderKanban, label: "Projects" },
-    { path: "/admin/team", icon: Users, label: "Team" },
-    { path: "/admin/partners", icon: Handshake, label: "Partners" },
-    { path: "/admin/news", icon: Newspaper, label: "News & Articles" },
-    { path: "/admin/impact-stories", icon: MessageCircle, label: "Impact Stories" },
-    { path: "/admin/enquiries", icon: Mail, label: "Enquiries" },
-    { path: "/admin/interests", icon: HeartHandshake, label: "Interests & Donations" },
-    { path: "/admin/about", icon: Info, label: "About Us Content" },
-    { path: "/admin/settings", icon: Settings, label: "Settings" },
+    { path: "/admin", icon: LayoutDashboard, label: t('admin.dashboard'), exact: true },
+    { path: "/admin/programs", icon: Target, label: t('admin.programs') },
+    { path: "/admin/projects", icon: FolderKanban, label: t('admin.projects') },
+    { path: "/admin/team", icon: Users, label: t('admin.team') },
+    { path: "/admin/partners", icon: Handshake, label: t('admin.partners') },
+    { path: "/admin/news", icon: Newspaper, label: t('admin.news') },
+    { path: "/admin/impact-stories", icon: MessageCircle, label: t('admin.impactStories') },
+    { path: "/admin/enquiries", icon: Mail, label: t('admin.enquiries') },
+    { path: "/admin/interests", icon: HeartHandshake, label: t('admin.interests') },
+    { path: "/admin/about", icon: Info, label: t('admin.about') },
+    { path: "/admin/settings", icon: Settings, label: t('admin.settings') },
   ];
 
   const isActive = (path: string, exact = false) => {
@@ -56,7 +56,7 @@ export function AdminSidebar() {
           />
           <div>
             <div className="font-bold text-lg">LULA Admin</div>
-            <div className="text-xs text-gray-400">Management Portal</div>
+            <div className="text-xs text-gray-400">{t('admin.management')}</div>
           </div>
         </Link>
       </div>
@@ -98,7 +98,7 @@ export function AdminSidebar() {
         <Link to="/" onClick={() => setMobileOpen(false)}>
           <Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-white hover:bg-gray-800">
             <LogOut className="w-5 h-5 mr-3" />
-            Exit Admin
+            {t('admin.exitAdmin')}
           </Button>
         </Link>
       </div>

@@ -219,6 +219,20 @@ const translations: Record<Language, Record<string, string>> = {
     'form.thankYouDonate': 'Thank You for Your Donation!',
     'form.whatsapp': 'WhatsApp',
     'form.ok': 'OK',
+    // Admin
+    'admin.dashboard': 'Dashboard',
+    'admin.programs': 'Programs',
+    'admin.projects': 'Projects',
+    'admin.team': 'Team',
+    'admin.partners': 'Partners',
+    'admin.news': 'News & Articles',
+    'admin.impactStories': 'Impact Stories',
+    'admin.enquiries': 'Enquiries',
+    'admin.interests': 'Interests & Donations',
+    'admin.about': 'About Us Content',
+    'admin.settings': 'Settings',
+    'admin.exitAdmin': 'Exit Admin',
+    'admin.management': 'Management Portal',
   },
   fr: {
     // Navigation
@@ -428,6 +442,20 @@ const translations: Record<Language, Record<string, string>> = {
     'form.thankYouDonate': 'Merci pour votre don!',
     'form.whatsapp': 'WhatsApp',
     'form.ok': 'OK',
+    // Admin
+    'admin.dashboard': 'Tableau de Bord',
+    'admin.programs': 'Programmes',
+    'admin.projects': 'Projets',
+    'admin.team': 'Équipe',
+    'admin.partners': 'Partenaires',
+    'admin.news': 'Actualités',
+    'admin.impactStories': "Histoires d'Impact",
+    'admin.enquiries': 'Demandes',
+    'admin.interests': 'Intérêts & Dons',
+    'admin.about': 'Contenu À Propos',
+    'admin.settings': 'Paramètres',
+    'admin.exitAdmin': 'Quitter Admin',
+    'admin.management': 'Portail de Gestion',
   },
   sw: {
     // Navigation
@@ -637,6 +665,20 @@ const translations: Record<Language, Record<string, string>> = {
     'form.thankYouDonate': 'Asante kwa Mchango Wako!',
     'form.whatsapp': 'WhatsApp',
     'form.ok': 'Sawa',
+    // Admin
+    'admin.dashboard': 'Dashibodi',
+    'admin.programs': 'Programu',
+    'admin.projects': 'Miradi',
+    'admin.team': 'Timu',
+    'admin.partners': 'Washirika',
+    'admin.news': 'Habari',
+    'admin.impactStories': 'Hadithi za Athari',
+    'admin.enquiries': 'Maswali',
+    'admin.interests': 'Maslahi & Michango',
+    'admin.about': 'Kuhusu Yaliyomo',
+    'admin.settings': 'Mipangilio',
+    'admin.exitAdmin': 'Ondoka Admin',
+    'admin.management': 'Portali ya Usimamizi',
   },
 };
 
