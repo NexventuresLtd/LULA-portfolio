@@ -7,7 +7,7 @@ import { useContent } from '../context/ContentContext';
 import DRCongoMap from '../components/lula/DRCongoMap';
 
 function AboutPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   useSEO("About Us - Our Mission & Story", "Learn about Let Us Live Association (LULA), a community-based humanitarian organization with 100+ staff serving 850,000 beneficiaries in North and South Kivu, DR Congo.");
   const { aboutContent, appearanceSettings } = useContent();
   const heroBackground = appearanceSettings.aboutHeroBackground || "";
@@ -68,7 +68,7 @@ function AboutPage() {
               <CardContent className="p-8">
                 <h2 className="text-3xl mb-4 text-gray-900">{t('common.ourMission')}</h2>
                 <p className="text-lg text-gray-600 leading-relaxed text-justify">
-                  {aboutContent.mission}
+                  {getLocalizedValue(aboutContent.mission, language)}
                 </p>
               </CardContent>
             </Card>
@@ -77,7 +77,7 @@ function AboutPage() {
               <CardContent className="p-8">
                 <h2 className="text-3xl mb-4 text-gray-900">{t('common.ourVision')}</h2>
                 <p className="text-lg text-gray-600 leading-relaxed text-justify">
-                  {aboutContent.vision}
+                  {getLocalizedValue(aboutContent.vision, language)}
                 </p>
               </CardContent>
             </Card>
@@ -99,7 +99,7 @@ function AboutPage() {
             </div>
             <div
               className="prose prose-lg max-w-none text-justify"
-              dangerouslySetInnerHTML={{ __html: aboutContent.story }}
+              dangerouslySetInnerHTML={{ __html: getLocalizedValue(aboutContent.story, language) }}
             />
           </div>
         </div>

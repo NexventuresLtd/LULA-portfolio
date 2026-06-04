@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -8,13 +8,21 @@ import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
 import { Save, Info } from "lucide-react";
+import { LanguageFormSelector } from "../../components/admin/LanguageFormSelector";
+import { Language } from "../../context/LanguageProvider";
+import { getAllLanguageValues, setLocalizedValue, getLocalizedValue } from "../../utils/i18nContent";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export function AdminAboutPage() {
   const { t } = useLanguage();
   const { aboutContent, updateAboutContent } = useContent();
+  const [formLang, setFormLang] = useState<Language>('en');
   const [formData, setFormData] = useState(aboutContent);
+
+  useEffect(() => {
+    setFormData(aboutContent);
+  }, [aboutContent]);
 
   const handleSave = () => {
     updateAboutContent(formData);
@@ -53,6 +61,10 @@ export function AdminAboutPage() {
       </div>
 
       <div className="space-y-6">
+        <div className="flex items-center justify-between bg-white p-4 rounded-lg border">
+          <p className="text-sm text-gray-500">Select language to enter content:</p>
+          <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
+        </div>
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -65,8 +77,8 @@ export function AdminAboutPage() {
           </CardHeader>
           <CardContent>
             <Textarea
-              value={formData.mission}
-              onChange={(e) => setFormData({ ...formData, mission: e.target.value })}
+              value={getAllLanguageValues(formData.mission)[formLang]}
+              onChange={(e) => setFormData({ ...formData, mission: setLocalizedValue(formData.mission, formLang, e.target.value) })}
               rows={4}
               className="w-full"
               placeholder="Enter your mission statement..."
@@ -86,8 +98,8 @@ export function AdminAboutPage() {
           </CardHeader>
           <CardContent>
             <Textarea
-              value={formData.vision}
-              onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
+              value={getAllLanguageValues(formData.vision)[formLang]}
+              onChange={(e) => setFormData({ ...formData, vision: setLocalizedValue(formData.vision, formLang, e.target.value) })}
               rows={4}
               className="w-full"
               placeholder="Enter your vision statement..."
@@ -110,8 +122,8 @@ export function AdminAboutPage() {
               <Label htmlFor="story">{t('admin.content')}</Label>
               <div className="mt-2">
                 <ReactQuill
-                  value={formData.story}
-                  onChange={(value) => setFormData({ ...formData, story: value })}
+                  value={getAllLanguageValues(formData.story)[formLang]}
+                  onChange={(value) => setFormData({ ...formData, story: setLocalizedValue(formData.story, formLang, value) })}
                   modules={modules}
                   formats={formats}
                   placeholder="Write your organization's story here..."
@@ -135,7 +147,7 @@ export function AdminAboutPage() {
               <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('admin.ourStory')}</h3>
               <div 
                 className="prose prose-lg max-w-none"
-                dangerouslySetInnerHTML={{ __html: formData.story }}
+                dangerouslySetInnerHTML={{ __html: getLocalizedValue(formData.story, formLang) }}
               />
             </div>
           </CardContent>
