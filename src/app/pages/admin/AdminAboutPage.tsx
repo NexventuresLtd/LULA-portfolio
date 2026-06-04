@@ -62,7 +62,7 @@ export function AdminAboutPage() {
 
       <div className="space-y-6">
         <div className="flex items-center justify-between bg-white p-4 rounded-lg border">
-          <p className="text-sm text-gray-500">Select language to enter content:</p>
+          <p className="text-sm text-gray-500">{t("admin.selectLang")}</p>
           <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
         </div>
         <Card>

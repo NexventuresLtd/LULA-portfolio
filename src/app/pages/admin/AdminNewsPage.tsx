@@ -183,7 +183,7 @@ export function AdminNewsPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-500">Select language to enter content:</p>
+            <p className="text-sm text-gray-500">{t("admin.selectLang")}</p>
             <LanguageFormSelector currentLang={formLang} onChange={setFormLang} />
           </div>
           <Card>
