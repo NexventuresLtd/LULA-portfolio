@@ -78,11 +78,6 @@ export function ImpactStoriesPage() {
                     <div className="p-8">
                       <div className="mb-4 flex items-center gap-2">
                         <Quote className="w-10 h-10 text-green-600" />
-                        {story.featured && (
-                          <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                            Featured
-                          </span>
-                        )}
                       </div>
                       <p className="text-gray-700 text-lg mb-4 italic">"{getLocalizedValue(story.quote, language)}"</p>
                       <p className="text-gray-600 leading-relaxed mb-6">{getLocalizedValue(story.story, language)}</p>
