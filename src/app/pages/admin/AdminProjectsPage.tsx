@@ -236,8 +236,8 @@ export function AdminProjectsPage() {
                     <Label htmlFor="title">{t('admin.title')} *</Label>
                     <Input
                       id="title"
-                      value={formData.title}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                      value={getAllLanguageValues(formData.title)[formLang]}
+                      onChange={(e) => setFormData({ ...formData, title: setLocalizedValue(formData.title, formLang, e.target.value) })}
                       required={formLang === "en"}
                       className="text-lg"
                     />
