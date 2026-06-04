@@ -81,7 +81,7 @@ export function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('contact.sendMessage')}</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6 border border-gray-200 rounded-xl p-6">
                 <div>
                   <Label htmlFor="name">{t("contact.name")}</Label>
                   <Input

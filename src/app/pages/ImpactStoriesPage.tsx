@@ -58,11 +58,11 @@ export function ImpactStoriesPage() {
               No impact stories are available yet. Add a story in the admin panel to publish it here.
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentStories.map((story, index) => (
                 <Card key={`${story.id}-${index}`} className="border-none shadow-lg hover:shadow-xl transition-shadow">
                   <CardContent className="p-0">
-                    <div className="aspect-[16/9] overflow-hidden bg-gray-100">
+                    <div className="aspect-[4/3] overflow-hidden bg-gray-100">
                       {story.image ? (
                         <img
                           src={story.image}
@@ -75,7 +75,7 @@ export function ImpactStoriesPage() {
                         </div>
                       )}
                     </div>
-                    <div className="p-8">
+                    <div className="p-5">
                       <div className="mb-4 flex items-center gap-2">
                         <Quote className="w-10 h-10 text-green-600" />
                       </div>
