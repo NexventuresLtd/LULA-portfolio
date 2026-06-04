@@ -81,8 +81,8 @@ export function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('contact.sendMessage')}</h2>
-              <form onSubmit={handleSubmit} className="space-y-6 border border-gray-200 rounded-xl p-6">
-                <div>
+              <form onSubmit={handleSubmit} className="space-y-6 border border-border rounded-xl p-6 shadow-sm">
+                <div className="space-y-2">
                   <Label htmlFor="name">{t("contact.name")}</Label>
                   <Input
                     id="name"
@@ -92,7 +92,7 @@ export function ContactPage() {
                   />
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="email">{t("contact.email")}</Label>
                   <Input
                     id="email"
@@ -109,7 +109,7 @@ export function ContactPage() {
                   {emailError && <p className="text-sm text-red-500 mt-1">{emailError}</p>}
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="phone">{t("contact.phone")}</Label>
                   <Input
                     id="phone"
@@ -119,7 +119,7 @@ export function ContactPage() {
                   />
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="subject">{t("contact.subject")}</Label>
                   <Input
                     id="subject"
@@ -129,7 +129,7 @@ export function ContactPage() {
                   />
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="message">{t("contact.message")}</Label>
                   <Textarea
                     id="message"
