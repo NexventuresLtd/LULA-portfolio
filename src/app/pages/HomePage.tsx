@@ -269,13 +269,14 @@ function HomePage() {
             <p className="text-base sm:text-lg md:text-xl text-green-100">{t('home.impact.subtitle')}</p>
           </div>
           {displayedImpactStories.length > 0 ? (
+            <div className="max-w-4xl mx-auto">
             <Slider {...carouselSettings}>
               {displayedImpactStories.map((story) => (
-                <div key={story.id} className="px-2 sm:px-3 h-full">
-                  <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-colors min-h-[280px] sm:min-h-[300px] flex flex-col">
-                    <CardContent className="p-4 sm:p-6 flex flex-col h-full">
-                      <Quote className="h-8 w-8 sm:h-10 sm:w-10 text-gray-300 mb-3 sm:mb-4 flex-shrink-0" />
-                      <p className="text-sm sm:text-base text-green-50 mb-4 sm:mb-6 leading-relaxed italic flex-grow">"{getLocalizedValue(story.quote, language)}"</p>
+                <div key={story.id} className="px-2 sm:px-3">
+                  <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-colors flex flex-col max-w-sm mx-auto">
+                    <CardContent className="p-4 sm:p-5 flex flex-col">
+                      <Quote className="h-6 w-6 sm:h-8 sm:w-8 text-gray-300 mb-2 sm:mb-3 flex-shrink-0" />
+                      <p className="text-sm text-green-50 mb-4 leading-relaxed italic line-clamp-4">"{getLocalizedValue(story.quote, language)}"</p>
                       <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex-shrink-0 bg-green-800">
                           {story.image ? (
@@ -300,6 +301,7 @@ function HomePage() {
                 </div>
               ))}
             </Slider>
+            </div>
           ) : (
             <div className="text-center text-green-100/80">{t("admin.noResults")}</div>
           )}
