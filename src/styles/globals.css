@@ -19,7 +19,7 @@
   --accent-foreground: #0369a1;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.2);
+  --border: rgba(0, 91, 234, 0.1);
   --input: transparent;
   --input-background: rgba(255, 255, 255, 0.8);
   --switch-background: #cbced4;
@@ -548,4 +548,10 @@ body {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Visible borders for form inputs */
+input[data-slot="input"],
+textarea[data-slot="textarea"] {
+  border-color: #d1d5db !important;
 }
