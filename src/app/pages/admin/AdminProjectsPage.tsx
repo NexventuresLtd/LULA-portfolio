@@ -480,7 +480,7 @@ export function AdminProjectsPage() {
                       <MapPin className="h-4 w-4" />
                       <span>{project.region}</span>
                     </div>
-                    <CardTitle className="text-lg line-clamp-2">{0}</CardTitle>
+                    <CardTitle className="text-lg line-clamp-2">{getLocalizedValue(project.title, language)}</CardTitle>
                   </div>
                   <div className="flex gap-1">
                     <Button

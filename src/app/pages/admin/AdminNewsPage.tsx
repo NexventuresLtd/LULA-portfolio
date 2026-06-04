@@ -373,7 +373,7 @@ export function AdminNewsPage() {
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
                     <p className="text-sm text-gray-500 mb-2">{item.date}</p>
-                    <CardTitle className="text-lg line-clamp-2">{0}</CardTitle>
+                    <CardTitle className="text-lg line-clamp-2">{getLocalizedValue(item.title, language)}</CardTitle>
                   </div>
                   <div className="flex gap-1">
                     <Button
