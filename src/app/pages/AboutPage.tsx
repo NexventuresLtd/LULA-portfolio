@@ -4,6 +4,7 @@ import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { useLanguage } from '../context/LanguageProvider';
 import { useContent } from '../context/ContentContext';
+import { getLocalizedValue } from '../utils/i18nContent';
 import DRCongoMap from '../components/lula/DRCongoMap';
 
 function AboutPage() {

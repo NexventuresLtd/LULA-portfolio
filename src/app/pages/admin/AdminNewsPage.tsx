@@ -16,7 +16,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export function AdminNewsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { news, addNews, updateNews, deleteNews } = useContent();
   const [isEditing, setIsEditing] = useState(false);
   const [showDiscardDialog, setShowDiscardDialog] = useState(false);
@@ -35,7 +35,7 @@ export function AdminNewsPage() {
 
   const filteredNews = useMemo(() => {
     return news.filter(item =>
-      getLocalizedValue(item.title, 'en').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      getLocalizedValue(item.title, language).toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.category || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [news, searchTerm]);
@@ -373,7 +373,7 @@ export function AdminNewsPage() {
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
                     <p className="text-sm text-gray-500 mb-2">{item.date}</p>
-                    <CardTitle className="text-lg line-clamp-2">{getLocalizedValue(item.title, "en")}</CardTitle>
+                    <CardTitle className="text-lg line-clamp-2">{0}</CardTitle>
                   </div>
                   <div className="flex gap-1">
                     <Button
@@ -395,7 +395,7 @@ export function AdminNewsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: getLocalizedValue(item.content, "en") }} />
+                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: 0 }} />
               </CardContent>
             </Card>
           ))

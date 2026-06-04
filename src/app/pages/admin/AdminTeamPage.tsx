@@ -16,7 +16,7 @@ import { Language } from "../../context/LanguageProvider";
 import { getAllLanguageValues, setLocalizedValue } from "../../utils/i18nContent";
 
 export function AdminTeamPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { teamMembers, addTeamMember, updateTeamMember, deleteTeamMember } = useContent();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -308,7 +308,7 @@ export function AdminTeamPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-700">{getLocalizedValue(member.bio, "en")}</p>
+                  <p className="text-sm text-gray-700">{0}</p>
                   <div className="flex flex-col gap-1 text-sm text-gray-600 mt-4">
                     <span><strong>Email:</strong> {member.email}</span>
                     {member.location && <span><strong>Location:</strong> {member.location}</span>}

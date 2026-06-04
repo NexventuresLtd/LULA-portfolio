@@ -27,7 +27,7 @@ const iconMap: { [key: string]: any } = {
 const iconOptions = ['Shield', 'Heart', 'Stethoscope', 'GraduationCap', 'Handshake', 'Users', 'Briefcase'];
 
 export function AdminProgramsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { programs, addProgram, updateProgram, deleteProgram } = useContent();
   const [isEditing, setIsEditing] = useState(false);
   const [showDiscardDialog, setShowDiscardDialog] = useState(false);
@@ -49,8 +49,8 @@ export function AdminProgramsPage() {
 
   const filteredPrograms = useMemo(() => {
     return programs.filter(program =>
-      getLocalizedValue(program.title, 'en').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      getLocalizedValue(program.description, 'en').toLowerCase().includes(searchTerm.toLowerCase())
+      getLocalizedValue(program.title, language).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      getLocalizedValue(program.description, language).toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [programs, searchTerm]);
 
@@ -238,7 +238,7 @@ export function AdminProgramsPage() {
                         <IconComponent className="w-7 h-7" />
                       </div>
                       <div className="flex justify-between items-start gap-2">
-                        <CardTitle className="text-xl">{getLocalizedValue(program.title, "en")}</CardTitle>
+                        <CardTitle className="text-xl">{getLocalizedValue(program.title, language)}</CardTitle>
                         <div className="flex gap-1 flex-shrink-0">
                           <Button variant="outline" size="sm" onClick={() => handleOpenEditor(program)}>
                             <Edit className="w-4 h-4" />
@@ -253,7 +253,7 @@ export function AdminProgramsPage() {
                           </Button>
                         </div>
                       </div>
-                      <p className="text-base text-gray-600">{getLocalizedValue(program.description, "en")}</p>
+                      <p className="text-base text-gray-600">{getLocalizedValue(program.description, language)}</p>
                     </CardHeader>
                     <CardContent>
                       <div className="flex items-center justify-between pt-4 border-t border-gray-200">

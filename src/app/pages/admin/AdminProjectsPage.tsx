@@ -18,7 +18,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export function AdminProjectsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { projects, addProject, updateProject, deleteProject } = useContent();
   const [isEditing, setIsEditing] = useState(false);
   const [showDiscardDialog, setShowDiscardDialog] = useState(false);
@@ -42,10 +42,10 @@ export function AdminProjectsPage() {
   // Filter projects based on search term
   const filteredProjects = useMemo(() => {
     return projects.filter(project =>
-      getLocalizedValue(project.title, 'en').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      getLocalizedValue(project.title, language).toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.region.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      getLocalizedValue(project.description, 'en').toLowerCase().includes(searchTerm.toLowerCase())
+      getLocalizedValue(project.description, language).toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [projects, searchTerm]);
 
@@ -480,7 +480,7 @@ export function AdminProjectsPage() {
                       <MapPin className="h-4 w-4" />
                       <span>{project.region}</span>
                     </div>
-                    <CardTitle className="text-lg line-clamp-2">{getLocalizedValue(project.title, "en")}</CardTitle>
+                    <CardTitle className="text-lg line-clamp-2">{0}</CardTitle>
                   </div>
                   <div className="flex gap-1">
                     <Button
@@ -511,7 +511,7 @@ export function AdminProjectsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: getLocalizedValue(project.description, "en") }} />
+                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: 0 }} />
               </CardContent>
             </Card>
           ))
