@@ -283,7 +283,7 @@ export function AdminTeamPage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="text-lg">{member.name}</CardTitle>
-                        <p className="text-sm text-green-600 font-medium">{member.role}</p>
+                        <p className="text-sm text-green-600 font-medium">{getLocalizedValue(member.role, language)}</p>
                       </div>
                       <div className="flex gap-2">
                         <Button

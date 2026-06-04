@@ -2,11 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { Users, FolderKanban, Target, Newspaper, Handshake, MessageCircle, Plus, Mail, Heart } from "lucide-react";
 import { useContent } from "../../context/ContentContext";
 import { useLanguage } from "../../context/LanguageProvider";
+import { getLocalizedValue } from "../../utils/i18nContent";
 import { Link, useNavigate } from "react-router";
 import { Button } from "../../components/ui/button";
 
 export function AdminDashboardPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { programs, projects, teamMembers, partners, news, impactStories, enquiries, interests } = useContent();
   const navigate = useNavigate();
 
@@ -51,9 +52,9 @@ export function AdminDashboardPage() {
 
   // Build recent activity from all content types sorted by recency
   const recentActivity = [
-    ...projects.map(p => ({ type: t('admin.projects'), title: p.title, date: p.duration || '', link: '/admin/projects' })),
-    ...news.map(n => ({ type: t('admin.news'), title: n.title, date: n.date, link: '/admin/news' })),
-    ...impactStories.map(s => ({ type: t('admin.impactStories'), title: s.title || s.name, date: '', link: '/admin/impact-stories' })),
+    ...projects.map(p => ({ type: t('admin.projects'), title: getLocalizedValue(p.title, language), date: p.duration || '', link: '/admin/projects' })),
+    ...news.map(n => ({ type: t('admin.news'), title: getLocalizedValue(n.title, language), date: n.date, link: '/admin/news' })),
+    ...impactStories.map(s => ({ type: t('admin.impactStories'), title: getLocalizedValue(s.title, language) || s.name, date: '', link: '/admin/impact-stories' })),
     ...enquiries.slice(0, 3).map(e => ({ type: t('admin.enquiries'), title: `${e.name} — ${e.subject}`, date: e.date, link: '/admin/enquiries' })),
     ...interests.slice(0, 3).map(i => ({ type: t('admin.interests'), title: `${i.name} (${i.type})`, date: i.date, link: '/admin/interests' })),
   ].slice(0, 6);
