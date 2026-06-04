@@ -511,7 +511,7 @@ export function AdminProjectsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: 0 }} />
+                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: getLocalizedValue(project.description, language) }} />
               </CardContent>
             </Card>
           ))

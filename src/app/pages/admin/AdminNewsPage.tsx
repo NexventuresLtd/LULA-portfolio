@@ -395,7 +395,7 @@ export function AdminNewsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: 0 }} />
+                <p className="text-sm text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: getLocalizedValue(item.content, language) }} />
               </CardContent>
             </Card>
           ))

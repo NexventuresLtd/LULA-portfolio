@@ -165,7 +165,7 @@ export function ProjectsPage() {
           <form onSubmit={handleVolunteerSubmit}>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="v-name">Full Name *</Label>
+                <Label htmlFor="v-name">{t("form.name")} *</Label>
                 <Input
                   id="v-name"
                   value={volunteerForm.name}
@@ -175,7 +175,7 @@ export function ProjectsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="v-email">Email *</Label>
+                <Label htmlFor="v-email">{t("form.email")} *</Label>
                 <Input
                   id="v-email"
                   type="email"
@@ -186,7 +186,7 @@ export function ProjectsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="v-phone">Phone *</Label>
+                <Label htmlFor="v-phone">{t("form.phone")} *</Label>
                 <Input
                   id="v-phone"
                   type="tel"
@@ -197,7 +197,7 @@ export function ProjectsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="v-message">Why do you want to volunteer?</Label>
+                <Label htmlFor="v-message">{t("form.message")}</Label>
                 <Textarea
                   id="v-message"
                   value={volunteerForm.message}
@@ -215,9 +215,7 @@ export function ProjectsPage() {
               >
                 Cancel
               </Button>
-              <Button type="submit" className="bg-green-600 hover:bg-green-700">
-                Submit Application
-              </Button>
+              <Button type="submit" className="bg-green-600 hover:bg-green-700">{t("form.submit")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

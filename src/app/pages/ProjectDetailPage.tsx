@@ -140,14 +140,14 @@ export function ProjectDetailPage() {
             setShowSuccess(true);
           }}>
             <div className="space-y-4 py-4">
-              <div><Label>Name *</Label><Input value={form.name} onChange={e => setForm({...form, name: e.target.value})} required /></div>
-              <div><Label>Email *</Label><Input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required /></div>
-              <div><Label>Phone *</Label><Input value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} required /></div>
-              <div><Label>Message</Label><Textarea value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Why do you want to volunteer?" /></div>
+              <div><Label>{t("form.name")} *</Label><Input value={form.name} onChange={e => setForm({...form, name: e.target.value})} required /></div>
+              <div><Label>{t("form.email")} *</Label><Input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required /></div>
+              <div><Label>{t("form.phone")} *</Label><Input value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} required /></div>
+              <div><Label>{t("form.message")}</Label><Textarea value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Why do you want to volunteer?" /></div>
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setShowVolunteerDialog(false)}>{t("admin.cancel")}</Button>
-              <Button type="submit" className="bg-green-600 hover:bg-green-700">Submit</Button>
+              <Button type="submit" className="bg-green-600 hover:bg-green-700">{t("form.submit")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>
