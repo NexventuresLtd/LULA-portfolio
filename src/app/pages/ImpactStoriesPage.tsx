@@ -2,33 +2,21 @@ import { useSEO } from '../hooks/useSEO';
 import { useMemo, useState } from "react";
 import { useLanguage } from "../context/LanguageProvider";
 import { Card, CardContent } from "../components/ui/card";
-import { Quote, User } from "lucide-react";
+import { Button } from "../components/ui/button";
+import { Quote, User, X } from "lucide-react";
 import { useContent } from "../context/ContentContext";
 import { getLocalizedValue } from "../utils/i18nContent";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "../components/ui/pagination";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
 
 export function ImpactStoriesPage() {
   const { t, language } = useLanguage();
   useSEO("Impact Stories - Real Stories of Change", "Read real stories from communities served by LULA in Eastern DR Congo. See how our programs transform lives.");
   const { impactStories, appearanceSettings } = useContent();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const [selectedStory, setSelectedStory] = useState<any>(null);
 
   const stories = useMemo(() => {
     return [...impactStories].sort((a, b) => Number(b.featured ?? false) - Number(a.featured ?? false));
   }, [impactStories]);
-
-  const totalPages = Math.ceil(stories.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentStories = stories.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="bg-white">
@@ -55,14 +43,14 @@ export function ImpactStoriesPage() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           {stories.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-6 py-12 text-center text-gray-500">
-              No impact stories are available yet. Add a story in the admin panel to publish it here.
+              {t("admin.noResults")}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentStories.map((story, index) => (
-                <Card key={`${story.id}-${index}`} className="border-none shadow-lg hover:shadow-xl transition-shadow">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {stories.map((story, index) => (
+                <Card key={`${story.id}-${index}`} className="border border-gray-200 hover:shadow-lg transition-shadow">
                   <CardContent className="p-0">
-                    <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                    <div className="h-48 overflow-hidden bg-gray-100 rounded-t-lg">
                       {story.image ? (
                         <img
                           src={story.image}
@@ -71,81 +59,54 @@ export function ImpactStoriesPage() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <User className="w-16 h-16 text-gray-300" />
+                          <User className="w-12 h-12 text-gray-300" />
                         </div>
                       )}
                     </div>
                     <div className="p-5">
-                      <div className="mb-4 flex items-center gap-2">
-                        <Quote className="w-10 h-10 text-green-600" />
-                      </div>
-                      <p className="text-gray-700 text-lg mb-4 italic">"{getLocalizedValue(story.quote, language)}"</p>
-                      <p className="text-gray-600 leading-relaxed mb-6">{getLocalizedValue(story.story, language)}</p>
-                      <div className="border-t border-gray-200 pt-6">
-                        <div className="flex items-start gap-4">
-                          <div className="flex-1">
-                            <div className="font-semibold text-gray-900 text-lg">{story.name}</div>
-                            <div className="text-sm text-gray-600">{story.role}</div>
-                          </div>
+                      <Quote className="w-6 h-6 text-green-600 mb-2" />
+                      <p className="text-gray-700 text-sm italic line-clamp-3 mb-3">"{getLocalizedValue(story.quote, language)}"</p>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div>
+                          <div className="font-semibold text-gray-900 text-sm">{story.name}</div>
+                          <div className="text-xs text-gray-500">{story.role}</div>
                         </div>
                       </div>
+                      <Button
+                        variant="link"
+                        className="p-0 h-auto text-green-600 hover:text-green-700 text-sm"
+                        onClick={() => setSelectedStory(story)}
+                      >
+                        {t("common.readMore")} →
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
           )}
-
-          {stories.length > itemsPerPage && (
-            <div className="mt-12">
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                    />
-                  </PaginationItem>
-
-                  {[...Array(totalPages)].map((_, i) => {
-                    const pageNumber = i + 1;
-                    if (
-                      pageNumber === 1 ||
-                      pageNumber === totalPages ||
-                      (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
-                    ) {
-                      return (
-                        <PaginationItem key={pageNumber}>
-                          <PaginationLink
-                            onClick={() => setCurrentPage(pageNumber)}
-                            isActive={currentPage === pageNumber}
-                            className="cursor-pointer"
-                          >
-                            {pageNumber}
-                          </PaginationLink>
-                        </PaginationItem>
-                      );
-                    }
-
-                    if (pageNumber === currentPage - 2 || pageNumber === currentPage + 2) {
-                      return <PaginationEllipsis key={pageNumber} />;
-                    }
-
-                    return null;
-                  })}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
-          )}
         </div>
       </section>
+
+      {/* Read More Dialog */}
+      <Dialog open={selectedStory !== null} onOpenChange={() => setSelectedStory(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">{selectedStory?.name}</DialogTitle>
+            <p className="text-sm text-gray-500">{selectedStory?.role}</p>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            {selectedStory?.image && (
+              <img src={selectedStory.image} alt={selectedStory.name} className="w-full h-64 object-cover rounded-lg" />
+            )}
+            <div className="bg-green-50 p-4 rounded-lg">
+              <Quote className="w-6 h-6 text-green-600 mb-2" />
+              <p className="text-gray-700 italic">"{getLocalizedValue(selectedStory?.quote, language)}"</p>
+            </div>
+            <p className="text-gray-600 leading-relaxed text-justify">{getLocalizedValue(selectedStory?.story, language)}</p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
