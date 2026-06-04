@@ -195,7 +195,7 @@ export function GetInvolvedPage() {
                   )}
 
                   <a
-                    href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello LULA, I would like to donate ${donationAmount} ${currency}. Please share payment details.`)}`}
+                    href={`https://wa.me/${orgSettings.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(t('wa.donate').replace('{amount}', donationAmount).replace('{currency}', currency))}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block"

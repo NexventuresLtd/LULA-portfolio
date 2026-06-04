@@ -133,7 +133,7 @@ export function ProjectDetailPage() {
               email: form.email,
               phone: form.phone,
               type: 'volunteer',
-              message: `Interested in volunteering for: ${getLocalizedValue(project.title, "en")}. ${form.message}`
+              message: t('wa.volunteer').replace('{project}', getLocalizedValue(project.title, 'en')) + ' ' + form.message
             });
             setForm({ name: '', email: '', phone: '', message: '' });
             setShowVolunteerDialog(false);

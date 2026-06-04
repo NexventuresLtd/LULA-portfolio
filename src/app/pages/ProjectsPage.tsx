@@ -44,7 +44,7 @@ export function ProjectsPage() {
       email: volunteerForm.email,
       phone: volunteerForm.phone,
       type: 'volunteer',
-      message: `Interested in volunteering for: ${getLocalizedValue(selectedProject?.title, "en")}. ${volunteerForm.message}`
+      message: t('wa.volunteer').replace('{project}', getLocalizedValue(selectedProject?.title || '', 'en')) + ' ' + volunteerForm.message
     });
     setVolunteerForm({ name: "", email: "", phone: "", message: "" });
     setShowVolunteerDialog(false);

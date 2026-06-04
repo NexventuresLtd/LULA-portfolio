@@ -410,6 +410,8 @@ const translations: Record<Language, Record<string, string>> = {
     'involved.thankYouPartnerDesc': 'We have received your partnership inquiry. We will be in touch shortly.',
     'involved.thankYouDonateDesc': 'We have received your donation request. Our team will contact you with payment details.',
     'contact.whatsapp': 'Chat on WhatsApp',
+    'wa.donate': 'Hello LULA, I would like to donate {amount} {currency}. Please share payment details.',
+    'wa.volunteer': 'Hello LULA, I am interested in volunteering for: {project}.',
     'involved.supportProject': 'Want to support this project?',
   },
   fr: {
@@ -811,6 +813,8 @@ const translations: Record<Language, Record<string, string>> = {
     'involved.thankYouPartnerDesc': 'Nous avons recu votre demande de partenariat. Nous vous contacterons sous peu.',
     'involved.thankYouDonateDesc': 'Nous avons recu votre demande de don. Notre equipe vous contactera avec les details de paiement.',
     'contact.whatsapp': 'Discuter sur WhatsApp',
+    'wa.donate': 'Bonjour LULA, je souhaite faire un don de {amount} {currency}. Merci de partager les details de paiement.',
+    'wa.volunteer': 'Bonjour LULA, je suis interesse par le benevolat pour: {project}.',
     'involved.supportProject': 'Vous voulez soutenir ce projet?',
   },
   sw: {
@@ -1212,6 +1216,8 @@ const translations: Record<Language, Record<string, string>> = {
     'involved.thankYouPartnerDesc': 'Tumepokea ombi lako la ushirikiano. Tutawasiliana nawe hivi karibuni.',
     'involved.thankYouDonateDesc': 'Tumepokea ombi lako la mchango. Timu yetu itawasiliana nawe na maelezo ya malipo.',
     'contact.whatsapp': 'Zungumza WhatsApp',
+    'wa.donate': 'Habari LULA, ningependa kutoa mchango wa {amount} {currency}. Tafadhali shiriki maelezo ya malipo.',
+    'wa.volunteer': 'Habari LULA, nina nia ya kujitolea kwa: {project}.',
     'involved.supportProject': 'Unataka kusaidia mradi huu?',
   },
 };
