@@ -247,7 +247,7 @@ export function AdminImpactStoriesPage() {
               <CardHeader>
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
-                    <CardTitle className="text-xl mb-2">{0}</CardTitle>
+                    <CardTitle className="text-xl mb-2">{getLocalizedValue(story.title, language)}</CardTitle>
                     {story.featured && (
                       <p className="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
                         Featured
@@ -293,9 +293,9 @@ export function AdminImpactStoriesPage() {
                 </div>
                 <div className="bg-green-50 p-4 rounded-lg mb-4">
                   <Quote className="h-6 w-6 text-green-600 mb-2" />
-                  <p className="text-sm italic text-gray-700">"{0}"</p>
+                  <p className="text-sm italic text-gray-700">"{getLocalizedValue(story.quote, language)}"</p>
                 </div>
-                <p className="text-sm text-gray-600 line-clamp-3">{0}</p>
+                <p className="text-sm text-gray-600 line-clamp-3">{getLocalizedValue(story.story, language)}</p>
               </CardContent>
             </Card>
           ))
