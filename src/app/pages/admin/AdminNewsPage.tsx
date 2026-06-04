@@ -198,7 +198,7 @@ export function AdminNewsPage() {
                     id="title"
                     value={getAllLanguageValues(formData.title)[formLang]}
                     onChange={(e) => setFormData({ ...formData, title: setLocalizedValue(formData.title, formLang, e.target.value) })}
-                    required
+                    required={formLang === "en"}
                     className="text-lg"
                   />
                 </div>
@@ -209,7 +209,7 @@ export function AdminNewsPage() {
                     type="date"
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    required
+                    required={formLang === "en"}
                   />
                 </div>
               </div>
@@ -221,7 +221,7 @@ export function AdminNewsPage() {
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     placeholder="e.g., Program Launch, Success Story, Partnership"
-                    required
+                    required={formLang === "en"}
                   />
                 </div>
                 <div className="space-y-2">
@@ -232,7 +232,7 @@ export function AdminNewsPage() {
                       value={formData.image}
                       onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                       placeholder="https://... or upload below"
-                      required
+                      required={formLang === "en"}
                     />
                     <input
                       type="file"

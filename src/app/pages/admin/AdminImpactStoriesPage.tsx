@@ -121,7 +121,7 @@ export function AdminImpactStoriesPage() {
                     id="title"
                     value={getAllLanguageValues(formData.title)[formLang]}
                     onChange={(e) => setFormData({ ...formData, title: setLocalizedValue(formData.title, formLang, e.target.value) })}
-                    required
+                    required={formLang === "en"}
                   />
                 </div>
                 <div className="space-y-2">
@@ -130,7 +130,7 @@ export function AdminImpactStoriesPage() {
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
+                    required={formLang === "en"}
                   />
                 </div>
                 <div className="space-y-2">
@@ -140,7 +140,7 @@ export function AdminImpactStoriesPage() {
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                     placeholder="e.g., Women's Cooperative Member"
-                    required
+                    required={formLang === "en"}
                   />
                 </div>
                 <div className="space-y-2">
@@ -149,7 +149,7 @@ export function AdminImpactStoriesPage() {
                     id="quote"
                     value={getAllLanguageValues(formData.quote)[formLang]}
                     onChange={(e) => setFormData({ ...formData, quote: setLocalizedValue(formData.quote, formLang, e.target.value) })}
-                    required
+                    required={formLang === "en"}
                     rows={2}
                     placeholder="A brief, impactful quote from the person"
                   />
@@ -160,7 +160,7 @@ export function AdminImpactStoriesPage() {
                     id="story"
                     value={getAllLanguageValues(formData.story)[formLang]}
                     onChange={(e) => setFormData({ ...formData, story: setLocalizedValue(formData.story, formLang, e.target.value) })}
-                    required
+                    required={formLang === "en"}
                     rows={6}
                     placeholder="The complete impact story..."
                   />

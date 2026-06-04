@@ -238,7 +238,7 @@ export function AdminProjectsPage() {
                       id="title"
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      required
+                      required={formLang === "en"}
                       className="text-lg"
                     />
                   </div>
@@ -249,7 +249,7 @@ export function AdminProjectsPage() {
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       placeholder="e.g., Child Protection, Women Empowerment, Health"
-                      required
+                      required={formLang === "en"}
                     />
                   </div>
                 </div>
@@ -300,7 +300,7 @@ export function AdminProjectsPage() {
                       value={formData.image}
                       onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                       placeholder="https://... or upload below"
-                      required
+                      required={formLang === "en"}
                     />
                     <input
                       type="file"

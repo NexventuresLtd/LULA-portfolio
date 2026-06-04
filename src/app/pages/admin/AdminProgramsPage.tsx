@@ -150,7 +150,7 @@ export function AdminProgramsPage() {
                     id="title"
                     value={getAllLanguageValues(formData.title)[formLang]}
                     onChange={(e) => setFormData({ ...formData, title: setLocalizedValue(formData.title, formLang, e.target.value) })}
-                    required
+                    required={formLang === "en"}
                   />
                 </div>
                 <div className="space-y-2">
@@ -160,7 +160,7 @@ export function AdminProgramsPage() {
                     value={getAllLanguageValues(formData.description)[formLang]}
                     onChange={(e) => setFormData({ ...formData, description: setLocalizedValue(formData.description, formLang, e.target.value) })}
                     placeholder="Short description (1-2 sentences)"
-                    required
+                    required={formLang === "en"}
                   />
                 </div>
                 <div className="space-y-2">
