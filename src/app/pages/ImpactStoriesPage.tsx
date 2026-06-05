@@ -93,7 +93,7 @@ export function ImpactStoriesPage() {
         <DialogContent className="max-w-[95vw] w-[95vw] lg:max-w-6xl p-0 overflow-hidden [&>button]:z-10">
           <div className="flex flex-col lg:flex-row">
             {/* Left: Image */}
-            <div className="w-full lg:w-1/2 h-[200px] sm:h-[250px] lg:h-auto lg:min-h-[450px] bg-gray-100 flex items-center justify-center overflow-hidden">
+            <div className="w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-auto lg:min-h-[540px] bg-gray-100 flex items-center justify-center overflow-hidden">
               {selectedStory?.image ? (
                 <img src={selectedStory.image} alt={selectedStory.name} className="w-full h-full object-cover" />
               ) : (
@@ -101,7 +101,7 @@ export function ImpactStoriesPage() {
               )}
             </div>
             {/* Right: Content */}
-            <div className="w-full lg:w-1/2 p-6 sm:p-8 overflow-y-auto max-h-[60vh] lg:max-h-[450px]">
+            <div className="w-full lg:w-1/2 p-6 sm:p-8 overflow-y-auto max-h-[70vh] lg:max-h-[540px]">
               <div className="mb-4">
                 <h2 className="text-2xl font-bold text-gray-900">{selectedStory?.name}</h2>
                 <p className="text-sm text-gray-500 mt-1">{selectedStory?.role}</p>
