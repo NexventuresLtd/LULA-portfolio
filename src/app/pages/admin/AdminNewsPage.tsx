@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -32,6 +32,8 @@ export function AdminNewsPage() {
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [formLang, setFormLang] = useState<Language>('en');
+  const formLangRef = useRef(formLang);
+  formLangRef.current = formLang;
 
   const filteredNews = useMemo(() => {
     return news.filter(item =>
@@ -269,7 +271,7 @@ export function AdminNewsPage() {
             <CardContent>
               <ReactQuill
                 value={getAllLanguageValues(formData.content)[formLang]}
-                onChange={(value) => setFormData({ ...formData, content: setLocalizedValue(formData.content, formLang, value) })}
+                onChange={(value) => setFormData(prev => ({ ...prev, content: setLocalizedValue(prev.content, formLangRef.current, value) }))}
                 modules={modules}
                 formats={formats}
                 placeholder="Write the full news article content..."

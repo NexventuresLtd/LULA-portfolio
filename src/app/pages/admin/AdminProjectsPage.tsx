@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -27,6 +27,8 @@ export function AdminProjectsPage() {
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [formLang, setFormLang] = useState<Language>('en');
+  const formLangRef = useRef(formLang);
+  formLangRef.current = formLang;
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -356,7 +358,7 @@ export function AdminProjectsPage() {
               <CardContent>
                 <ReactQuill
                   value={getAllLanguageValues(formData.description)[formLang]}
-                  onChange={(value) => setFormData({ ...formData, description: setLocalizedValue(formData.description, formLang, value) })}
+                  onChange={(value) => setFormData(prev => ({ ...prev, description: setLocalizedValue(prev.description, formLangRef.current, value) }))}
                   modules={modules}
                   formats={formats}
                   placeholder="Write the full project description and details..."

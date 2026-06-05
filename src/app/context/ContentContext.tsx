@@ -817,10 +817,10 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   };
 
   const updateAboutContent = async (content: Partial<AboutContent>) => {
-    const visionWithOrg = embedOrgSettings(content.vision || aboutContent.vision || '', orgSettings);
+    const visionWithOrg = embedOrgSettings(content.vision ?? aboutContent.vision ?? '', orgSettings);
     const storyWithAppearance = Object.keys(appearanceSettings).length > 0
-      ? embedAppearance(content.story || aboutContent.story || '', appearanceSettings)
-      : (content.story || aboutContent.story || '');
+      ? embedAppearance(content.story ?? aboutContent.story ?? '', appearanceSettings)
+      : (content.story ?? aboutContent.story ?? '');
 
     const updatedContent = await requestJson<any>('/site-content/', {
       method: 'PUT',

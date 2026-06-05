@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -19,6 +19,8 @@ export function AdminAboutPage() {
   const { aboutContent, updateAboutContent } = useContent();
   const [formLang, setFormLang] = useState<Language>('en');
   const [formData, setFormData] = useState(aboutContent);
+  const formLangRef = useRef(formLang);
+  formLangRef.current = formLang;
 
   useEffect(() => {
     setFormData(aboutContent);
@@ -123,7 +125,7 @@ export function AdminAboutPage() {
               <div className="mt-2">
                 <ReactQuill
                   value={getAllLanguageValues(formData.story)[formLang]}
-                  onChange={(value) => setFormData({ ...formData, story: setLocalizedValue(formData.story, formLang, value) })}
+                  onChange={(value) => setFormData(prev => ({ ...prev, story: setLocalizedValue(prev.story, formLangRef.current, value) }))}
                   modules={modules}
                   formats={formats}
                   placeholder="Write your organization's story here..."
