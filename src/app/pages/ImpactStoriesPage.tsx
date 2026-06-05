@@ -90,10 +90,10 @@ export function ImpactStoriesPage() {
 
       {/* Read More Dialog */}
       <Dialog open={selectedStory !== null} onOpenChange={() => setSelectedStory(null)}>
-        <DialogContent className="max-w-5xl w-[90vw] p-0 overflow-hidden">
-          <div className="flex flex-col md:flex-row h-[60vh] md:h-[50vh]">
+        <DialogContent className="max-w-[95vw] w-[95vw] lg:max-w-6xl p-0 overflow-hidden [&>button]:z-10">
+          <div className="flex flex-col lg:flex-row">
             {/* Left: Image */}
-            <div className="w-full md:w-1/2 bg-gray-100 flex items-center justify-center overflow-hidden">
+            <div className="w-full lg:w-1/2 h-[200px] sm:h-[250px] lg:h-auto lg:min-h-[450px] bg-gray-100 flex items-center justify-center overflow-hidden">
               {selectedStory?.image ? (
                 <img src={selectedStory.image} alt={selectedStory.name} className="w-full h-full object-cover" />
               ) : (
@@ -101,18 +101,16 @@ export function ImpactStoriesPage() {
               )}
             </div>
             {/* Right: Content */}
-            <div className="w-full md:w-1/2 p-6 overflow-y-auto flex flex-col justify-center">
-              <DialogHeader>
-                <DialogTitle className="text-xl">{selectedStory?.name}</DialogTitle>
-                <p className="text-sm text-gray-500">{selectedStory?.role}</p>
-              </DialogHeader>
-              <div className="space-y-3 mt-3">
-                <div className="bg-green-50 p-3 rounded-lg">
-                  <Quote className="w-4 h-4 text-green-600 mb-1" />
-                  <p className="text-gray-700 italic text-sm">"{getLocalizedValue(selectedStory?.quote, language)}"</p>
-                </div>
-                <p className="text-gray-600 leading-relaxed text-justify text-sm">{getLocalizedValue(selectedStory?.story, language)}</p>
+            <div className="w-full lg:w-1/2 p-6 sm:p-8 overflow-y-auto max-h-[60vh] lg:max-h-[450px]">
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold text-gray-900">{selectedStory?.name}</h2>
+                <p className="text-sm text-gray-500 mt-1">{selectedStory?.role}</p>
               </div>
+              <div className="bg-green-50 p-4 rounded-lg mb-4">
+                <Quote className="w-5 h-5 text-green-600 mb-2" />
+                <p className="text-gray-700 italic">"{getLocalizedValue(selectedStory?.quote, language)}"</p>
+              </div>
+              <p className="text-gray-600 leading-relaxed text-justify">{getLocalizedValue(selectedStory?.story, language)}</p>
             </div>
           </div>
         </DialogContent>
