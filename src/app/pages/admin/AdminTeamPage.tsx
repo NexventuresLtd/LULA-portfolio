@@ -274,7 +274,7 @@ export function AdminTeamPage() {
           />
         </div>
         <div className="flex items-center">
-          <Label htmlFor="filter" className="mr-2 hidden sm:block">Filter by Type:</Label>
+          <Label htmlFor="filter" className="mr-2 whitespace-nowrap hidden sm:block">Filter by Type:</Label>
           <Select value={filterType} onValueChange={(value: 'all' | 'leadership' | 'staff') => setFilterType(value)}>
             <SelectTrigger>
               <SelectValue />
