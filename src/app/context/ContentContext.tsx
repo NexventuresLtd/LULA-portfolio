@@ -631,9 +631,9 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       method: 'PUT',
       body: JSON.stringify(buildProgramPayload({
         title: program.title || currentProgram?.title || 'Untitled Program',
-        description: program.description || currentProgram?.description || '',
-        details: program.details || currentProgram?.details || '',
-        beneficiaries: program.beneficiaries || currentProgram?.beneficiaries || '',
+        description: program.description ?? currentProgram?.description ?? '',
+        details: program.details ?? currentProgram?.details ?? '',
+        beneficiaries: program.beneficiaries ?? currentProgram?.beneficiaries ?? '',
         icon: program.icon || currentProgram?.icon || 'Shield',
         color: program.color || currentProgram?.color || 'bg-green-50 text-green-600',
       })),
@@ -664,12 +664,12 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         id: id,
         name: member.name || currentMember?.name || 'Team Member',
         role: member.role || currentMember?.role || 'Team Member',
-        bio: member.bio || currentMember?.bio || '',
-        image: member.image || currentMember?.image || '',
-        email: member.email || currentMember?.email || '',
-        location: member.location || currentMember?.location || '',
+        bio: member.bio ?? currentMember?.bio ?? '',
+        image: member.image ?? currentMember?.image ?? '',
+        email: member.email ?? currentMember?.email ?? '',
+        location: member.location ?? currentMember?.location ?? '',
         type: member.type || currentMember?.type || 'staff',
-        linkedin: member.linkedin || currentMember?.linkedin || '',
+        linkedin: member.linkedin ?? currentMember?.linkedin ?? '',
       })),
     });
 
@@ -700,7 +700,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         id,
         name: partner.name || currentPartner?.name || 'Partner',
         type: partner.type || currentPartner?.type || 'international',
-        logo: partner.logo || currentPartner?.logo,
+        logo: partner.logo ?? currentPartner?.logo ?? '',
         featured: featured ?? false,
       })),
     });
@@ -728,9 +728,9 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       id,
       title: newsItem.title || currentNews?.title || 'Untitled News',
       date: newsItem.date || currentNews?.date || '',
-      image: newsItem.image || currentNews?.image || '',
+      image: newsItem.image ?? currentNews?.image ?? '',
       category: newsItem.category || currentNews?.category || 'News',
-      content: newsItem.content || currentNews?.content || '',
+      content: newsItem.content ?? currentNews?.content ?? '',
     });
 
     const updatedNews = await requestJson<any>(`/news/${id}`, {
@@ -760,14 +760,14 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     const payload = buildProjectPayload({
       id,
       title: project.title || currentProject?.title || 'Untitled Project',
-      description: project.description || currentProject?.description || '',
-      image: project.image || currentProject?.image || '',
-      category: project.category || currentProject?.category || '',
+      description: project.description ?? currentProject?.description ?? '',
+      image: project.image ?? currentProject?.image ?? '',
+      category: project.category ?? currentProject?.category ?? '',
       region: project.region || currentProject?.region || 'Eastern DRC',
       status: project.status || currentProject?.status || 'active',
       featured: project.featured ?? currentProject?.featured ?? false,
-      beneficiaries: project.beneficiaries || currentProject?.beneficiaries || '',
-      duration: project.duration || currentProject?.duration || '',
+      beneficiaries: project.beneficiaries ?? currentProject?.beneficiaries ?? '',
+      duration: project.duration ?? currentProject?.duration ?? '',
     });
 
     const updatedProject = await requestJson<any>(`/projects/${id}`, {
