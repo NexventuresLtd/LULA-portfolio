@@ -6,7 +6,7 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { Plus, Edit, Trash2, Search, AlertCircle, User } from "lucide-react";
+import { Plus, Edit, Trash2, Search, AlertCircle, User, Upload } from "lucide-react";
 import { useLanguage } from "../../context/LanguageProvider";
 import { useContent } from "../../context/ContentContext";
 import { toast } from "sonner";
@@ -187,14 +187,46 @@ export function AdminTeamPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image">{t("admin.photoUrl")} *</Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="https://..."
-                    required
-                  />
+                  <Label htmlFor="image">{t("admin.photoUrl")}</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="image"
+                      value={formData.image}
+                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                      placeholder="Paste image URL or upload"
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="team-image-upload"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        const fd = new FormData();
+                        fd.append('file', file);
+                        try {
+                          const token = localStorage.getItem('lula-admin-token');
+                          const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org'}/api/media/upload`, {
+                            method: 'POST',
+                            headers: { 'Authorization': `Bearer ${token}` },
+                            body: fd,
+                          });
+                          if (!res.ok) throw new Error();
+                          const data = await res.json();
+                          setFormData({ ...formData, image: `${import.meta.env.VITE_BACKEND_BASE_URL || 'https://api.lula-asbl.org'}${data.url}` });
+                        } catch {}
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={() => document.getElementById('team-image-upload')?.click()}
+                    >
+                      <Upload className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="linkedin">LinkedIn</Label>
@@ -231,9 +263,9 @@ export function AdminTeamPage() {
         </Dialog>
       </div>
 
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mb-4">
         <div className="flex items-center">
-          <Label htmlFor="search" className="mr-2">Search:</Label>
+          <Label htmlFor="search" className="mr-2 hidden sm:block">Search:</Label>
           <Input
             id="search"
             value={searchQuery}
@@ -242,7 +274,7 @@ export function AdminTeamPage() {
           />
         </div>
         <div className="flex items-center">
-          <Label htmlFor="filter" className="mr-2">Filter by Type:</Label>
+          <Label htmlFor="filter" className="mr-2 hidden sm:block">Filter by Type:</Label>
           <Select value={filterType} onValueChange={(value: 'all' | 'leadership' | 'staff') => setFilterType(value)}>
             <SelectTrigger>
               <SelectValue />
@@ -308,7 +340,7 @@ export function AdminTeamPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-700">{0}</p>
+                  <p className="text-sm text-gray-700">{getLocalizedValue(member.bio, language)}</p>
                   <div className="flex flex-col gap-1 text-sm text-gray-600 mt-4">
                     <span><strong>Email:</strong> {member.email}</span>
                     {member.location && <span><strong>Location:</strong> {member.location}</span>}
