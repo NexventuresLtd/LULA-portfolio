@@ -103,14 +103,14 @@ export default function NGOFooter() {
               </li>
               <li className="flex items-center gap-2 text-green-100">
                 <Mail className="h-5 w-5 flex-shrink-0" />
-                <a href="mailto:info@lula-drc.org" className="hover:text-white transition-colors">
-                  info@lula-drc.org
+                <a href="mailto:info@lula-asbl.org" className="hover:text-white transition-colors">
+                  info@lula-asbl.org
                 </a>
               </li>
               <li className="flex items-center gap-2 text-green-100">
                 <Phone className="h-5 w-5 flex-shrink-0" />
-                <a href="tel:+243999123456" className="hover:text-white transition-colors">
-                  +243 999 123 456
+                <a href="tel:+243890423191" className="hover:text-white transition-colors">
+                  +243 890 423 191
                 </a>
               </li>
             </ul>

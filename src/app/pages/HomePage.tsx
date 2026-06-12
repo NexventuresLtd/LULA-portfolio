@@ -326,10 +326,10 @@ function HomePage() {
                 {[...featuredPartners, ...featuredPartners].map((partner, i) => (
                   <div
                     key={`${partner.id}-${i}`}
-                    className="flex-shrink-0 w-48 h-28 rounded-xl border border-gray-200 flex items-center justify-center px-4"
+                    className="flex-shrink-0 w-56 h-36 rounded-xl border border-gray-200 flex items-center justify-center px-4"
                   >
                     {partner.logo ? (
-                      <img src={partner.logo} alt={partner.name} className="h-16 w-auto max-w-full object-contain" />
+                      <img src={partner.logo} alt={partner.name} className="h-24 w-auto max-w-full object-contain" />
                     ) : (
                       <p className="text-base font-semibold text-gray-500 text-center whitespace-normal">
                         {partner.name}

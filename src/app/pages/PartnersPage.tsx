@@ -73,13 +73,13 @@ export function PartnersPage() {
             {internationalPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-6 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
               >
                 {partner.logo && (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-16 w-auto object-contain mb-3"
+                    className="h-24 w-auto object-contain mb-3"
                   />
                 )}
                 <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
@@ -102,13 +102,13 @@ export function PartnersPage() {
             {governmentPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-6 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
               >
                 {partner.logo && (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-14 w-auto object-contain mb-3"
+                    className="h-24 w-auto object-contain mb-3"
                   />
                 )}
                 <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
@@ -131,13 +131,13 @@ export function PartnersPage() {
             {localPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-6 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
               >
                 {partner.logo && (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="h-14 w-auto object-contain mb-3"
+                    className="h-24 w-auto object-contain mb-3"
                   />
                 )}
                 <span className="text-sm font-semibold text-green-700 text-center">{partner.name}</span>
