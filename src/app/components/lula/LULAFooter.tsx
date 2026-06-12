@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Globe } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageProvider';
+import { useContent } from '../../context/ContentContext';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -12,6 +13,7 @@ import headerLogo from '../../../assets/LULA-HeaderLogo.png';
 
 export default function NGOFooter() {
   const { language, setLanguage, t } = useLanguage();
+  const { orgSettings } = useContent();
 
   const footerLinks = [
     { path: '/about', label: t('nav.about') },
@@ -97,22 +99,28 @@ export default function NGOFooter() {
           <div>
             <h3 className="font-semibold text-lg mb-4">{t('footer.getInTouch')}</h3>
             <ul className="space-y-3">
+              {orgSettings.address && (
               <li className="flex items-start gap-2 text-green-100">
                 <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                <span>Goma, North Kivu, Democratic Republic of Congo</span>
+                <span>{orgSettings.address}</span>
               </li>
+              )}
+              {orgSettings.email && (
               <li className="flex items-center gap-2 text-green-100">
                 <Mail className="h-5 w-5 flex-shrink-0" />
-                <a href="mailto:info@lula-asbl.org" className="hover:text-white transition-colors">
-                  info@lula-asbl.org
+                <a href={`mailto:${orgSettings.email}`} className="hover:text-white transition-colors">
+                  {orgSettings.email}
                 </a>
               </li>
+              )}
+              {orgSettings.phone && (
               <li className="flex items-center gap-2 text-green-100">
                 <Phone className="h-5 w-5 flex-shrink-0" />
-                <a href="tel:+243890423191" className="hover:text-white transition-colors">
-                  +243 890 423 191
+                <a href={`tel:${orgSettings.phone.replace(/\s/g, '')}`} className="hover:text-white transition-colors">
+                  {orgSettings.phone}
                 </a>
               </li>
+              )}
             </ul>
           </div>
         </div>

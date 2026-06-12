@@ -31,7 +31,7 @@ const translations: Record<Language, Record<string, string>> = {
     'lang.french': 'Français',
     'lang.swahili': 'Kiswahili',
     // Hero
-    'hero.title': 'Empowering Communities in Eastern DR Congo',
+    'hero.title': 'Empowering Women, Girls and Vulnerable Children in Eastern DR Congo',
     'hero.subtitle': 'Building a future where children thrive, women lead, and communities prosper',
     'hero.cta_donate': 'Support Our Mission',
     'hero.cta_learn': 'Learn More',
@@ -434,7 +434,7 @@ const translations: Record<Language, Record<string, string>> = {
     'lang.french': 'Français',
     'lang.swahili': 'Kiswahili',
     // Hero
-    'hero.title': "Autonomiser les Communautés dans l'Est de la RDC",
+    'hero.title': "Autonomiser les Femmes, les Filles et les Enfants Vulnérables dans l'Est de la RDC",
     'hero.subtitle': 'Construire un avenir où les enfants prospèrent, les femmes dirigent et les communautés prospèrent',
     'hero.cta_donate': 'Soutenir Notre Mission',
     'hero.cta_learn': 'En Savoir Plus',
@@ -837,7 +837,7 @@ const translations: Record<Language, Record<string, string>> = {
     'lang.french': 'Français',
     'lang.swahili': 'Kiswahili',
     // Hero
-    'hero.title': 'Kuwezesha Jamii Mashariki mwa DR Congo',
+    'hero.title': 'Kuwezesha Wanawake, Wasichana na Watoto Walio Hatarini Mashariki mwa DR Congo',
     'hero.subtitle': 'Kujenga mustakabali ambapo watoto wanastawi, wanawake wanaongoza, na jamii zinafanikiwa',
     'hero.cta_donate': 'Unga Mkono Dhamira Yetu',
     'hero.cta_learn': 'Jifunze Zaidi',

@@ -321,23 +321,22 @@ function HomePage() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl text-center mb-8 sm:mb-12 text-gray-900">{t('home.partners')}</h2>
           {featuredPartners.length > 0 ? (
-            <div className="overflow-hidden">
-              <div className="flex animate-marquee gap-8 whitespace-nowrap">
-                {[...featuredPartners, ...featuredPartners].map((partner, i) => (
-                  <div
-                    key={`${partner.id}-${i}`}
-                    className="flex-shrink-0 w-56 h-36 rounded-xl border border-gray-200 flex items-center justify-center px-4"
-                  >
-                    {partner.logo ? (
-                      <img src={partner.logo} alt={partner.name} className="h-24 w-auto max-w-full object-contain" />
-                    ) : (
-                      <p className="text-base font-semibold text-gray-500 text-center whitespace-normal">
-                        {partner.name}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {featuredPartners.slice(0, 4).map((partner) => (
+                <div
+                  key={partner.id}
+                  className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                >
+                  {partner.logo ? (
+                    <img src={partner.logo} alt={partner.name} className="h-24 w-auto max-w-full object-contain mb-3" />
+                  ) : (
+                    <p className="text-base font-semibold text-gray-500 text-center">
+                      {partner.name}
+                    </p>
+                  )}
+                  <span className="text-sm font-semibold text-gray-700 text-center">{partner.name}</span>
+                </div>
+              ))}
             </div>
           ) : (
             <div className="text-center text-gray-400">{t("admin.noResults")}</div>
