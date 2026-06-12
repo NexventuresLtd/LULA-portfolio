@@ -42,7 +42,7 @@ function HomePage() {
   }, []);
 
   const stats = [
-    { icon: Users, value: '150,000+', label: t('home.stats.beneficiaries') },
+    { icon: Users, value: '850,000+', label: t('home.stats.beneficiaries') },
     { icon: MapPin, value: '12', label: t('home.stats.regions') },
     { icon: Briefcase, value: '25+', label: t('home.stats.programs') },
     { icon: HandHeart, value: '40+', label: t('home.stats.partners') },
@@ -123,6 +123,16 @@ function HomePage() {
 
   // Get featured partners from ContentContext
   const featuredPartners = partners.filter(p => p.featured);
+  const [partnerPage, setPartnerPage] = useState(0);
+  const totalPartnerPages = Math.ceil(featuredPartners.length / 4);
+
+  useEffect(() => {
+    if (totalPartnerPages <= 1) return;
+    const interval = setInterval(() => {
+      setPartnerPage(prev => (prev + 1) % totalPartnerPages);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [totalPartnerPages]);
 
   // Get latest 3 news articles from the database
   const latestNews = news.slice(0, 3);
@@ -322,7 +332,7 @@ function HomePage() {
           <h2 className="text-3xl sm:text-4xl text-center mb-8 sm:mb-12 text-gray-900">{t('home.partners')}</h2>
           {featuredPartners.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {featuredPartners.slice(0, 4).map((partner) => (
+              {featuredPartners.slice(partnerPage * 4, partnerPage * 4 + 4).map((partner) => (
                 <div
                   key={partner.id}
                   className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
@@ -340,6 +350,17 @@ function HomePage() {
             </div>
           ) : (
             <div className="text-center text-gray-400">{t("admin.noResults")}</div>
+          )}
+          {totalPartnerPages > 1 && (
+            <div className="flex justify-center gap-2 mt-6">
+              {Array.from({ length: totalPartnerPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPartnerPage(i)}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors ${i === partnerPage ? 'bg-green-600' : 'bg-gray-300'}`}
+                />
+              ))}
+            </div>
           )}
         </div>
       </section>
