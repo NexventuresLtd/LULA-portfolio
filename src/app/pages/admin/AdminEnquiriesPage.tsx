@@ -256,7 +256,7 @@ export function AdminEnquiriesPage() {
           <DialogHeader>
             <DialogTitle>{selectedEnquiry?.subject}</DialogTitle>
             <DialogDescription>
-              From {selectedEnquiry?.name} on {selectedEnquiry?.date}
+              {selectedEnquiry?.name} — {selectedEnquiry?.date}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">

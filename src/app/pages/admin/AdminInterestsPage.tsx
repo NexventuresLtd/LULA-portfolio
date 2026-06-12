@@ -351,7 +351,7 @@ export function AdminInterestsPage() {
           <DialogHeader>
             <DialogTitle>{selectedInterest?.name}</DialogTitle>
             <DialogDescription>
-              {selectedInterest?.type} interest from {selectedInterest?.date}
+              {selectedInterest?.type} — {selectedInterest?.date}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">

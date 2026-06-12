@@ -414,9 +414,7 @@ export function AdminNewsPage() {
               <div>
                 <DialogTitle className="text-xl">{t('admin.deleteConfirm')}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  {newsToDelete
-                    ? `This will permanently remove “${newsToDelete.title}”. This action cannot be undone.`
-                    : 'This will permanently remove the selected news article. This action cannot be undone.'}
+                  {t('admin.deleteDesc')} "{newsToDelete ? getLocalizedValue(newsToDelete.title, language) : ''}"
                 </DialogDescription>
               </div>
             </div>

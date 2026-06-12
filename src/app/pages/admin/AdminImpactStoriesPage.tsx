@@ -320,7 +320,7 @@ export function AdminImpactStoriesPage() {
               <div>
                 <DialogTitle className="text-xl">{t('admin.deleteConfirm')}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  {t("admin.deleteDesc")} "{storyToDelete?.title}" from the admin dashboard.
+                  {t("admin.deleteDesc")} "{storyToDelete ? getLocalizedValue(storyToDelete.title, language) : ''}"
                 </DialogDescription>
               </div>
             </div>

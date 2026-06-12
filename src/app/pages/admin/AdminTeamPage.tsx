@@ -129,9 +129,9 @@ export function AdminTeamPage() {
           </DialogTrigger>
           <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingMember ? 'Edit Team Member' : 'Add New Team Member'}</DialogTitle>
+              <DialogTitle>{editingMember ? t('admin.edit') + ' ' + t('admin.team') : t('admin.addTeamMember')}</DialogTitle>
               <DialogDescription>
-                {editingMember ? 'Update the team member details below' : 'Fill in the details to add a new team member'}
+                {editingMember ? t('admin.update') : t('admin.addTeamMember')}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
@@ -362,9 +362,9 @@ export function AdminTeamPage() {
                 <AlertCircle className="h-5 w-5" />
               </div>
               <div>
-                <DialogTitle>Delete team member?</DialogTitle>
+                <DialogTitle>{t('admin.deleteConfirm')}</DialogTitle>
                 <DialogDescription className="mt-1">
-                  This action will remove this team member from the backend and the admin list.
+                  {t('admin.deleteDesc')}
                 </DialogDescription>
               </div>
             </div>
