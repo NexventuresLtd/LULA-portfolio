@@ -73,7 +73,7 @@ export function PartnersPage() {
             {internationalPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                className="flex flex-col items-center justify-center p-8 border border-gray-200 hover:shadow-md transition-shadow"
               >
                 {partner.logo && (
                   <img
@@ -102,7 +102,7 @@ export function PartnersPage() {
             {governmentPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                className="flex flex-col items-center justify-center p-8 border border-gray-200 hover:shadow-md transition-shadow"
               >
                 {partner.logo && (
                   <img
@@ -131,7 +131,7 @@ export function PartnersPage() {
             {localPartners.map((partner) => (
               <div
                 key={partner.id}
-                className="flex flex-col items-center justify-center p-8 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                className="flex flex-col items-center justify-center p-8 border border-gray-200 hover:shadow-md transition-shadow"
               >
                 {partner.logo && (
                   <img
