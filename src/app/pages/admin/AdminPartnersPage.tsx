@@ -324,9 +324,9 @@ export function AdminPartnersPage() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t('admin.confirmDelete')}</AlertDialogTitle>
+            <AlertDialogTitle>{t('admin.deleteConfirm')}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t('admin.deleteWarning')} "{partnerToDelete?.name}"?
+              {t('admin.deleteDesc')} "{partnerToDelete?.name}"?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
