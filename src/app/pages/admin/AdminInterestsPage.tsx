@@ -42,18 +42,23 @@ export function AdminInterestsPage() {
   const [selectedInterest, setSelectedInterest] = useState<any>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [interestToDelete, setInterestToDelete] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  const filteredInterests = interests.filter(interest => {
-    const matchesSearch = 
-      interest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      interest.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      interest.message.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesType = typeFilter === 'all' || interest.type === typeFilter;
-    const matchesStatus = statusFilter === 'all' || interest.status === statusFilter;
-    
-    return matchesSearch && matchesType && matchesStatus;
-  });
+  const filteredInterests = interests
+    .filter(interest => {
+      const matchesSearch = 
+        interest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        interest.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        interest.message.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesType = typeFilter === 'all' || interest.type === typeFilter;
+      const matchesStatus = statusFilter === 'all' || interest.status === statusFilter;
+      return matchesSearch && matchesType && matchesStatus;
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  const totalPages = Math.ceil(filteredInterests.length / itemsPerPage);
+  const paginatedInterests = filteredInterests.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handleStatusChange = (id: string, status: 'new' | 'contacted' | 'completed') => {
     updateInterestStatus(id, status);
@@ -217,14 +222,14 @@ export function AdminInterestsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredInterests.length === 0 ? (
+              {paginatedInterests.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-gray-500 py-8">
                     {t("admin.noResults")}
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredInterests.map((interest) => (
+                paginatedInterests.map((interest) => (
                   <TableRow key={interest.id}>
                     <TableCell className="font-medium">
                       <button
@@ -309,6 +314,17 @@ export function AdminInterestsPage() {
               )}
             </TableBody>
           </Table></div>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between px-4 py-3 border-t">
+              <span className="text-sm text-gray-600">
+                {t('admin.showing')} {(currentPage - 1) * itemsPerPage + 1}–{Math.min(currentPage * itemsPerPage, filteredInterests.length)} / {filteredInterests.length}
+              </span>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>{t('admin.previous')}</Button>
+                <Button variant="outline" size="sm" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>{t('admin.next')}</Button>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
