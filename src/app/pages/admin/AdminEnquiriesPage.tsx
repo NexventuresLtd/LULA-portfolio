@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
@@ -34,6 +34,8 @@ import {
 export function AdminEnquiriesPage() {
   const { t } = useLanguage();
   const { enquiries, updateEnquiryStatus, deleteEnquiry, refreshEnquiries } = useContent();
+
+  useEffect(() => { refreshEnquiries(); }, []);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'in-progress' | 'resolved'>('all');
   const [selectedEnquiry, setSelectedEnquiry] = useState<any>(null);
