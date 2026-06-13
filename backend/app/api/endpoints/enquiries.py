@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import List
 from app.db.session import get_db
@@ -6,6 +6,7 @@ from app.models.enquiry import Enquiry
 from app.models.user import User
 from app.schemas.enquiry import EnquiryCreate, EnquiryUpdate, EnquiryResponse
 from app.core.security import get_current_active_user
+from app.core.email import send_enquiry_notification
 
 router = APIRouter()
 
@@ -34,11 +35,21 @@ def get_enquiry(
 
 
 @router.post("/", response_model=EnquiryResponse)
-def create_enquiry(enquiry: EnquiryCreate, db: Session = Depends(get_db)):
+def create_enquiry(enquiry: EnquiryCreate, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     db_enquiry = Enquiry(**enquiry.dict())
     db.add(db_enquiry)
     db.commit()
     db.refresh(db_enquiry)
+
+    background_tasks.add_task(
+        send_enquiry_notification,
+        name=enquiry.name,
+        email=enquiry.email,
+        phone=enquiry.phone or "",
+        subject=enquiry.subject,
+        message=enquiry.message,
+    )
+
     return db_enquiry
 
 

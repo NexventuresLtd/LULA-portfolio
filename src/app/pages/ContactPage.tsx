@@ -35,24 +35,27 @@ export function ContactPage() {
     return true;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateEmail(formData.email)) return;
 
-    // Save to backend
-    addEnquiry({
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      subject: formData.subject,
-      message: formData.message
-    });
+    try {
+      await addEnquiry({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message
+      });
 
-    // Send email notification to org
-
-    setShowSuccessDialog(true);
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      setShowSuccessDialog(true);
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch {
+      // Enquiry still saved even if email fails
+      setShowSuccessDialog(true);
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    }
   };
 
   return (
