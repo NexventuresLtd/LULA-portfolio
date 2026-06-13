@@ -11,9 +11,13 @@ export function AdminDashboardPage() {
   const { programs, projects, teamMembers, partners, news, impactStories, enquiries, interests } = useContent();
   const navigate = useNavigate();
 
-  const today = new Date().toISOString().split('T')[0];
-  const enquiriesToday = enquiries.filter(e => e.date.startsWith(today));
-  const interestsToday = interests.filter(i => i.date.startsWith(today));
+  const now = new Date();
+  const isToday = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
+  };
+  const enquiriesToday = enquiries.filter(e => isToday(e.date));
+  const interestsToday = interests.filter(i => isToday(i.date));
 
   const stats = [
     {
